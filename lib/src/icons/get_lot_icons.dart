@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart'
-    show ProxyArticle;
+import 'package:models_weebi/weebi_models.dart' show ProxyArticle;
 
 Icon getProxyIcons(ProxyArticle proxy) {
-  if (proxy.id == null) {
+  if (proxy.id == 0) {
     return const Icon(Icons.check_box_outline_blank, color: Colors.grey);
   } else if (proxy.id == 1) {
     return const Icon(Icons.looks_one, color: Colors.grey);
@@ -20,6 +19,7 @@ Icon getProxyIcons(ProxyArticle proxy) {
     return const Icon(Icons.looks_5, color: Colors.grey);
   } else if (proxy.id == 6) {
     return const Icon(Icons.looks_6, color: Colors.grey);
-  } else
+  } else {
     return const Icon(Icons.check_box_outline_blank, color: Colors.grey);
+  }
 }

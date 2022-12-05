@@ -2,22 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
-final paddingVerticalLine = const EdgeInsets.symmetric(vertical: 8);
+const paddingVerticalLine = EdgeInsets.symmetric(vertical: 8);
 
 final weebiTheme = ThemeData(
   fontFamily: 'PT_Sans-Narrow',
   appBarTheme: const AppBarTheme(color: WeebiColors.blackAppBar),
   primaryColor: WeebiColors.blackAppBar,
-  buttonTheme: ButtonThemeData(
+  buttonTheme: const ButtonThemeData(
     buttonColor: WeebiColors.buttonColor,
     textTheme: ButtonTextTheme.primary,
   ),
   indicatorColor: WeebiColors.yellowIndicator,
-  tabBarTheme: TabBarTheme(
+  tabBarTheme: const TabBarTheme(
     indicator: BoxDecoration(
       border: Border(
-        bottom: const BorderSide(
-            color: Colors.teal, width: 8, style: BorderStyle.solid),
+        bottom:
+            BorderSide(color: Colors.teal, width: 8, style: BorderStyle.solid),
       ),
       color: WeebiColors.blackAppBar,
     ),

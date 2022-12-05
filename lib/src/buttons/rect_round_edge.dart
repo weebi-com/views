@@ -22,18 +22,17 @@ class WeebiButtonRect extends StatelessWidget {
       child: Container(
         height: 60,
         width: 88,
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Tooltip(
-          message: tooltip ?? '',
+          message: tooltip,
           child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
                   backColor ?? MaterialStateProperty.all<Color>(Colors.blue),
             ),
             onPressed: onPressed,
-            child: Text(string,
-                style: TextStyle(color: fontColor ?? Colors.black)),
+            child: Text(string, style: TextStyle(color: fontColor)),
           ),
         ),
       ),

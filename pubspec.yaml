@@ -21,7 +21,7 @@ dependencies:
     #  url: https://gitlab.com/weebi_git/models_weebi
   closing:
     #path: closing
-    path: /Users/mac/Developer/closing
+    path: ../closing
   #  git: 
   #    url: https://gitlab.com/weebi_git/closing  #mac  
 

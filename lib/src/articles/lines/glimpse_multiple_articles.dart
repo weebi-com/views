@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
     show ArticleWeebi, LineOfArticles;
-import 'package:views_weebi/src/articles/tile_title_glimpse.dart';
+import 'package:views_weebi/src/articles/lines/tile_title_glimpse.dart';
 import 'package:views_weebi/stock.dart';
 import 'package:weebi/src/routes/articles/line_article_detail.dart';
 import 'package:weebi/src/stores/tickets.dart';

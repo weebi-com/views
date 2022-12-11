@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:closing/closing_store.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/tile_title_glimpse.dart';
+import 'package:views_weebi/src/articles/lines/tile_title_glimpse.dart';
 
 // Project imports:
 import 'package:views_weebi/stock.dart';

@@ -15,7 +15,8 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class LineSingleArticleGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
-  LineSingleArticleGlimpseWidget(LineOfArticles line, {Key? key}) : super(line);
+  LineSingleArticleGlimpseWidget(LineOfArticles line, {super.key})
+      : super(line);
 
   @override
   Widget build(BuildContext context) {

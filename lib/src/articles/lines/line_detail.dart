@@ -145,6 +145,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
           controller: controller,
           child: Column(
             children: [
+              // * for now no basket here, keep it simple
               // if (line.isBasket) ...[
               //   if (line.isSingleArticle)
               //     LineSingleABasketGlimpseWidget(line)

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show ArticleWeebi;
-// import 'package:provider/provider.dart';
-// import 'package:weebi/src/stores/tickets.dart';
+import 'package:provider/provider.dart';
+import 'package:weebi/src/stores/tickets.dart';
 import 'package:weebi/src/views/main_views/articles/article_weebi/articleW_detail_section.dart';
-import 'package:views_weebi/stock.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:weebi/src/views/main_views/articles/article_weebi/article_glimpse.dart';
 
 class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleWeebi>
@@ -24,7 +24,7 @@ class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleWeebi>
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
     double articleLiveQt = articleStockNow(
         closingsStore.closingStockShops ?? [], ticketsStore.tickets);
-    final double articleLiveQt = 0.0;
+    // final double articleLiveQt = 0.0;
 
     return isGlimpse
         ? ArticleWGlimpse2Widget(article, articleLiveQt)

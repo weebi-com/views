@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router/rc_router.dart';
-import 'package:views_weebi/src/articles/line_detail.dart';
 // TODO ?
 // $ dart pub outdated --mode=null-safety
 //and then

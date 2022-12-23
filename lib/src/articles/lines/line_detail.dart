@@ -1,12 +1,14 @@
 // Flutter imports:
+import 'package:closing/closing_abstraction.dart';
 import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
+import 'package:models_weebi/abstractions.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:views_weebi/stock.dart';
+import 'package:mixins_weebi/stock.dart';
 
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, EnvironmentWeebi, LineOfArticles, ShopWeebi;
@@ -48,8 +50,16 @@ Gradient getLineGradient(LineOfArticles line) {
 class LineArticlesDetailWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   final int initArticle;
-  LineArticlesDetailWidget(LineOfArticles line, {this.initArticle = 1})
-      : super(line);
+  LineArticlesDetailWidget(
+      LineOfArticles line,
+      MobxTicketsStoreCreator mobxTicketsStoreCreator,
+      MobxClosingStoreCreator mobxClosingStoreCreator,
+      {this.initArticle = 1})
+      : super(
+          line,
+          mobxTicketsStoreCreator,
+          mobxClosingStoreCreator,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +67,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
 
     final shopStore = Provider.of<ShopStore>(context, listen: false);
     final thisShop = shopStore.shop.first;
-
-    final ticketsStore = Provider.of<TicketsStore>(context, listen: true);
-    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
-    final lineLiveQt = lineStockNow(
-        closingsStore.closingStockShops ?? [], ticketsStore.tickets);
+    final lineLiveQt = lineStockNow;
 
     return Scaffold(
       floatingActionButton: Stack(
@@ -145,6 +151,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
           controller: controller,
           child: Column(
             children: [
+              // * for now no basket here, keep it simple
               // if (line.isBasket) ...[
               //   if (line.isSingleArticle)
               //     LineSingleABasketGlimpseWidget(line)

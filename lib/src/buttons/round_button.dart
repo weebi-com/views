@@ -14,16 +14,16 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Tooltip(
-          message: tooltip ?? '',
+          message: tooltip,
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-                shape: CircleBorder(), backgroundColor: Colors.blue),
+                shape: const CircleBorder(), backgroundColor: Colors.blue),
             child: Container(
               width: 100,
               height: 100,
               alignment: Alignment.center,
-              decoration: BoxDecoration(shape: BoxShape.circle),
+              decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Text(string),
             ),
           ),

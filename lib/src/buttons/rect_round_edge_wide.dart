@@ -18,11 +18,11 @@ class WeebiButtonOkRectWide extends StatelessWidget {
       child: Container(
         height: 64,
         width: 264,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
         child: Tooltip(
-          message: tooltip ?? '',
+          message: tooltip,
           child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),

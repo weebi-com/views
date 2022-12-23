@@ -20,11 +20,11 @@ class WeebiNumPadButton extends StatelessWidget {
     return Container(
       height: 55,
       width: 55,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
       ),
       child: Tooltip(
-        message: tooltip ?? '',
+        message: tooltip,
         child: ElevatedButton(
           style: ButtonStyle(
             backgroundColor:
@@ -35,7 +35,7 @@ class WeebiNumPadButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: fontColor ?? Colors.black,
+                color: fontColor,
               )),
         ),
       ),

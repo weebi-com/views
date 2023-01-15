@@ -19,7 +19,7 @@ class ArticleWDetailSection extends StatelessWidget {
           const Icon(Icons.local_offer, color: Colors.teal),
           const Text("Prix de vente"),
           SelectableText(
-            "${numFormat.format((article).price)}",
+            numFormat.format((article).price),
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -27,7 +27,7 @@ class ArticleWDetailSection extends StatelessWidget {
           const Icon(Icons.local_offer, color: Colors.red),
           const Text("Coût d'achat"),
           SelectableText(
-            "${numFormat?.format((article).cost)}",
+            numFormat.format((article).cost),
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -35,7 +35,7 @@ class ArticleWDetailSection extends StatelessWidget {
           const Icon(Icons.warehouse),
           const Text("Quantité"),
           SelectableText(
-            '${numFormat?.format(articleLiveQt)}',
+            numFormat.format(articleLiveQt),
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
         ),
@@ -47,13 +47,13 @@ class ArticleWDetailSection extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        if (article?.articleCode != null &&
+        if (article.articleCode != null &&
             '${article.articleCode}' != '${article.lineId}${article.id}')
           FieldValueWidget(
             const Icon(Icons.speaker_phone),
             const Text("Code barre"),
             SelectableText(
-              "${article?.articleCode}",
+              "${article.articleCode}",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),

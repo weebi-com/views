@@ -1,7 +1,6 @@
 // Project imports:
 import 'package:flutter/material.dart';
 import 'package:views_weebi/src/routes/route_base.dart';
-import 'package:views_weebi/views_line.dart';
 
 class ArticleLineCreateRoute extends WeebiRouteBase {
   static String routePath = '/line_create';

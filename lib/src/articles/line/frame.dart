@@ -1,7 +1,6 @@
 // Dart imports:
 
 // Flutter imports:
-import 'package:closing/closing_abstraction.dart';
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_base/src/base/article_base.dart';

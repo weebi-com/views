@@ -7,16 +7,13 @@ import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart'
-    show EnvironmentWeebi, LineOfArticles;
+import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
 import 'package:views_weebi/src/articles/lines/frame.dart';
-import 'package:weebi/src/providers/top_provider.dart';
 
 import 'package:models_weebi/extensions.dart';
 // import 'package:weebi/src/routes/articles/line_article_create.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
-import 'package:views_weebi/icons.dart';
 
 // import 'package:weebi/src/views/main_views/articles/line/line_basket/line_basket_create.dart';
 // import 'package:weebi/src/views/main_views/articles/lines_frame.dart';

@@ -45,7 +45,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                           fontSize: 20,
                           color: Colors.black),
                       overflow: TextOverflow.ellipsis),
-                  Text('${article.fullName}',
+                  Text(article.fullName,
                       style: TextStyle(
                           decoration: article.status == false
                               ? TextDecoration.lineThrough
@@ -57,7 +57,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                   SizedBox(
                     width: 160,
                     height: 160,
-                    child: article?.photo == null || article.photo!.isEmpty
+                    child: article.photo == null || article.photo!.isEmpty
                         ? Image.asset('assets/icons/product_detail.png',
                             color: WeebiColors.greyLight)
                         : Hero(

@@ -22,7 +22,7 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
         //Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
         //    '${article.productId}', '${article.id}'));
       },
-      leading: CircleAvatar(backgroundColor: Colors.transparent),
+      leading: const CircleAvatar(backgroundColor: Colors.transparent),
       title: Row(
         children: <Widget>[
           article.photo != null && article.photo!.isNotEmpty
@@ -32,7 +32,7 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
                       foregroundImage:
                           AssetImage('assets/photos/${article.photo}')),
                 )
-              : CircleAvatar(backgroundColor: Colors.transparent),
+              : const CircleAvatar(backgroundColor: Colors.transparent),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
@@ -42,7 +42,7 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '${article.fullName}',
+              article.fullName,
               style: article.status == false
                   ? const TextStyle(decoration: TextDecoration.lineThrough)
                   : const TextStyle(),
@@ -52,8 +52,8 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(article.weight != 1
-                  ? '${numFormat?.format(article.weight)}p. x ${numFormat?.format(articleLiveQt)}'
-                  : '${numFormat?.format(articleLiveQt)}'),
+                  ? '${numFormat.format(article.weight)}p. x ${numFormat.format(articleLiveQt)}'
+                  : numFormat.format(articleLiveQt)),
             ),
             const Icon(Icons.warehouse, color: WeebiColors.grey)
           ],

@@ -108,7 +108,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${numFormat?.format(lineLiveQt)}',
+                  child: Text(numFormat.format(lineLiveQt),
                       textAlign: TextAlign.end,
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold)),

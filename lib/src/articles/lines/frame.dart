@@ -7,8 +7,6 @@ import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/lines/glimpse_multiple_articles.dart';
 import 'package:views_weebi/src/articles/lines/glimpse_single_article.dart';
-import 'package:weebi/src/views/main_views/articles/line/line_basket/glimpse_multiple_articles_b.dart';
-import 'package:weebi/src/views/main_views/articles/line/line_basket/glimpse_single_article_b.dart';
 import 'package:mixins_weebi/mobx_stores/tickets.dart';
 import 'package:views_weebi/views.dart';
 import 'package:closing/closing_store.dart';

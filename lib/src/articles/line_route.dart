@@ -12,6 +12,7 @@ import 'package:rc_router/rc_router.dart';
 //and then
 // $ dart pub upgrade --null-safety
 import 'package:views_weebi/views.dart' show LineArticlesDetailWidget;
+import 'package:views_weebi/views_line.dart';
 
 // Project imports:
 

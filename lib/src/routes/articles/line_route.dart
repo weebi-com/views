@@ -15,7 +15,7 @@ import 'package:views_weebi/views_line.dart' show LineArticlesDetailWidget;
 
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:mixins_weebi/stock.dart';
+// import 'package:mixins_weebi/stock.dart';
 
 class LineOfArticlesDetailRoute extends RcRoute {
   static String routePath = '/lines/:id/';

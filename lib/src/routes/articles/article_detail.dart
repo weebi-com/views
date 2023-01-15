@@ -6,7 +6,6 @@ import 'package:models_weebi/weebi_models.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router/rc_router.dart';
-import 'package:views_weebi/src/articles/line/line_detail.dart';
 import 'package:views_weebi/views_article.dart';
 
 typedef ActionsArticleWidget = List<Widget> Function(
@@ -33,12 +32,16 @@ class ArticleDetailRoute extends RcRoute {
     final articleId = routeParams.pathParameters['articleId'];
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final line = articlesStore.lines
-        .firstWhere((l) => l?.id == int.tryParse(lineId), orElse: null);
+        .firstWhere((l) => l.id == int.tryParse(lineId), orElse: () {
+      throw 'no line match $lineId';
+    });
+    final article = line.articles.firstWhere(
+        (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
+      throw 'no article match $lineId.$articleId';
+    });
     return Provider.value(
-      value: line.articles
-          .firstWhere((a) => '${a?.id}' == articleId, orElse: null),
-      child: ArticleDetailWidget(line.articles
-          .firstWhere((a) => '${a?.id}' == articleId, orElse: null)),
+      value: article,
+      child: ArticleDetailWidget(article), // todo add isShopLocked here
     );
   }
 }

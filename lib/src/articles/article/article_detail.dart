@@ -179,7 +179,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: false,
               collapseMode: CollapseMode.parallax,
-              background: article?.photo == null || article.photo!.isEmpty
+              background: article.photo == null || article.photo!.isEmpty
                   ? (line.isBasket ?? false)
                       ? const Icon(Icons.shopping_basket,
                           color: WeebiColors.grey)
@@ -187,7 +187,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                           color: WeebiColors.greyLight)
                   : Hero(
                       tag: article.photo!,
-                      child: Image.asset('assets/photos/${article?.photo}',
+                      child: Image.asset('assets/photos/${article.photo}',
                           fit: BoxFit.scaleDown,
                           errorBuilder: (_, o, stack) => Image.asset(
                               'assets/icons/product_detail.png',

@@ -7,11 +7,11 @@ import 'package:closing/closing_store.dart';
 import 'package:models_weebi/abstractions.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/src/articles/lines/tile_title_glimpse.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
+import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
 

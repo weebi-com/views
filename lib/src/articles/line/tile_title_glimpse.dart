@@ -19,7 +19,7 @@ class LineArticleTileTitle extends StatelessWidget {
       children: <Widget>[
         Hero(
           tag: line.id,
-          child: line?.articles?.first?.photo == null ||
+          child: line.articles.first.photo == null ||
                   line.articles.first.photo!.isEmpty
               ? const CircleAvatar(backgroundColor: Colors.transparent)
               : CircleAvatar(

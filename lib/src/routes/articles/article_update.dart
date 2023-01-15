@@ -23,22 +23,22 @@ class ArticleUpdateRoute extends RcRoute {
     final articleId = routeParams.pathParameters['articleId'];
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final line = articlesStore.lines
-        .firstWhere((p) => p.id?.toString() == lineId, orElse: null);
+        .firstWhere((p) => p.id.toString() == lineId, orElse: () {
+      throw 'no line match $lineId';
+    });
+    final article = line.articles.firstWhere(
+        (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
+      throw 'no line match $lineId';
+    });
     final isBasket = line.isBasket ?? false;
     if (isBasket) {
       articlesStore.clearAllArticleMinQtInSelected();
     }
     return Provider.value(
-      value: line.articles
-          .firstWhere((a) => a.id?.toString() == articleId, orElse: null),
+      value: article,
       child: isBasket
-          ? ArticleBasketUpdateViewFakeFrame(line.articles.firstWhere(
-              (a) => a.id?.toString() == articleId,
-              orElse: null) as ArticleBasket)
-          : ArticleUpdateViewFakeFrame(
-              line.articles.firstWhere((a) => a.id?.toString() == articleId,
-                  orElse: null) as Article,
-            ),
+          ? ArticleBasketUpdateViewFakeFrame(article as ArticleBasket)
+          : ArticleUpdateViewFakeFrame(article as Article),
     );
   }
 }

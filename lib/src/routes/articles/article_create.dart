@@ -8,7 +8,6 @@ import 'package:rc_router/rc_router.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:views_weebi/views_article.dart';
 
 class ArticleCreateRoute extends RcRoute {
   static String routePath = '/lines/:id/article_create';
@@ -24,13 +23,13 @@ class ArticleCreateRoute extends RcRoute {
     final lineId = routeParams.pathParameters['id'];
     // print('lineId $lineId');
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
+    final article = articlesStore.lines
+        .firstWhere((line) => line.id.toString() == lineId, orElse: () {
+      throw 'no LineArticle matching line.id $lineId';
+    });
     return Provider.value(
-      value: articlesStore.lines
-          .firstWhere((line) => line.id.toString() == lineId, orElse: null),
-      child: ArticleCreateViewFakeFrame(
-        articlesStore.lines
-            .firstWhere((line) => line.id.toString() == lineId, orElse: null),
-      ),
+      value: article,
+      child: ArticleCreateViewFakeFrame(article),
     );
   }
 }

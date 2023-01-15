@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:models_weebi/utils.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article;
 import 'package:views_weebi/src/routes/articles/line_route.dart';
-import 'package:models_base/utils.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ArticleWGlimpse2Widget extends StatelessWidget {

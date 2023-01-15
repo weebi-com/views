@@ -127,8 +127,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   : FloatingActionButton(
                       heroTag: 'reactivate',
                       tooltip: 'Réactiver l\'article',
-                      child: const Icon(Icons.play_arrow, color: Colors.white),
                       backgroundColor: WeebiColors.orange,
+                      child: const Icon(Icons.play_arrow, color: Colors.white),
                       onPressed: () async {
                         final d = article is Article
                             ? await reactivateArticleW(articlesStore)
@@ -141,8 +141,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   ? FloatingActionButton(
                       heroTag: 'createBasketSameLine',
                       tooltip: 'Créer un sous-panier d\'articles',
-                      child: const IconAddArticleBasket(),
                       backgroundColor: WeebiColors.orange,
+                      child: const IconAddArticleBasket(),
                       onPressed: () {
                         articlesStore.clearAllArticleMinQtInSelected();
                         Navigator.of(context).pushNamed(
@@ -152,10 +152,10 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   : FloatingActionButton(
                       heroTag: 'createArticleSameLine',
                       tooltip: 'Créer un article dans la même ligne',
-                      child: const Icon(Icons.library_add, color: Colors.white),
                       backgroundColor: WeebiColors.orange,
                       onPressed: () => Navigator.of(context).pushNamed(
                           ArticleCreateRoute.generateRoute('${line.id}')),
+                      child: const Icon(Icons.library_add, color: Colors.white),
                     )),
       body: CustomScrollView(
         //scrollBehavior: ,

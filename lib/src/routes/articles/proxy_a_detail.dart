@@ -7,7 +7,6 @@ import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router/rc_router.dart';
 import 'package:views_weebi/src/articles/article/article_detail.dart';
-import 'package:views_weebi/views_line.dart';
 
 class ProxyADetailRoute extends RcRoute {
   static String routePath = '/products/:productId/:articleId/:lotId';
@@ -28,16 +27,26 @@ class ProxyADetailRoute extends RcRoute {
     final articleId = routeParams.pathParameters['articleId'];
     final lotId = routeParams.pathParameters['lotId'];
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final _line = articlesStore.lines
-        .firstWhere((p) => p.id?.toString() == lineId, orElse: null);
-    final ArticleBasket _article = _line.articles
-            .firstWhere((a) => a.id?.toString() == articleId, orElse: null)
-        as ArticleBasket;
+    final line = articlesStore.lines
+        .firstWhere((p) => p.id.toString() == lineId, orElse: () {
+      throw 'no lines match for $lineId';
+    });
+    final ArticleBasket article = line.articles
+        .firstWhere((a) => a.id.toString() == articleId, orElse: () {
+      throw 'no article match $lineId.$articleId';
+    }) as ArticleBasket;
+
+    final ProxyArticle proxy = article.proxies.firstWhere(
+        (p) =>
+            p.lineId.toString() == lineId &&
+            p.articleId.toString() == articleId &&
+            p.id.toString() == lotId, orElse: () {
+      throw 'no proxy match $lineId.$articleId.$lotId';
+    });
 
     return Provider.value(
-      value: _article.proxies
-          .firstWhere((l) => l.id?.toString() == lotId, orElse: null),
-      child: ArticleDetailWidget(_article),
+      value: proxy,
+      child: ArticleDetailWidget(article),
     );
   }
 }

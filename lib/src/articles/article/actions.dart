@@ -30,18 +30,18 @@ List<Widget> actionsArticleWidget<A extends ArticleAbstract>(
         tooltip: "Supprimer l'article",
         icon: const Icon(Icons.delete, color: WeebiColors.grey),
         onPressed: () async {
+          final articlesStore =
+              Provider.of<ArticlesStore>(context, listen: false);
           final isOkToDelete = await showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (c) => AskAreYouSure(
+            builder: (c) => const AskAreYouSure(
                 'Attention effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?'),
           );
 
           if (!isOkToDelete) {
             return;
           }
-          final articlesStore =
-              Provider.of<ArticlesStore>(context, listen: false);
           final p = articlesStore.lines
               .firstWhere((element) => element.id == article.productId);
           if (p.articles.length <= 1) {

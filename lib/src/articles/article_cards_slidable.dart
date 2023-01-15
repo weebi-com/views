@@ -48,8 +48,8 @@ class _SlidableCardsV2State extends State<SlidableCardsV2> {
       child: SizedBox(
         height: context.screenHeight * 0.83,
         child: PageView.builder(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             controller: pageController,
             itemCount: widget.line.articles.length,
             itemBuilder: (context, position) {

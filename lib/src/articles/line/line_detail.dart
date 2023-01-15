@@ -1,15 +1,9 @@
 // Flutter imports:
-import 'package:closing/closing_abstraction.dart';
-import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/mobx_stores/tickets.dart';
-import 'package:models_weebi/abstractions.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
-import 'package:mixins_weebi/stock.dart';
 
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, LineOfArticles;
@@ -18,8 +12,6 @@ import 'package:views_weebi/src/routes/articles/article_basket_create.dart';
 import 'package:views_weebi/src/routes/articles/article_create.dart';
 import 'package:views_weebi/src/routes/articles/line_articles.dart';
 import 'package:views_weebi/views_article.dart';
-import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:mixins_weebi/stores.dart' show TicketsStore;
 import 'package:views_weebi/styles.dart' show WeebiColors, WeebiTextStyles;
 import 'package:mixins_weebi/stock.dart';
 
@@ -159,7 +151,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                       const Icon(Icons.style),
                       const Text("Unité"),
                       SelectableText(
-                        "${line.stockUnit.stockUnitText}",
+                        line.stockUnit.stockUnitText,
                         style: WeebiTextStyles.blackAndBold,
                       ),
                     ),
@@ -171,7 +163,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                       const Icon(Icons.pause),
                       const Text("Articles désactivés le "),
                       SelectableText(
-                        "${line?.statusUpdateDate ?? ''}",
+                        "${line.statusUpdateDate}",
                         style: WeebiTextStyles.blackAndBold,
                       ),
                     ),

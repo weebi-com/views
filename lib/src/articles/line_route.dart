@@ -1,5 +1,8 @@
 // Flutter imports:
+import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/mobx_stores/articles.dart';
+import 'package:mixins_weebi/mobx_stores/tickets.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -11,7 +14,6 @@ import 'package:rc_router/rc_router.dart';
 import 'package:views_weebi/views.dart' show LineArticlesDetailWidget;
 
 // Project imports:
-import 'package:weebi/src/stores/articles.dart';
 
 class LineArticlesDetailRoute extends RcRoute {
   static String routePath = '/lines/:id/:articleId/';
@@ -28,13 +30,19 @@ class LineArticlesDetailRoute extends RcRoute {
     final lineId = routeParams.pathParameters['id'];
     final articleId = routeParams.pathParameters['articleId'];
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
+    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
+    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+    final line = articlesStore.lines
+        .firstWhere((product) => product.id.toString() == lineId);
+
+    // TODO check this is really helpful
+    // consider using a map before to filter
     return Provider.value(
-      value: articlesStore.lines.firstWhere(
-          (product) => product.id.toString() == lineId,
-          orElse: () => null),
+      value: line,
       child: LineArticlesDetailWidget(
-        articlesStore.lines.firstWhere((line) => line.id.toString() == lineId,
-            orElse: () => null),
+        line,
+        () => ticketsStore.tickets,
+        () => closingsStore.closingStockShops,
         initArticle: int.parse(articleId!),
       ),
     );

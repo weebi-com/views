@@ -2,6 +2,7 @@
 import 'package:closing/closing_abstraction.dart';
 import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:models_weebi/abstractions.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
@@ -12,23 +13,18 @@ import 'package:mixins_weebi/stock.dart';
 
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, EnvironmentWeebi, LineOfArticles, ShopWeebi;
+import 'package:views_weebi/views_article.dart';
 import 'package:weebi/src/providers/top_provider.dart';
-import 'package:weebi/src/routes/articles/article_create.dart';
-import 'package:weebi/src/routes/articles/line_article_update.dart';
-import 'package:weebi/src/routes/articles/line_articles.dart';
-import 'package:weebi/src/stores/articles.dart';
+import 'package:views_weebi/routes.dart';
 import 'package:weebi/src/stores/shop.dart';
-import 'package:weebi/src/stores/tickets.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/styles.dart' show WeebiTextStyles;
 import 'package:weebi/src/views/main_views/articles/article_basket/article_basket_create.dart';
 import 'package:weebi/src/views/main_views/articles/article_basket/article_basket_glimpse.dart';
 
-import 'package:weebi/src/views/main_views/articles/article_cards_slidable.dart';
 import 'package:weebi/src/widgets/dialogs/ask_are_you_sure_bis.dart';
-import 'package:weebi/src/widgets/dialogs/basic_dialog.dart';
 
-import 'package:weebi/src/widgets/field_value.dart';
+import 'package:views_weebi/widgets.dart';
 
 Gradient getLineGradient(LineOfArticles line) {
   if (line.status) {
@@ -51,14 +47,14 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   final int initArticle;
   LineArticlesDetailWidget(
-      LineOfArticles line,
-      MobxTicketsStoreCreator mobxTicketsStoreCreator,
-      MobxClosingStoreCreator mobxClosingStoreCreator,
-      {this.initArticle = 1})
-      : super(
+    LineOfArticles line,
+    TicketsInvoker ticketsInvoker,
+    ClosingStockShopsInvoker closingsInvoker, {
+    this.initArticle = 1,
+  }) : super(
           line,
-          mobxTicketsStoreCreator,
-          mobxClosingStoreCreator,
+          ticketsInvoker,
+          closingsInvoker,
         );
 
   @override
@@ -128,7 +124,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${numFormat?.format(lineLiveQt)}',
+                  child: Text('${numFormat.format(lineLiveQt)}',
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold)),
@@ -168,7 +164,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                 if (line.stockUnit != StockUnit.unit)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: FieldWidget(
+                    child: FieldValueWidget(
                       const Icon(Icons.style),
                       const Text("Unité"),
                       SelectableText(
@@ -180,11 +176,11 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                 if (line.status == false)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: FieldWidget(
+                    child: FieldValueWidget(
                       const Icon(Icons.pause),
                       const Text("Articles désactivés le "),
                       SelectableText(
-                        "${line?.statusUpdateDate ?? ''}",
+                        "${line.statusUpdateDate ?? ''}",
                         style: WeebiTextStyles.blackAndBold,
                       ),
                     ),

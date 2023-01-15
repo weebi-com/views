@@ -1,19 +1,18 @@
 // Flutter imports:
 import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/mobx_stores/tickets.dart';
 
 // Package imports:
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show ArticleWeebi;
+import 'package:models_weebi/weebi_models.dart' show Article, ArticleWeebi;
 import 'package:provider/provider.dart';
-import 'package:weebi/src/stores/tickets.dart';
-import 'package:weebi/src/views/main_views/articles/article_weebi/articleW_detail_section.dart';
 import 'package:mixins_weebi/stock.dart';
-import 'package:weebi/src/views/main_views/articles/article_weebi/article_glimpse.dart';
+import 'package:views_weebi/views_article.dart';
 
-class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleWeebi>
-    with ArticleStockNowMixin<ArticleWeebi> {
+class ArticleWFrameView extends ArticleStockStatelessAbstract<Article>
+    with ArticleStockNowMixin<Article> {
   final bool isGlimpse;
   const ArticleWFrameView(article, this.isGlimpse, {super.key})
       : super(article);

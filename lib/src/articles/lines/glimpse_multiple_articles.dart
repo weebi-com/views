@@ -9,26 +9,24 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleWeebi, LineOfArticles;
+    show Article, ArticleWeebi, LineOfArticles;
+import 'package:views_weebi/src/articles/line_route.dart';
 import 'package:views_weebi/src/articles/lines/tile_title_glimpse.dart';
 import 'package:mixins_weebi/stock.dart';
-import 'package:weebi/src/routes/articles/line_article_detail.dart';
-import 'package:weebi/src/stores/tickets.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
-
-import 'package:weebi/src/views/main_views/articles/article_weebi/frame.dart';
+import 'package:views_weebi/views_article.dart';
 
 class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   LineArticlesGlimpseWidget(
-      LineOfArticles line,
-      MobxTicketsStoreCreator mobxTicketsStoreCreator,
-      MobxClosingStoreCreator mobxClosingStoreCreator,
-      {Key? key})
-      : super(
+    LineOfArticles line,
+    TicketsInvoker ticketsInvoker,
+    ClosingStockShopsInvoker closingsInvoker, {
+    Key? key,
+  }) : super(
           line,
-          mobxTicketsStoreCreator,
-          mobxClosingStoreCreator,
+          ticketsInvoker,
+          closingsInvoker,
         );
 
   @override
@@ -79,7 +77,7 @@ class LineArticlesGlimpseWidgetSatefulState
               LineArticleTileTitle(widget.line, widget.lineLiveQt, iconColor!),
           children: <Widget>[
             for (final article in widget.line.articles)
-              ArticleWFrameView(article as ArticleWeebi, true)
+              ArticleWFrameView(article as Article, true)
           ],
         ),
       ),

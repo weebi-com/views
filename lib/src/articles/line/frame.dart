@@ -5,10 +5,7 @@ import 'package:closing/closing_abstraction.dart';
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_base/src/base/article_base.dart';
-import 'package:models_weebi/abstractions.dart';
 import 'package:models_weebi/weebi_models.dart';
-import 'package:views_weebi/src/articles/line/glimpse_multiple_articles.dart';
-import 'package:views_weebi/src/articles/line/glimpse_single_article.dart';
 
 import 'package:views_weebi/views_line.dart';
 

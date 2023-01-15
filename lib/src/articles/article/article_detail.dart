@@ -7,11 +7,10 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleBasket, Article, LineOfArticles, EnvironmentWeebi, ShopWeebi;
+    show ArticleBasket, Article, LineOfArticles;
 import 'package:views_weebi/icons.dart';
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/src/articles/article/actions.dart';
-import 'package:views_weebi/views_line.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
@@ -217,9 +216,9 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: FieldValueWidget(
                 const Icon(Icons.subject),
-                const Text("Nom de l\'article : "),
+                const Text("Nom de l'article : "),
                 SelectableText(
-                  "${article.fullName}",
+                  article.fullName,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -245,7 +244,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               child: ArticleDetailComplementarySection(article),
             ),
           ),
-          SliverToBoxAdapter(child: const SizedBox(height: 84)),
+          const SliverToBoxAdapter(child: SizedBox(height: 84)),
 
           // * consider displaying tickets where this was solved
           //Divider(height: 12),

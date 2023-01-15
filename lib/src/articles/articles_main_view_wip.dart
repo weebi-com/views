@@ -1,16 +1,18 @@
 // Flutter imports:
+import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
+import 'package:mixins_weebi/mobx_stores/tickets.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
-import 'package:views_weebi/src/articles/lines/frame.dart';
 
 import 'package:models_weebi/extensions.dart';
+import 'package:views_weebi/src/articles/line/frame.dart';
 // import 'package:weebi/src/routes/articles/line_article_create.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
@@ -93,6 +95,10 @@ class LinesArticlesViewState extends State<LinesArticlesView> {
           body: Observer(builder: (context) {
             final articlesStore =
                 Provider.of<ArticlesStore>(context, listen: false);
+            final closingsStore =
+                Provider.of<ClosingsStore>(context, listen: false);
+            final ticketsStore =
+                Provider.of<TicketsStore>(context, listen: false);
             final linesSkip = articlesStore.lines
                 .where((element) => element.title != '*') // consider removing
                 .where((element) => element.isPalpable ?? true)
@@ -112,7 +118,10 @@ class LinesArticlesViewState extends State<LinesArticlesView> {
                           LinesFrameW(
                               contextMain: context,
                               index: index,
-                              lines: linesListReordered),
+                              lines: linesListReordered,
+                              ticketsInvoker: () => ticketsStore.tickets,
+                              closingStockShopsInvoker: () =>
+                                  closingsStore.closingStockShops),
                     ),
                   )
                 else
@@ -125,7 +134,10 @@ class LinesArticlesViewState extends State<LinesArticlesView> {
                           LinesFrameW(
                               contextMain: context,
                               index: index,
-                              lines: linesSkip),
+                              lines: linesSkip,
+                              ticketsInvoker: () => ticketsStore.tickets,
+                              closingStockShopsInvoker: () =>
+                                  closingsStore.closingStockShops),
                     ),
                   ),
                 // below empty widget at bottom so that last product can also be selected

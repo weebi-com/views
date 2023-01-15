@@ -9,27 +9,30 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article, LineOfArticles;
-import 'package:views_weebi/src/articles/article/frame.dart';
-import 'package:views_weebi/src/routes/articles/line_route.dart';
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
-
-import 'package:views_weebi/styles.dart' show WeebiColors;
+import 'package:views_weebi/src/articles/line_route.dart';
 import 'package:mixins_weebi/stock.dart';
+import 'package:views_weebi/styles.dart' show WeebiColors;
+import 'package:views_weebi/views_article.dart';
 
 class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
-  LineArticlesGlimpseWidget(LineOfArticles line, TicketsInvoker ticketsInvoker,
-      ClosingStockShopsInvoker closingStockShopsInvoker,
-      {super.key})
-      : super(
+  LineArticlesGlimpseWidget(
+    LineOfArticles line,
+    TicketsInvoker ticketsInvoker,
+    ClosingStockShopsInvoker closingsInvoker, {
+    Key? key,
+  }) : super(
           line,
           ticketsInvoker,
-          closingStockShopsInvoker,
+          closingsInvoker,
         );
 
   @override
   Widget build(BuildContext context) {
-    return LineArticlesGlimpseWidgetSateful(line, lineStockNow);
+    final lineLiveQt = lineStockNow;
+
+    return LineArticlesGlimpseWidgetSateful(line, lineLiveQt);
   }
 }
 
@@ -60,9 +63,7 @@ class LineArticlesGlimpseWidgetSatefulState
       child: InkWell(
         onLongPress: () {
           Navigator.of(context).pushNamed(
-              LineOfArticlesDetailRoute.generateRoute(
-                  '${widget.line.id}', 'false',
-                  articleId: '1')); //TODO here get shopLocked
+              LineArticlesDetailRoute.generateRoute('${widget.line.id}'));
         },
         child: ExpansionTile(
           onExpansionChanged: (bool expanding) {

@@ -6,22 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:closing/closing_store.dart';
 import 'package:models_weebi/abstractions.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
+import 'package:views_weebi/routes.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
-import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:mixins_weebi/stock.dart';
+import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
+import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
+
+import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class LineSingleArticleGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   LineSingleArticleGlimpseWidget(
-      LineOfArticles line,
-      TicketsInvoker ticketsInvoker,
-      ClosingStockShopsInvoker closingStockShopsInvoker,
-      {super.key})
-      : super(line, ticketsInvoker, closingStockShopsInvoker);
+    LineOfArticles line,
+    TicketsInvoker ticketsInvoker,
+    ClosingStockShopsInvoker closingsInvoker, {
+    super.key,
+  }) : super(
+          line,
+          ticketsInvoker,
+          closingsInvoker,
+        );
 
   @override
   Widget build(BuildContext context) {

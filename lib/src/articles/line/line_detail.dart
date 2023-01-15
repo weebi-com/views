@@ -131,18 +131,6 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
           controller: controller,
           child: Column(
             children: [
-              // if (line.isBasket) ...[
-              //   if (line.isSingleArticle)
-              //     LineSingleABasketGlimpseWidget(line)
-              //   else
-              //     LineABasketGlimpseWidgetStateful(line)
-              // ] else ...[
-              //   if (line.isSingleArticle)
-              //     LineSingleArticleGlimpseWidget(line)
-              //   else
-              //     LineArticlesGlimpseWidget(line)
-              // ],
-
               if (!(line.isBasket ?? false)) ...[
                 if (line.stockUnit != StockUnit.unit)
                   Padding(

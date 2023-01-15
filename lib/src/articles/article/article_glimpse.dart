@@ -27,7 +27,7 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
         children: <Widget>[
           article.photo != null && article.photo!.isNotEmpty
               ? Hero(
-                  tag: article.photo!,
+                  tag: '${article.lineId}.${article.id}',
                   child: CircleAvatar(
                       foregroundImage:
                           AssetImage('assets/photos/${article.photo}')),

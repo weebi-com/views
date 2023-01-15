@@ -20,15 +20,18 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 // import 'package:weebi/src/views/main_views/articles/line/line_basket/line_basket_create.dart';
 // import 'package:weebi/src/views/main_views/articles/lines_frame.dart';
 
-class LinesArticlesView extends StatefulWidget {
+// * This is for web only now
+// articleBaskets are not included here yet
+// so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
+class LinesArticlesViewWIP extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const LinesArticlesView({super.key, required this.mainNavigator});
+  const LinesArticlesViewWIP({super.key, required this.mainNavigator});
 
   @override
-  LinesArticlesViewState createState() => LinesArticlesViewState();
+  LinesArticlesViewStateWIP createState() => LinesArticlesViewStateWIP();
 }
 
-class LinesArticlesViewState extends State<LinesArticlesView> {
+class LinesArticlesViewStateWIP extends State<LinesArticlesViewWIP> {
   final barcodeController = TextEditingController();
   final scrollControllerVertical = ScrollController();
   late List<LineOfArticles> linesListReordered = [];

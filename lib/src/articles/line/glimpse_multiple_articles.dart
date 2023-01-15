@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article, LineOfArticles;
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
-import 'package:views_weebi/src/articles/line_route.dart';
+import 'package:views_weebi/src/routes/line_route.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
@@ -21,7 +21,7 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     LineOfArticles line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingsInvoker, {
-    Key? key,
+    super.key,
   }) : super(
           line,
           ticketsInvoker,
@@ -30,9 +30,7 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
 
   @override
   Widget build(BuildContext context) {
-    final lineLiveQt = lineStockNow;
-
-    return LineArticlesGlimpseWidgetSateful(line, lineLiveQt);
+    return LineArticlesGlimpseWidgetSateful(line, lineStockNow);
   }
 }
 

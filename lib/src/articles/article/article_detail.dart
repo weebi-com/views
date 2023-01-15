@@ -185,7 +185,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                       : Image.asset('assets/icons/product_detail.png',
                           color: WeebiColors.greyLight)
                   : Hero(
-                      tag: article.photo!,
+                      tag: '${article.lineId}.${article.id}',
                       child: Image.asset('assets/photos/${article.photo}',
                           fit: BoxFit.scaleDown,
                           errorBuilder: (_, o, stack) => Image.asset(

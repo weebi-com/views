@@ -8,9 +8,7 @@ import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, LineOfArticles;
 import 'package:views_weebi/src/articles/line/actions.dart';
-import 'package:views_weebi/src/routes/articles/article_basket_create.dart';
-import 'package:views_weebi/src/routes/articles/article_create.dart';
-import 'package:views_weebi/src/routes/articles/line_articles.dart';
+import 'package:views_weebi/src/routes/articles/line_articles_unfinished.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, WeebiTextStyles;
 import 'package:mixins_weebi/stock.dart';
@@ -38,10 +36,14 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   final int initArticle;
   final bool isShopLocked;
+  final List<IconButton> iconButtonsInAppBar;
+  final Widget fabButton;
   LineArticlesDetailWidget(
     LineOfArticles line,
     TicketsInvoker ticketsInvoker,
-    ClosingStockShopsInvoker closingStockShopsInvoker, {
+    ClosingStockShopsInvoker closingStockShopsInvoker,
+    this.iconButtonsInAppBar,
+    this.fabButton, {
     this.isShopLocked = false,
     this.initArticle = 1,
     super.key,
@@ -57,33 +59,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 31),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: isShopLocked
-                  ? const SizedBox()
-                  : (line.isBasket ?? false)
-                      ? FloatingActionButton(
-                          heroTag: 'créer un panier',
-                          tooltip: 'créer un panier d\'article',
-                          backgroundColor: Colors.amber[700],
-                          onPressed: () => Navigator.of(context).pushNamed(
-                              ArticleBasketCreateRoute.generateRoute(
-                                  '${line.id}')),
-                          child: const Icon(Icons.library_add,
-                              color: Colors.white),
-                        )
-                      : FloatingActionButton(
-                          heroTag: 'créer un article',
-                          tooltip: 'créer un article',
-                          backgroundColor: Colors.orange[700],
-                          onPressed: () => Navigator.of(context).pushNamed(
-                              ArticleCreateRoute.generateRoute('${line.id}')),
-                          child: const Icon(
-                            Icons.library_add,
-                            color: Colors.white,
-                          ),
-                        ),
-            ),
+            child: Align(alignment: Alignment.bottomRight, child: fabButton),
           )
         ],
       ),
@@ -92,8 +68,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
-          onPressed: () =>
-              Navigator.of(context).pushNamed(ArticleLinesRoute.routePath),
+          onPressed: () => Navigator.of(context)
+              .pushNamed(ArticleLinesRouteUnfinished.routePath),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         title: Row(
@@ -117,7 +93,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
             const Icon(Icons.warehouse, color: Colors.black),
           ],
         ),
-        actions: actionsLineWidget(context, isShopLocked, line),
+        actions: actionsLineWidgetUnfinished(
+            context, isShopLocked, line, iconButtonsInAppBar),
       ),
       body: Container(
         decoration: const BoxDecoration(

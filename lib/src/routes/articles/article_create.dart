@@ -9,27 +9,28 @@ import 'package:rc_router/rc_router.dart';
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 
-class ArticleCreateRoute extends RcRoute {
-  static String routePath = '/lines/:id/article_create';
+class ArticleCreateRouteUnfinished extends RcRoute {
+  static String routePath = '/lines/:lineId/article_create';
 
-  static String generateRoute(String id) =>
-      RcRoute.generateRoute(routePath, pathParams: {'id': id});
+  static String generateRoute(String lineId) =>
+      RcRoute.generateRoute(routePath, pathParams: {'lineId': lineId});
 
-  ArticleCreateRoute() : super(path: ArticleCreateRoute.routePath);
+  ArticleCreateRouteUnfinished()
+      : super(path: ArticleCreateRouteUnfinished.routePath);
 
   @override
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
-    final lineId = routeParams.pathParameters['id'];
+    final lineId = routeParams.pathParameters['lineId'];
     // print('lineId $lineId');
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final article = articlesStore.lines
+    final line = articlesStore.lines
         .firstWhere((line) => line.id.toString() == lineId, orElse: () {
       throw 'no LineArticle matching line.id $lineId';
     });
     return Provider.value(
-      value: article,
-      child: ArticleCreateViewFakeFrame(article),
+      value: line,
+      child: ArticleCreateViewFakeFrame(line),
     );
   }
 }

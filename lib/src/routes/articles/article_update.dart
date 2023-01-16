@@ -7,14 +7,15 @@ import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router/rc_router.dart';
 
-class ArticleUpdateRoute extends RcRoute {
+class ArticleUpdateRouteUnfinished extends RcRoute {
   static String routePath = '/article_update/:lineId/:articleId';
 
   static String generateRoute(String lineId, String articleId) =>
       RcRoute.generateRoute(routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 
-  ArticleUpdateRoute() : super(path: ArticleUpdateRoute.routePath);
+  ArticleUpdateRouteUnfinished()
+      : super(path: ArticleUpdateRouteUnfinished.routePath);
 
   @override
   Widget build(BuildContext context) {

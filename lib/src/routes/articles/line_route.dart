@@ -21,15 +21,11 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 // import 'package:mixins_weebi/stock.dart';
 
 class LineOfArticlesDetailRoute extends RcRoute {
-  static String routePath = '/lines/:lineId/';
+  static String routePath = '/lines/:lineId';
 
   static String generateRoute(String lineId, String isShopLocked,
           {required String articleId}) =>
-      RcRoute.generateRoute(routePath, pathParams: {
-        'lineId': lineId,
-        'articleId': articleId,
-        'isShopLocked': isShopLocked
-      });
+      RcRoute.generateRoute(routePath, pathParams: {'lineId': lineId});
   static String generateUpdateRoute(String lineId, String isShopLocked,
           {required String articleId}) =>
       RcRoute.generateRoute(LineOfArticleUpdateRouteUnfinished.routePath,

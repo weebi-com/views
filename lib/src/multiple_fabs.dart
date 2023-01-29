@@ -18,7 +18,7 @@ class MultipleFABs extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(right: 31),
+          padding: const EdgeInsets.only(right: 31),
           child: Align(
             alignment: Alignment.bottomRight,
             child: FABRight,

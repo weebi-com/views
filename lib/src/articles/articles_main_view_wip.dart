@@ -221,16 +221,16 @@ class LinesArticlesViewStateWIP extends State<LinesArticlesViewWIP> {
   }
 
   // fetch from original lines_of_articles.dart in mainView
-  void _orderByTitle(bool _isAscending) {
+  void _orderByTitle(bool isAscending) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     List<LineOfArticles> ordering = articlesStore.lines;
-    if (_isAscending == true) {
+    if (isAscending == true) {
       ordering.sort((a, b) => a.title.compareTo(b.title));
     } else {
       ordering.sort((a, b) => b.title.compareTo(a.title));
     }
     setState(() {
-      isTitleAscending = !_isAscending;
+      isTitleAscending = !isAscending;
       linesListReordered = ordering;
       isListReorderedByLineTitle = true;
       isListReorderedById = false;
@@ -238,16 +238,16 @@ class LinesArticlesViewStateWIP extends State<LinesArticlesViewWIP> {
     });
   }
 
-  void _orderById(bool _isAscending) {
+  void _orderById(bool isAscending) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     List<LineOfArticles> ordering = articlesStore.lines;
-    if (_isAscending == true) {
+    if (isAscending == true) {
       ordering.sort((a, b) => a.id.compareTo(b.id));
     } else {
       ordering.sort((a, b) => b.id.compareTo(a.id));
     }
     setState(() {
-      isIdAscending = _isAscending;
+      isIdAscending = isAscending;
       linesListReordered = ordering;
       isListReorderedById = true;
       isListReorderedByLineTitle = false;

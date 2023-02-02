@@ -25,11 +25,12 @@ class ArticleBasketCreateRouteUnfinished extends RcRoute {
     // print('lineId $lineId');
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return Provider.value(
-      value: articlesStore.lines
-          .firstWhere((line) => line.id.toString() == lineId, orElse: () => null),
+      value: articlesStore.lines.firstWhere(
+          (line) => line.id.toString() == lineId,
+          orElse: () => throw ""),
       child: ArticleBasketCreateViewFakeFrame(
-        articlesStore.lines
-            .firstWhere((line) => line.id.toString() == lineId, orElse: () => null),
+        articlesStore.lines.firstWhere((line) => line.id.toString() == lineId,
+            orElse: () => throw ""),
       ),
     );
   }

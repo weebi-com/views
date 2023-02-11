@@ -3,7 +3,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
-import 'package:models_base/src/base/article_base.dart';
+import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
 
 import 'package:views_weebi/views_line.dart';

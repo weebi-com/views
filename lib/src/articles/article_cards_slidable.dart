@@ -15,10 +15,10 @@ class SlidableCardsV2<A extends ArticleAbstract> extends StatefulWidget {
 
   const SlidableCardsV2(this.line, {this.articleId = 1, super.key});
   @override
-  _SlidableCardsV2State createState() => _SlidableCardsV2State();
+  SlidableCardsV2State createState() => SlidableCardsV2State();
 }
 
-class _SlidableCardsV2State extends State<SlidableCardsV2> {
+class SlidableCardsV2State extends State<SlidableCardsV2> {
   late PageController pageController;
   var currentPageValue = 0.0;
 

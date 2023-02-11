@@ -15,9 +15,8 @@ import 'article_glimpse.dart';
 
 class ArticleWFrameView extends ArticleStockStatelessAbstract<Article>
     with ArticleStockNowMixin<Article> {
-  final Article article;
   final bool isGlimpse;
-  const ArticleWFrameView(this.article, this.isGlimpse, {super.key})
+  const ArticleWFrameView(Article article, this.isGlimpse, {super.key})
       : super(article);
 
   @override

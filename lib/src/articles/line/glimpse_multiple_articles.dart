@@ -21,7 +21,7 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     LineOfArticles line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingsInvoker, {
-    Key? key,
+    super.key,
   }) : super(
           line,
           ticketsInvoker,
@@ -30,16 +30,14 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
 
   @override
   Widget build(BuildContext context) {
-    final lineLiveQt = lineStockNow;
-
-    return LineArticlesGlimpseWidgetSateful(line, lineLiveQt);
+    return LineArticlesGlimpseWidgetSateful(line, lineStockNow);
   }
 }
 
 class LineArticlesGlimpseWidgetSateful extends StatefulWidget {
   final LineOfArticles line;
-  final double lineLiveQt;
-  const LineArticlesGlimpseWidgetSateful(this.line, this.lineLiveQt,
+  final double lineStockNow;
+  const LineArticlesGlimpseWidgetSateful(this.line, this.lineStockNow,
       {super.key});
 
   @override
@@ -72,8 +70,8 @@ class LineArticlesGlimpseWidgetSatefulState
                   expanding ? WeebiColors.buttonColor : WeebiColors.grey,
             );
           },
-          title:
-              LineArticleTileTitle(widget.line, widget.lineLiveQt, iconColor!),
+          title: LineArticleTileTitle(
+              widget.line, widget.lineStockNow, iconColor!),
           children: <Widget>[
             for (final article in widget.line.articles)
               ArticleWFrameView(article as Article, true)

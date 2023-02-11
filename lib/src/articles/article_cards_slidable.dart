@@ -1,6 +1,7 @@
 //credits to Flutter Animation Gallery
 
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
 
@@ -12,8 +13,12 @@ import 'package:views_weebi/src/articles/article_card_slide.dart';
 class SlidableCardsV2<A extends ArticleAbstract> extends StatefulWidget {
   final LineOfArticles line;
   final int articleId;
+  final TicketsInvoker ticketsInvoker;
+  final ClosingStockShopsInvoker closingStockShopsInvoker;
 
-  const SlidableCardsV2(this.line, {this.articleId = 1, super.key});
+  const SlidableCardsV2(
+      this.line, this.ticketsInvoker, this.closingStockShopsInvoker,
+      {this.articleId = 1, super.key});
   @override
   SlidableCardsV2State createState() => SlidableCardsV2State();
 }
@@ -59,20 +64,29 @@ class SlidableCardsV2State extends State<SlidableCardsV2> {
                   child: SizedBox(
                     width: 200,
                     child: ArticleACardSlide(
-                        widget.line, widget.line.articles[position]),
+                        widget.line,
+                        widget.line.articles[position],
+                        widget.ticketsInvoker,
+                        widget.closingStockShopsInvoker),
                   ),
                 );
               } else if (position < currentPageValue) {
                 return Transform.scale(
                   scale: max(1 - (currentPageValue - position), 0.5),
                   child: ArticleACardSlide(
-                      widget.line, widget.line.articles[position]),
+                      widget.line,
+                      widget.line.articles[position],
+                      widget.ticketsInvoker,
+                      widget.closingStockShopsInvoker),
                 );
               } else {
                 return Transform.scale(
                   scale: max(1 - (position - currentPageValue), 0.5),
                   child: ArticleACardSlide(
-                      widget.line, widget.line.articles[position]),
+                      widget.line,
+                      widget.line.articles[position],
+                      widget.ticketsInvoker,
+                      widget.closingStockShopsInvoker),
                 );
               }
             }),

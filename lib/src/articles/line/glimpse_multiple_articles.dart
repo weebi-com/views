@@ -16,24 +16,28 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
   LineArticlesGlimpseWidget(
     LineOfArticles line,
     TicketsInvoker ticketsInvoker,
-    ClosingStockShopsInvoker closingsInvoker, {
+    ClosingStockShopsInvoker closingStockShopsInvoker, {
     super.key,
   }) : super(
           line,
           ticketsInvoker,
-          closingsInvoker,
+          closingStockShopsInvoker,
         );
 
   @override
   Widget build(BuildContext context) {
-    return LineArticlesGlimpseWidgetSateful(line, lineStockNow);
+    return LineArticlesGlimpseWidgetSateful(
+        line, lineStockNow, ticketsInvoker, closingStockShopsInvoker);
   }
 }
 
 class LineArticlesGlimpseWidgetSateful extends StatefulWidget {
   final LineOfArticles line;
   final double lineStockNow;
+  final TicketsInvoker ticketsInvoker;
+  final ClosingStockShopsInvoker closingStockShopsInvoker;
   const LineArticlesGlimpseWidgetSateful(this.line, this.lineStockNow,
+      this.ticketsInvoker, this.closingStockShopsInvoker,
       {super.key});
 
   @override
@@ -72,7 +76,12 @@ class LineArticlesGlimpseWidgetSatefulState
               widget.line, widget.lineStockNow, iconColor!),
           children: <Widget>[
             for (final article in widget.line.articles)
-              ArticleWFrameView(article as Article, true)
+              ArticleWFrameView(
+                article as Article,
+                true,
+                widget.ticketsInvoker,
+                widget.closingStockShopsInvoker,
+              )
           ],
         ),
       ),

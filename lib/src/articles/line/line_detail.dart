@@ -135,9 +135,10 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                   ),
                 const SizedBox(height: 12),
                 SlidableCardsV2(
-                  line,
-                  articleId: initArticle,
-                )
+                    line,
+                    articleId: initArticle,
+                    ticketsInvoker,
+                    closingStockShopsInvoker)
               ] else ...[
                 for (final article in line.articles)
                   ArticleBasketGlimpseWidgetFakeFrame(

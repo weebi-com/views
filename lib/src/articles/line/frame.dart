@@ -34,7 +34,7 @@ class LinesFrameW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (lines[index].isSingleArticle) {
-      return LineSingleArticleGlimpseWidget(
+      return ArticleSingleGlimpseWidget(
           lines[index], ticketsInvoker, closingStockShopsInvoker);
     } else {
       return LineArticlesGlimpseWidget(

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:models_weebi/weebi_models.dart';
@@ -47,6 +48,10 @@ class ProxyADetailRoute extends RcRoute {
     final articleId = routeParams.pathParameters['articleId'];
     final lotId = routeParams.pathParameters['lotId'];
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
+
+    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
+    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+
     final line = articlesStore.lines
         .firstWhere((p) => p.id.toString() == lineId, orElse: () {
       throw 'no lines match for $lineId';
@@ -131,7 +136,11 @@ class ProxyADetailRoute extends RcRoute {
     return Provider.value(
       value: proxy,
       child: ArticleDetailWidget(
-          article, iconButons, fabButton), // TODO add isShopLocked
+          article,
+          iconButons,
+          fabButton,
+          () => ticketsStore.tickets,
+          () => closingsStore.closingStockShops), // TODO add isShopLocked
     );
   }
 }

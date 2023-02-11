@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_weebi/base.dart';
 
 // Package imports:
@@ -22,9 +23,11 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
   final bool isShopLocked;
   final List<IconButton> iconButtonsInAppBar;
+  final TicketsInvoker ticketsInvoker;
+  final ClosingStockShopsInvoker closingStockShopsInvoker;
   final FloatingActionButton fabButton;
-  const ArticleDetailWidget(
-      this.article, this.iconButtonsInAppBar, this.fabButton,
+  const ArticleDetailWidget(this.article, this.iconButtonsInAppBar,
+      this.fabButton, this.ticketsInvoker, this.closingStockShopsInvoker,
       {this.isShopLocked = false, super.key});
 
   Future<Article> deactivateArticleW(ArticlesStore articlesStore) async {
@@ -163,7 +166,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             SliverToBoxAdapter(
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: ArticleWFrameView(article as Article, false),
+              child: ArticleWFrameView(article as Article, false,
+                  ticketsInvoker, closingStockShopsInvoker),
             )),
           if (article is ArticleBasket)
             SliverToBoxAdapter(

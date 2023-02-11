@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
 
@@ -49,6 +50,10 @@ class ArticleDetailRoute extends RcRoute {
         (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
       throw 'no article match $lineId.$articleId';
     });
+
+    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
+    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+
     final fabButton = (line.isBasket ?? false)
         ? FloatingActionButton(
             heroTag: 'createBasketSameLine',
@@ -115,7 +120,11 @@ class ArticleDetailRoute extends RcRoute {
     return Provider.value(
       value: article,
       child: ArticleDetailWidget(
-          article, iconButons, fabButton), // todo add isShopLocked here
+          article,
+          iconButons,
+          fabButton,
+          () => ticketsStore.tickets,
+          () => closingsStore.closingStockShops), // todo add isShopLocked here
     );
   }
 }

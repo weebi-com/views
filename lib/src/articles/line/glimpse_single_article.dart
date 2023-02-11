@@ -11,9 +11,9 @@ import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
-class LineSingleArticleGlimpseWidget extends LineArticleStockAbstract
+class ArticleSingleGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
-  LineSingleArticleGlimpseWidget(
+  ArticleSingleGlimpseWidget(
     LineOfArticles line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingsInvoker, {
@@ -26,8 +26,6 @@ class LineSingleArticleGlimpseWidget extends LineArticleStockAbstract
 
   @override
   Widget build(BuildContext context) {
-    final lineLiveQt = lineStockNow;
-
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
@@ -39,7 +37,7 @@ class LineSingleArticleGlimpseWidget extends LineArticleStockAbstract
       },
       child: ListTile(
           trailing: const Icon(Icons.ac_unit, color: Colors.transparent),
-          title: LineArticleTileTitle(line, lineLiveQt, WeebiColors.grey,
+          title: LineArticleTileTitle(line, lineStockNow, WeebiColors.grey,
               key: Key('#${line.id}'))),
     );
   }

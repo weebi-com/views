@@ -1,11 +1,7 @@
 // Flutter imports:
-import 'package:closing/closing_abstraction.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:closing/closing_store.dart';
-import 'package:models_weebi/abstractions.dart';
-import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 
 // Project imports:

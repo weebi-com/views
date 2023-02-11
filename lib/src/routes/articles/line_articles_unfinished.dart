@@ -2,13 +2,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:views_weebi/src/routes/route_base.dart';
 
-class ArticleLinesRoute extends WeebiRouteBase {
+class ArticleLinesRouteUnfinished extends WeebiRouteBase {
   static String routePath = '/lines';
 
-  ArticleLinesRoute(GlobalKey<NavigatorState> mainNavigator)
+  ArticleLinesRouteUnfinished(GlobalKey<NavigatorState> mainNavigator)
       : super(
             child: LinesArticlesViewFakeFrame(mainNavigator),
-            routePath: ArticleLinesRoute.routePath);
+            routePath: ArticleLinesRouteUnfinished.routePath);
 }
 
 class LinesArticlesViewFakeFrame extends StatelessWidget {

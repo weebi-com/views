@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, Article, LineOfArticles;
-import 'package:views_weebi/icons.dart';
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/src/articles/article/actions.dart';
 import 'package:views_weebi/routes.dart';
@@ -18,61 +17,14 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 
 import 'package:views_weebi/widgets.dart';
 
-// TODO use this for actionsWidget
-// Iterable<Widget> actionsWidget(BuildContext context, ShopWeebi thisShop) {
-//   return <Widget>[
-//     if (!isShopLocked)
-//       IconButton(
-//         tooltip: "Editer l'article",
-//         icon: const Icon(Icons.edit, color: WeebiColors.grey),
-//         onPressed: () async {
-//           if (isShopLocked == true) {
-//             return showDialogWeebi('Permission requise', context);
-//           } else {
-//             return Navigator.of(context).pushNamed(
-//                 ArticleUpdateRoute.generateRoute(
-//                     '${article.productId}', '${article.id}'));
-//           }
-//         },
-//       ),
-//     if (context.read<TopProvider>().environment != EnvironmentWeebi.ldb ||
-//         !isShopLocked)
-//       IconButton(
-//         tooltip: "Supprimer l'article",
-//         icon: const Icon(Icons.delete, color: WeebiColors.grey),
-//         onPressed: () async {
-//           final isOkToDelete = await showDialog(
-//             context: context,
-//             barrierDismissible: false,
-//             builder: (c) => AskAreYouSure(
-//                 'Attention effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?'),
-//           );
-
-//           if (!isOkToDelete) {
-//             return;
-//           }
-//           final articlesStore =
-//               Provider.of<ArticlesStore>(context, listen: false);
-//           final p = articlesStore.lines
-//               .firstWhere((element) => element.id == article.productId);
-//           if (p.articles.length <= 1) {
-//             await articlesStore.deleteForeverLineArticle(p);
-//             Navigator.of(context).popAndPushNamed(ArticleLinesRoute.routePath);
-//           } else {
-//             await articlesStore.deleteForeverArticle(article);
-//             Navigator.of(context).popAndPushNamed(
-//                 LineArticlesDetailRoute.generateRoute('${p.id}'));
-//           }
-//         },
-//       )
-//   ];
-// }
-
 // same widget for article and article basket
 class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
   final bool isShopLocked;
-  const ArticleDetailWidget(this.article,
+  final List<IconButton> iconButtonsInAppBar;
+  final FloatingActionButton fabButton;
+  const ArticleDetailWidget(
+      this.article, this.iconButtonsInAppBar, this.fabButton,
       {this.isShopLocked = false, super.key});
 
   Future<Article> deactivateArticleW(ArticlesStore articlesStore) async {
@@ -127,8 +79,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   : FloatingActionButton(
                       heroTag: 'reactivate',
                       tooltip: 'Réactiver l\'article',
-                      child: const Icon(Icons.play_arrow, color: Colors.white),
                       backgroundColor: WeebiColors.orange,
+                      child: const Icon(Icons.play_arrow, color: Colors.white),
                       onPressed: () async {
                         final d = article is Article
                             ? await reactivateArticleW(articlesStore)
@@ -137,26 +89,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                             ArticleDetailRoute.generateRoute(
                                 '${d.lineId}', '${d.id}'));
                       }),
-              (line.isBasket ?? false)
-                  ? FloatingActionButton(
-                      heroTag: 'createBasketSameLine',
-                      tooltip: 'Créer un sous-panier d\'articles',
-                      child: const IconAddArticleBasket(),
-                      backgroundColor: WeebiColors.orange,
-                      onPressed: () {
-                        articlesStore.clearAllArticleMinQtInSelected();
-                        Navigator.of(context).pushNamed(
-                            ArticleBasketCreateRoute.generateRoute(
-                                '${line.id}'));
-                      })
-                  : FloatingActionButton(
-                      heroTag: 'createArticleSameLine',
-                      tooltip: 'Créer un article dans la même ligne',
-                      child: const Icon(Icons.library_add, color: Colors.white),
-                      backgroundColor: WeebiColors.orange,
-                      onPressed: () => Navigator.of(context).pushNamed(
-                          ArticleCreateRoute.generateRoute('${line.id}')),
-                    )),
+              fabButton),
       body: CustomScrollView(
         //scrollBehavior: ,
         controller: controller,
@@ -185,7 +118,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                       : Image.asset('assets/icons/product_detail.png',
                           color: WeebiColors.greyLight)
                   : Hero(
-                      tag: article.photo!,
+                      tag: '${article.lineId}.${article.id}',
                       child: Image.asset('assets/photos/${article.photo}',
                           fit: BoxFit.scaleDown,
                           errorBuilder: (_, o, stack) => Image.asset(
@@ -203,12 +136,14 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
                 onPressed: () {
+                  // * if article has just been created it would be nice to go back
                   Navigator.of(context).pop();
                 },
                 tooltip:
                     MaterialLocalizations.of(context).openAppDrawerTooltip),
 
-            actions: actionsArticleWidget(context, isShopLocked, article),
+            actions: actionsArticleWidgetUnfinished(
+                context, isShopLocked, article, iconButtonsInAppBar),
           ),
 
           SliverToBoxAdapter(

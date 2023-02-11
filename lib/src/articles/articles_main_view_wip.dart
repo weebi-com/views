@@ -20,15 +20,18 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 // import 'package:weebi/src/views/main_views/articles/line/line_basket/line_basket_create.dart';
 // import 'package:weebi/src/views/main_views/articles/lines_frame.dart';
 
-class LinesArticlesView extends StatefulWidget {
+// * This is for web only now
+// articleBaskets are not included here yet
+// so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
+class LinesArticlesViewWIP extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const LinesArticlesView({super.key, required this.mainNavigator});
+  const LinesArticlesViewWIP({super.key, required this.mainNavigator});
 
   @override
-  LinesArticlesViewState createState() => LinesArticlesViewState();
+  LinesArticlesViewStateWIP createState() => LinesArticlesViewStateWIP();
 }
 
-class LinesArticlesViewState extends State<LinesArticlesView> {
+class LinesArticlesViewStateWIP extends State<LinesArticlesViewWIP> {
   final barcodeController = TextEditingController();
   final scrollControllerVertical = ScrollController();
   late List<LineOfArticles> linesListReordered = [];
@@ -218,16 +221,16 @@ class LinesArticlesViewState extends State<LinesArticlesView> {
   }
 
   // fetch from original lines_of_articles.dart in mainView
-  void _orderByTitle(bool _isAscending) {
+  void _orderByTitle(bool isAscending) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     List<LineOfArticles> ordering = articlesStore.lines;
-    if (_isAscending == true) {
+    if (isAscending == true) {
       ordering.sort((a, b) => a.title.compareTo(b.title));
     } else {
       ordering.sort((a, b) => b.title.compareTo(a.title));
     }
     setState(() {
-      isTitleAscending = !_isAscending;
+      isTitleAscending = !isAscending;
       linesListReordered = ordering;
       isListReorderedByLineTitle = true;
       isListReorderedById = false;
@@ -235,16 +238,16 @@ class LinesArticlesViewState extends State<LinesArticlesView> {
     });
   }
 
-  void _orderById(bool _isAscending) {
+  void _orderById(bool isAscending) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     List<LineOfArticles> ordering = articlesStore.lines;
-    if (_isAscending == true) {
+    if (isAscending == true) {
       ordering.sort((a, b) => a.id.compareTo(b.id));
     } else {
       ordering.sort((a, b) => b.id.compareTo(a.id));
     }
     setState(() {
-      isIdAscending = _isAscending;
+      isIdAscending = isAscending;
       linesListReordered = ordering;
       isListReorderedById = true;
       isListReorderedByLineTitle = false;

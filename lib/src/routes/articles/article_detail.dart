@@ -1,7 +1,9 @@
 // Flutter imports:
-import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
+import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -50,9 +52,9 @@ class ArticleDetailRoute extends RcRoute {
         (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
       throw 'no article match $lineId.$articleId';
     });
-
+//? consider calling TicketsInvoker & ClosingStockShopsInvoker
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
-    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+    final closingStore = Provider.of<ClosingsStore>(context, listen: false);
 
     final fabButton = (line.isBasket ?? false)
         ? FloatingActionButton(
@@ -124,7 +126,7 @@ class ArticleDetailRoute extends RcRoute {
           iconButons,
           fabButton,
           () => ticketsStore.tickets,
-          () => closingsStore.closingStockShops), // todo add isShopLocked here
+          () => closingStore.closingStockShops), // todo add isShopLocked here
     );
   }
 }

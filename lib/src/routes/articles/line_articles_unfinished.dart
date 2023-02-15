@@ -19,6 +19,7 @@ class LinesArticlesViewFakeFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 //TODO implement LinesArticlesView(mainNavigator: mainNavigator)
+// TODO use Provider.value to have something dynamic
     return Container();
   }
 }

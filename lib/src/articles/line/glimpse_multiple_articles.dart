@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article, LineOfArticles;
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
-import 'package:views_weebi/src/routes/articles/line_route.dart';
+import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
@@ -60,10 +60,10 @@ class LineArticlesGlimpseWidgetSatefulState
       message: 'Appui long pour voir tous les articles de la ligne',
       child: InkWell(
         onLongPress: () {
-          Navigator.of(context).pushNamed(
-              LineOfArticlesDetailRoute.generateRoute('${widget.line.id}',
-                  'false', // TODO get isShopLocked for real
-                  articleId: '1'));
+          Navigator.of(context).pushNamed(LineOfArticlesDetailRoute.generateRoute(
+              '${widget.line.id}', 'false', // TODO get isShopLocked for real
+              articleId:
+                  '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
         },
         child: ExpansionTile(
           onExpansionChanged: (bool expanding) {

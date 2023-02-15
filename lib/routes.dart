@@ -1,6 +1,6 @@
 library routes;
 
-export 'src/routes/articles/line_route.dart';
+export 'src/routes/articles/line_detail.dart';
 export 'src/routes/articles/line_article_create_unfinished.dart';
 export 'src/routes/articles/line_article_update_unfinished.dart';
 export 'src/routes/articles/line_articles_unfinished.dart';

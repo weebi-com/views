@@ -1,7 +1,7 @@
 // Flutter imports:
-import 'package:closing/closing_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:mixins_weebi/mobx_stores/tickets.dart';
 

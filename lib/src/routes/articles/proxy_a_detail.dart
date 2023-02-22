@@ -121,7 +121,7 @@ class ProxyADetailRoute extends RcRoute {
           if (p.articles.length <= 1) {
             await articlesStore.deleteForeverLineArticle(p);
             Navigator.of(context)
-                .popAndPushNamed(ArticleLinesRouteUnfinished.routePath);
+                .popAndPushNamed(ArticleLinesFrameRoute.routePath);
           } else {
             await articlesStore.deleteForeverArticle(article);
             Navigator.of(context).popAndPushNamed(

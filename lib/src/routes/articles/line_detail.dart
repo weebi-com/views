@@ -113,8 +113,7 @@ class LineOfArticlesDetailRoute extends RcRoute {
                 Provider.of<ArticlesStore>(context, listen: false);
             final p = await articlesStore.deleteForeverLineArticle(line);
 
-            Navigator.of(context)
-                .pushNamed(ArticleLinesRouteUnfinished.routePath);
+            Navigator.of(context).pushNamed(ArticleLinesFrameRoute.routePath);
           })
     ];
     return Provider.value(

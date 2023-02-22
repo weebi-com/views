@@ -8,7 +8,7 @@ import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, LineOfArticles;
 import 'package:views_weebi/src/articles/line/actions.dart';
-import 'package:views_weebi/src/routes/articles/line_articles_unfinished.dart';
+import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, WeebiTextStyles;
 import 'package:mixins_weebi/stock.dart';
@@ -68,8 +68,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
-          onPressed: () => Navigator.of(context)
-              .pushNamed(ArticleLinesRouteUnfinished.routePath),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(ArticleLinesFrameRoute.routePath),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         title: Row(

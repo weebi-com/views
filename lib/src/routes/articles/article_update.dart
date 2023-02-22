@@ -20,8 +20,8 @@ class ArticleUpdateRouteUnfinished extends RcRoute {
   @override
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
-    final lineId = routeParams.pathParameters['lineId'];
-    final articleId = routeParams.pathParameters['articleId'];
+    final lineId = routeParams.pathParameters['lineId'] ?? '';
+    final articleId = routeParams.pathParameters['articleId'] ?? '';
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final line = articlesStore.lines
         .firstWhere((p) => p.id.toString() == lineId, orElse: () {
@@ -51,6 +51,7 @@ class ArticleUpdateViewFakeFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO implement ArticleWUpdateView(article:article) here
+    print('implement ArticleWUpdateView(article:article) here');
     return Container();
   }
 }
@@ -63,6 +64,7 @@ class ArticleBasketUpdateViewFakeFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO implement ArticleBasketUpdateView() here
+    print('implement ArticleBasketUpdateView() here');
     return Container();
   }
 }

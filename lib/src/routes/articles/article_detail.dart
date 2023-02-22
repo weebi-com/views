@@ -39,7 +39,7 @@ class ArticleDetailRoute extends RcRoute {
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
     final lineId = routeParams.pathParameters['lineId'] ?? '';
-    final articleId = routeParams.pathParameters['articleId'];
+    final articleId = routeParams.pathParameters['articleId'] ?? '';
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final line = articlesStore.lines
         .firstWhere((l) => l.id == int.tryParse(lineId), orElse: () {
@@ -105,7 +105,7 @@ class ArticleDetailRoute extends RcRoute {
           if (p.articles.length <= 1) {
             await articlesStore.deleteForeverLineArticle(p);
             Navigator.of(context)
-                .popAndPushNamed(ArticleLinesRouteUnfinished.routePath);
+                .popAndPushNamed(ArticleLinesFrameRoute.routePath);
           } else {
             await articlesStore.deleteForeverArticle(article);
             Navigator.of(context).popAndPushNamed(

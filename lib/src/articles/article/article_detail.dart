@@ -8,10 +8,11 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleBasket, Article, LineOfArticles;
+    show Article, ArticleBasket, LineOfArticles, PhotoSource;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/src/articles/article/actions.dart';
 import 'package:views_weebi/routes.dart';
+import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
@@ -114,19 +115,15 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: false,
               collapseMode: CollapseMode.parallax,
+              // TODO update with photo widget here
               background: article.photo == null || article.photo!.isEmpty
                   ? (line.isBasket ?? false)
                       ? const Icon(Icons.shopping_basket,
                           color: WeebiColors.grey)
-                      : Image.asset('assets/icons/product_detail.png',
-                          color: WeebiColors.greyLight)
+                      : Loader.productIcon
                   : Hero(
                       tag: '${article.lineId}.${article.id}',
-                      child: Image.asset('assets/photos/${article.photo}',
-                          fit: BoxFit.scaleDown,
-                          errorBuilder: (_, o, stack) => Image.asset(
-                              'assets/icons/product_detail.png',
-                              color: WeebiColors.grey)),
+                      child: PhotoWidget(article),
                     ),
               title: Text(
                   '#${line.id}.${article.id} ${article.status ? '' : ' \ndésactivé'}',

@@ -4,6 +4,7 @@ import 'package:models_weebi/utils.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article;
+import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
@@ -25,14 +26,15 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
       leading: const CircleAvatar(backgroundColor: Colors.transparent),
       title: Row(
         children: <Widget>[
-          article.photo != null && article.photo!.isNotEmpty
-              ? Hero(
+          SizedBox(
+            height: 42,
+            width: 42,
+            child: ClipOval(
+              child: Hero(
                   tag: '${article.lineId}.${article.id}',
-                  child: CircleAvatar(
-                      foregroundImage:
-                          AssetImage('assets/photos/${article.photo}')),
-                )
-              : const CircleAvatar(backgroundColor: Colors.transparent),
+                  child: PhotoWidget(article)),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(

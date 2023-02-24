@@ -1,10 +1,15 @@
 //credits to Flutter Animation Gallery
+import 'dart:typed_data';
+import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_weebi/base.dart';
+import 'package:models_weebi/common.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:views_weebi/routes.dart';
+import 'package:views_weebi/src/articles/photo.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
@@ -62,17 +67,10 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                   SizedBox(
                     width: 160,
                     height: 160,
-                    child: article.photo == null || article.photo!.isEmpty
-                        ? Image.asset('assets/icons/product_detail.png',
-                            color: WeebiColors.greyLight)
-                        : Hero(
-                            tag: article.photo!,
-                            child: Image.asset('assets/photos/${article.photo}',
-                                fit: BoxFit.scaleDown,
-                                errorBuilder: (_, o, stack) => Image.asset(
-                                    'assets/icons/product_detail.png',
-                                    color: WeebiColors.greyLight)),
-                          ),
+                    child: Hero(
+                      tag: '${article.lineId}.${article.id}',
+                      child: PhotoWidget(article),
+                    ),
                   ),
                   ArticleWFrameView(
                     article as Article,

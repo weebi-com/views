@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
+import 'package:models_weebi/weebi_models.dart'
+    show Article, LineOfArticles, PhotoSource;
 import 'package:models_base/utils.dart';
+import 'package:views_weebi/src/articles/photo.dart';
 
 class LineArticleTileTitle extends StatelessWidget {
   final LineOfArticles line;
@@ -17,15 +19,13 @@ class LineArticleTileTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Hero(
-          tag: line.id,
-          child: line.articles.first.photo == null ||
-                  line.articles.first.photo!.isEmpty
-              ? const CircleAvatar(backgroundColor: Colors.transparent)
-              : CircleAvatar(
-                  foregroundImage:
-                      AssetImage('assets/photos/${line.articles.first.photo}'),
-                ),
+        SizedBox(
+          height: 42,
+          width: 42,
+          child: Hero(
+            tag: line.id,
+            child: ClipOval(child: PhotoWidget(line.articles.first)),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),

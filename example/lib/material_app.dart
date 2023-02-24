@@ -53,7 +53,6 @@ class _ExampleAppState extends State<ExampleApp> {
       onGenerateRoute: rcRoutes.onGeneratedRoute,
       scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(backgroundColor: Colors.white70),
-      //home: ArticlesMainFrameWIP(mainNavigator: navigatorKey),
       home: HomeView<ChassisTutoProducts>(chassisArticles,
           mainNavigator: mainNavigator),
     );

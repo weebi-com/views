@@ -5,6 +5,7 @@ import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:mixins_weebi/mobx_stores/tickets.dart';
 import 'package:mobx/mobx.dart';
+import 'package:models_weebi/dummies.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -28,23 +29,30 @@ class ArticlesLinesViewWIP extends StatefulWidget {
 }
 
 class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
-  final barcodeController = TextEditingController();
+  final textController = TextEditingController();
   final scrollControllerVertical = ScrollController();
-
-  List<LineOfArticles> searchResults = [];
-  bool _isSearch = false;
 
   bool submitting = false;
 
   @override
   void initState() {
     super.initState();
-    _isSearch = false;
+    textController.addListener(() {
+      final String text = textController.text;
+      textController.value = textController.value.copyWith(
+        text: text,
+        selection:
+            TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+      final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
+      articlesStore.setQueryString(textController.value.text);
+    });
   }
 
   @override
   void dispose() {
-    barcodeController.dispose();
+    textController.dispose();
     scrollControllerVertical.dispose();
     super.dispose();
   }
@@ -56,50 +64,56 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return Scaffold(
-      appBar: !_isSearch
+      appBar: articlesStore.filteredBy != FilteredBy.title
           ? null
           : AppBar(
               backgroundColor: weebiTheme.scaffoldBackgroundColor,
               leading: const Icon(Icons.search, color: Colors.black),
               title: TextField(
                 autofocus: true,
-                onChanged: (value) {
-                  _searchByTitleOrCode(value);
-                },
                 style: const TextStyle(color: Colors.black),
                 keyboardType: TextInputType.text,
-                controller: barcodeController,
+                controller: textController,
                 decoration: const InputDecoration(
-                  hintText: "titre / code ",
+                  hintText: "nom ",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.close),
-                  color: Colors.black,
-                  onPressed: () => setState(() => _isSearch = false),
-                ),
+                    icon: const Icon(Icons.close),
+                    color: Colors.black,
+                    onPressed: () {
+                      articlesStore.clearFilter(data: JamfBM.jams);
+                      setState(() {});
+                    }),
               ],
             ),
       body: ReactionBuilder(
-          builder: (_) {
-            return reaction((_) => articlesStore.sortedBy, (value) {
-              setState(() {});
-            });
-          },
-          child: ListView.builder(
+        builder: (_) {
+          // using reaction here is a bit trickier than in the addListener
+          // but it will allow us to move textedit anywhere in the widget tree
+          return reaction((_) => articlesStore.queryString,
+              (val) => articlesStore.filterByTitle()
+              //print(articlesStore.lines.length);
+              //print(val);
+              );
+        },
+        child: Observer(builder: (context) {
+          return ListView.builder(
             shrinkWrap: true,
             controller: scrollControllerVertical,
-            itemCount: articlesStore.linesPalpable.length,
+            itemCount: articlesStore.linesPalpableFiltered.length,
             itemBuilder: (BuildContext context, int index) => LinesFrameW(
                 contextMain: context,
                 index: index,
-                lines: articlesStore.linesPalpable,
+                lines: articlesStore.linesPalpableFiltered,
                 ticketsInvoker: () => ticketsStore.tickets,
                 closingStockShopsInvoker: () =>
                     closingsStore.closingStockShops),
-          )),
+          );
+        }),
+      ),
       floatingActionButton: Stack(
         children: <Widget>[
           Align(
@@ -112,11 +126,17 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                 heroTag: "btnSearchProducts",
                 tooltip: "Chercher un produit",
                 backgroundColor: Colors.white,
-                child: !_isSearch
+                child: articlesStore.filteredBy != FilteredBy.title
                     ? const Icon(Icons.search, color: WeebiColors.orange)
                     : const Icon(Icons.close, color: WeebiColors.orange),
                 onPressed: () {
-                  setState(() => _isSearch = !_isSearch);
+                  if (articlesStore.filteredBy != FilteredBy.title) {
+                    print('setFilteredBy(FilteredBy.title)');
+                    articlesStore.setFilteredBy(FilteredBy.title);
+                  } else {
+                    articlesStore.clearFilter(data: JamfBM.jams);
+                  }
+                  setState(() {});
                 },
               ),
             ),
@@ -151,23 +171,5 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
         ],
       ),
     );
-  }
-
-  void _searchByTitleOrCode(String queryString) {
-    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    var temp = articlesStore.lines
-        .where((p) => p.title != '*')
-        .where((p) => p.isPalpable ?? true)
-        .where((p) =>
-            p.title
-                .toLowerCase()
-                .trim()
-                .withoutAccents
-                .contains(queryString.trim().withoutAccents.toLowerCase()) ||
-            p.barcode.toString().contains(queryString))
-        .toList();
-    setState(() {
-      searchResults = temp;
-    });
   }
 }

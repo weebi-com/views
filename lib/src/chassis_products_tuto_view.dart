@@ -19,36 +19,36 @@ class ChassisTutoProducts extends ChassisAbstract {
           GlobalKey<NavigatorState> mainNavigator,
           ArticlesStore articlesStore) =>
       ChassisTutoProducts(
-          selectedIndex: 0,
-          actions: <Widget>[
-            Observer(
-              builder: (context) => IconButton(
-                icon: articlesStore.sortedBy.value == SortedBy.id
-                    ? const Icon(Icons.keyboard_arrow_up)
-                    : const Icon(Icons.keyboard_arrow_down),
-                onPressed: () {
-                  if (articlesStore.sortedBy.value == SortedBy.id) {
-                    articlesStore.sortBy(SortedBy.idReversed);
-                  } else {
-                    articlesStore.sortBy(SortedBy.id);
-                  }
-                },
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.sort_by_alpha),
+        selectedIndex: 0,
+        actions: <Widget>[
+          Observer(
+            builder: (context) => IconButton(
+              icon: articlesStore.sortedBy.value == SortedBy.idReversed
+                  ? const Icon(Icons.keyboard_arrow_up)
+                  : const Icon(Icons.keyboard_arrow_down),
               onPressed: () {
-                print('ok');
-                if (articlesStore.sortedBy.value == SortedBy.title) {
-                  articlesStore.sortBy(SortedBy.titleReversed);
+                if (articlesStore.sortedBy.value == SortedBy.id) {
+                  articlesStore.sortBy(SortedBy.idReversed);
                 } else {
-                  articlesStore.sortBy(SortedBy.title);
+                  articlesStore.sortBy(SortedBy.id);
                 }
               },
             ),
-          ],
-          mainNavigatorKey: mainNavigator,
-          body: ArticlesLinesViewWIP(mainNavigator: mainNavigator));
+          ),
+          IconButton(
+            icon: const Icon(Icons.sort_by_alpha),
+            onPressed: () {
+              if (articlesStore.sortedBy.value == SortedBy.title) {
+                articlesStore.sortBy(SortedBy.titleReversed);
+              } else {
+                articlesStore.sortBy(SortedBy.title);
+              }
+            },
+          ),
+        ],
+        mainNavigatorKey: mainNavigator,
+        body: ArticlesLinesViewWIP(mainNavigator: mainNavigator),
+      );
 
   const ChassisTutoProducts({
     super.key,

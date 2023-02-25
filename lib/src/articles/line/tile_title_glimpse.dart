@@ -23,7 +23,7 @@ class LineArticleTileTitle extends StatelessWidget {
           height: 42,
           width: 42,
           child: Hero(
-            tag: line.id,
+            tag: '${line.id}.${line.articles.first.id}',
             child: ClipOval(child: PhotoWidget(line.articles.first)),
           ),
         ),

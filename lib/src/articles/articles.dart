@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/mobx_stores/articles.dart';
 import 'package:mixins_weebi/mobx_stores/tickets.dart';
+import 'package:mobx/mobx.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -20,9 +21,7 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
 class ArticlesLinesViewWIP extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  final List<LineOfArticles> lines;
-  const ArticlesLinesViewWIP(
-      {super.key, required this.mainNavigator, required this.lines});
+  const ArticlesLinesViewWIP({super.key, required this.mainNavigator});
 
   @override
   LinesArticlesViewStateWIP createState() => LinesArticlesViewStateWIP();
@@ -31,11 +30,6 @@ class ArticlesLinesViewWIP extends StatefulWidget {
 class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
   final barcodeController = TextEditingController();
   final scrollControllerVertical = ScrollController();
-  late List<LineOfArticles> linesListReordered = [];
-  late bool isListReorderedByLineTitle = false;
-  late bool isListReorderedById = false;
-  late bool isTitleAscending = false;
-  late bool isIdAscending = true;
 
   List<LineOfArticles> searchResults = [];
   bool _isSearch = false;
@@ -46,10 +40,6 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
   void initState() {
     super.initState();
     _isSearch = false;
-    isListReorderedByLineTitle = false;
-    isListReorderedById = false;
-    isTitleAscending = true;
-    isIdAscending = true;
   }
 
   @override
@@ -62,7 +52,9 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
   @override
   Widget build(BuildContext context) {
     // final top = Provider.of<TopProvider>(context, listen: false);
-
+    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
+    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return Scaffold(
       appBar: !_isSearch
           ? null
@@ -90,53 +82,24 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                 ),
               ],
             ),
-      body: Observer(builder: (context) {
-        final closingsStore =
-            Provider.of<ClosingsStore>(context, listen: false);
-        final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
-        final linesSkip = widget.lines
-            .where((element) => element.title != '*') // consider removing
-            .where((element) => element.isPalpable ?? true)
-            .toList()
-          ..sort((a, b) => a.id.compareTo(b.id));
-        return Column(
-          children: <Widget>[
-            if (isListReorderedByLineTitle == true ||
-                isListReorderedById ==
-                    true) // handle null, default case as well in view)
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  controller: scrollControllerVertical,
-                  itemCount: linesListReordered.length,
-                  itemBuilder: (BuildContext context, int index) => LinesFrameW(
-                      contextMain: context,
-                      index: index,
-                      lines: linesListReordered,
-                      ticketsInvoker: () => ticketsStore.tickets,
-                      closingStockShopsInvoker: () =>
-                          closingsStore.closingStockShops),
-                ),
-              )
-            else
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollControllerVertical,
-                  shrinkWrap: true,
-                  itemCount: linesSkip.length,
-                  itemBuilder: (BuildContext context, int index) => LinesFrameW(
-                      contextMain: context,
-                      index: index,
-                      lines: linesSkip,
-                      ticketsInvoker: () => ticketsStore.tickets,
-                      closingStockShopsInvoker: () =>
-                          closingsStore.closingStockShops),
-                ),
-              ),
-            // below empty widget at bottom so that last product can also be selected
-          ],
-        );
-      }),
+      body: ReactionBuilder(
+          builder: (_) {
+            return reaction((_) => articlesStore.sortedBy, (value) {
+              setState(() {});
+            });
+          },
+          child: ListView.builder(
+            shrinkWrap: true,
+            controller: scrollControllerVertical,
+            itemCount: articlesStore.linesPalpable.length,
+            itemBuilder: (BuildContext context, int index) => LinesFrameW(
+                contextMain: context,
+                index: index,
+                lines: articlesStore.linesPalpable,
+                ticketsInvoker: () => ticketsStore.tickets,
+                closingStockShopsInvoker: () =>
+                    closingsStore.closingStockShops),
+          )),
       floatingActionButton: Stack(
         children: <Widget>[
           Align(

@@ -1,12 +1,8 @@
 //credits to Flutter Animation Gallery
-import 'dart:typed_data';
-import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
 import 'package:models_weebi/base.dart';
-import 'package:models_weebi/common.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';

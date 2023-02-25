@@ -30,8 +30,7 @@ class StoreLoader extends StatelessWidget {
     // await asyncWhen((_) => appStore.initialLoading == false);
     await closingsStore.init();
     await ticketsStore.init();
-    final isStillLoading = await articlesStore
-        .init(data: [...DummyArticleData.cola, ...DummyArticleData.babibel]);
+    final isStillLoading = await articlesStore.init(data: [...JamfBM.jams]);
     return isStillLoading;
   }
 

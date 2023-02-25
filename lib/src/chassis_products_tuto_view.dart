@@ -23,11 +23,11 @@ class ChassisTutoProducts extends ChassisAbstract {
           actions: <Widget>[
             Observer(
               builder: (context) => IconButton(
-                icon: articlesStore.sortedBy == SortedBy.id
+                icon: articlesStore.sortedBy.value == SortedBy.id
                     ? const Icon(Icons.keyboard_arrow_up)
                     : const Icon(Icons.keyboard_arrow_down),
                 onPressed: () {
-                  if (articlesStore.sortedBy == SortedBy.id) {
+                  if (articlesStore.sortedBy.value == SortedBy.id) {
                     articlesStore.sortBy(SortedBy.idReversed);
                   } else {
                     articlesStore.sortBy(SortedBy.id);
@@ -38,7 +38,8 @@ class ChassisTutoProducts extends ChassisAbstract {
             IconButton(
               icon: const Icon(Icons.sort_by_alpha),
               onPressed: () {
-                if (articlesStore.sortedBy == SortedBy.title) {
+                print('ok');
+                if (articlesStore.sortedBy.value == SortedBy.title) {
                   articlesStore.sortBy(SortedBy.titleReversed);
                 } else {
                   articlesStore.sortBy(SortedBy.title);
@@ -47,10 +48,7 @@ class ChassisTutoProducts extends ChassisAbstract {
             ),
           ],
           mainNavigatorKey: mainNavigator,
-          body: ArticlesLinesViewWIP(
-            mainNavigator: mainNavigator,
-            lines: articlesStore.lines,
-          ));
+          body: ArticlesLinesViewWIP(mainNavigator: mainNavigator));
 
   const ChassisTutoProducts({
     super.key,

@@ -44,8 +44,6 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   Widget build(BuildContext context) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final chassisArticles = ChassisTutoProducts.buildChassisForArticles(
-        mainNavigator, articlesStore);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -53,8 +51,21 @@ class _ExampleAppState extends State<ExampleApp> {
       onGenerateRoute: rcRoutes.onGeneratedRoute,
       scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(backgroundColor: Colors.white70),
-      home: HomeView<ChassisTutoProducts>(chassisArticles,
-          mainNavigator: mainNavigator),
+      home: HomeView<ChassisTutoProducts>(
+        ChassisTutoProducts.buildChassisForArticles(
+            mainNavigator, articlesStore),
+        mainNavigator: mainNavigator,
+      ),
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (BuildContext context) =>
+              const Scaffold(body: Center(child: Text('Not Found'))),
+        );
+      },
+      routes: {
+        InfoView.routePath: (context) => InfoView(mainNavigator),
+      },
     );
   }
 }

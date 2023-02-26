@@ -84,7 +84,11 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                     icon: const Icon(Icons.close),
                     color: Colors.black,
                     onPressed: () {
-                      articlesStore.clearFilter(data: JamfBM.jams);
+                      articlesStore.clearFilter(data: [
+                        ...DummyArticleData.cola,
+                        ...DummyArticleData.babibel
+                      ]);
+                      // JamfBM.jams
                       setState(() {});
                     }),
               ],
@@ -134,7 +138,11 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                     print('setFilteredBy(FilteredBy.title)');
                     articlesStore.setFilteredBy(FilteredBy.title);
                   } else {
-                    articlesStore.clearFilter(data: JamfBM.jams);
+                    articlesStore.clearFilter(data: [
+                      ...DummyArticleData.cola,
+                      ...DummyArticleData.babibel
+                    ]);
+                    // JamfBM.jams);
                   }
                   setState(() {});
                 },

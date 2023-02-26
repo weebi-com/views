@@ -7,23 +7,26 @@ import 'package:models_weebi/weebi_models.dart';
 import 'package:views_weebi/styles.dart';
 
 abstract class Loader {
-  static animatedSwitcher(child, frame) => AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
-        child: frame != null
-            ? child
-            : const SizedBox(
-                height: 42,
-                width: 42,
-                child: CircularProgressIndicator(
-                    strokeWidth: 6, color: WeebiColors.grey),
-              ),
-      );
+  // * bad look
+  // static animatedSwitcher(child, frame) => AnimatedSwitcher(
+  //       duration: const Duration(milliseconds: 200),
+  //       child: frame != null
+  //           ? child
+  //           : const SizedBox(
+  //               height: 42,
+  //               width: 42,
+  //               child: CircularProgressIndicator(
+  //                   strokeWidth: 6, color: WeebiColors.grey),
+  //             ),
+  //     );
   static Image get productIcon =>
       Image.memory(base64Decode(Base64DummyProduct.productBase64),
           color: Colors.black,
           frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
-        if (wasSynchronouslyLoaded) return child;
-        return Loader.animatedSwitcher(child, frame);
+        // if (wasSynchronouslyLoaded)
+
+        return child;
+        // return Loader.animatedSwitcher(child, frame);
       }));
 }
 
@@ -48,8 +51,9 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
           base64Decode(article.photo!),
           fit: BoxFit.scaleDown,
           frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded) return child;
-            return Loader.animatedSwitcher(child, frame);
+            return child;
+            //if (wasSynchronouslyLoaded) return child;
+            //return Loader.animatedSwitcher(child, frame);
           }),
           errorBuilder: (_, o, stack) => Loader.productIcon,
         );
@@ -57,8 +61,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
         return Image.network(article.photo!,
             fit: BoxFit.scaleDown,
             frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
-              if (wasSynchronouslyLoaded) return child;
-              return Loader.animatedSwitcher(child, frame);
+              return child;
             }),
             errorBuilder: (_, o, stack) => Loader.productIcon);
       case PhotoSource.unknown:

@@ -11,9 +11,6 @@ import 'package:models_weebi/dummies.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show LineOfArticles;
-
-import 'package:models_weebi/extensions.dart';
 import 'package:views_weebi/src/articles/line/frame.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 
@@ -81,7 +78,7 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
               ),
               actions: [
                 IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.cancel),
                     color: Colors.black,
                     onPressed: () {
                       articlesStore.clearFilter(data: [
@@ -110,8 +107,7 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
             itemCount: articlesStore.linesPalpableFiltered.length,
             itemBuilder: (BuildContext context, int index) => LinesFrameW(
                 contextMain: context,
-                index: index,
-                lines: articlesStore.linesPalpableFiltered,
+                line: articlesStore.linesPalpableFiltered[index],
                 ticketsInvoker: () => ticketsStore.tickets,
                 closingStockShopsInvoker: () =>
                     closingsStore.closingStockShops),
@@ -127,8 +123,8 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                 horizontal: MediaQuery.of(context).size.width / 14,
               ),
               child: FloatingActionButton(
-                heroTag: "btnSearchProducts",
-                tooltip: "Chercher un produit",
+                heroTag: 'btnSearchArticles',
+                tooltip: 'Chercher un article',
                 backgroundColor: Colors.white,
                 child: articlesStore.filteredBy != FilteredBy.title
                     ? const Icon(Icons.search, color: WeebiColors.orange)

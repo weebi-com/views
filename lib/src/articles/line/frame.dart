@@ -15,30 +15,27 @@ import 'package:views_weebi/views_line.dart';
 // also for web only
 
 class LinesFrameW extends StatelessWidget {
+  final BuildContext contextMain;
+  final LineOfArticles line;
+
+  final TicketsInvoker ticketsInvoker;
+  final ClosingStockShopsInvoker closingStockShopsInvoker;
   const LinesFrameW({
     super.key,
     required this.contextMain,
-    required this.index,
-    required this.lines,
+    required this.line,
     required this.ticketsInvoker,
     required this.closingStockShopsInvoker,
   });
 
-  final BuildContext contextMain;
-  final int index;
-  final List<LineOfArticles<ArticleAbstract>> lines;
-
-  final TicketsInvoker ticketsInvoker;
-  final ClosingStockShopsInvoker closingStockShopsInvoker;
-
   @override
   Widget build(BuildContext context) {
-    if (lines[index].isSingleArticle) {
+    if (line.isSingleArticle) {
       return ArticleSingleGlimpseWidget(
-          lines[index], ticketsInvoker, closingStockShopsInvoker);
+          line, ticketsInvoker, closingStockShopsInvoker);
     } else {
       return LineArticlesGlimpseWidget(
-          lines[index], ticketsInvoker, closingStockShopsInvoker);
+          line, ticketsInvoker, closingStockShopsInvoker);
     }
   }
 }

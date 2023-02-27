@@ -36,28 +36,34 @@ class ChassisTutoProducts extends ChassisAbstract {
         selectedIndex: 0,
         actions: <Widget>[
           Observer(
-            builder: (context) => IconButton(
-              icon: articlesStore.sortedBy.value == SortedBy.idReversed
-                  ? const Icon(Icons.keyboard_arrow_up)
-                  : const Icon(Icons.keyboard_arrow_down),
+            builder: (context) => Tooltip(
+              message: 'Trier par code',
+              child: IconButton(
+                icon: articlesStore.sortedBy.value == SortedBy.codeShortcut
+                    ? const Icon(Icons.keyboard_arrow_down)
+                    : const Icon(Icons.keyboard_arrow_up),
+                onPressed: () {
+                  if (articlesStore.sortedBy.value == SortedBy.codeShortcut) {
+                    articlesStore.sortBy(SortedBy.codeShortcutReversed);
+                  } else {
+                    articlesStore.sortBy(SortedBy.codeShortcut);
+                  }
+                },
+              ),
+            ),
+          ),
+          Tooltip(
+            message: 'Trier par titre',
+            child: IconButton(
+              icon: const Icon(Icons.sort_by_alpha),
               onPressed: () {
-                if (articlesStore.sortedBy.value == SortedBy.id) {
-                  articlesStore.sortBy(SortedBy.idReversed);
+                if (articlesStore.sortedBy.value == SortedBy.title) {
+                  articlesStore.sortBy(SortedBy.titleReversed);
                 } else {
-                  articlesStore.sortBy(SortedBy.id);
+                  articlesStore.sortBy(SortedBy.title);
                 }
               },
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.sort_by_alpha),
-            onPressed: () {
-              if (articlesStore.sortedBy.value == SortedBy.title) {
-                articlesStore.sortBy(SortedBy.titleReversed);
-              } else {
-                articlesStore.sortBy(SortedBy.title);
-              }
-            },
           ),
         ],
         mainNavigatorKey: mainNavigator,
@@ -82,6 +88,9 @@ class ChassisTutoProducts extends ChassisAbstract {
   _ViewsFrameState createState() => _ViewsFrameState();
 }
 
+// * *consider adding pathes, selectedColor and titles into the class as params
+// then consider making a dedicated constructor instead of extending an abstract class
+// should give more flexibility
 class _ViewsFrameState extends State<ChassisTutoProducts> {
   List<String> paths = [
     ArticleLinesFrameRoute.routePath,

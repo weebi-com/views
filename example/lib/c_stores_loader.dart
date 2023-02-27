@@ -1,28 +1,13 @@
-import 'material_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mixins_weebi/instantiate_stores/tickets.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/dummies.dart';
 
-void main() {
-  runApp(MultiProvider(
-    providers: [
-      Provider<TicketsStore>(
-          create: (_) => TicketsStoreInstantiater.noPersistence),
-      Provider<ClosingsStore>(
-          create: (_) => ClosingsStoreInstantiater.noPersistence),
-      Provider<ArticlesStore>(
-          create: (_) => ArticlesStoreInstantiater.noPersistence),
-    ],
-    child: const StoreLoader(),
-  ));
-}
-
-class StoreLoader extends StatelessWidget {
-  const StoreLoader({Key? key}) : super(key: key);
+class StoresLoader extends StatelessWidget {
+  final Widget child;
+  const StoresLoader(this.child, {Key? key}) : super(key: key);
 
   Future<bool> loadIt(ArticlesStore articlesStore, TicketsStore ticketsStore,
       ClosingsStore closingsStore) async {
@@ -64,7 +49,7 @@ class StoreLoader extends StatelessWidget {
                 child: Center(child: Text('loadStoreError ${snap.error}')));
           } else {
             if (snap.data == false) {
-              return const ExampleApp();
+              return child;
             } else {
               return const ColoredBox(
                   color: Color.fromRGBO(171, 71, 188, 1),

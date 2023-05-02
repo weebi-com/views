@@ -5,8 +5,7 @@ import 'package:models_weebi/utils.dart';
 
 // Package imports:
 
-import 'package:models_weebi/weebi_models.dart'
-    show ArticleBasket, ArticleLines;
+import 'package:models_weebi/weebi_models.dart' show ArticleBasket, ArticleLine;
 import 'package:views_weebi/src/articles/line/line_buttons.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
@@ -16,7 +15,7 @@ import 'package:mixins_weebi/stock.dart';
 
 import 'package:views_weebi/widgets.dart';
 
-Gradient getLineGradient(ArticleLines line) {
+Gradient getLineGradient(ArticleLine line) {
   if (line.status) {
     return const LinearGradient(
       begin: Alignment.bottomCenter,
@@ -39,7 +38,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
   final bool isShopLocked;
 
   LineArticlesDetailWidget(
-    ArticleLines line,
+    ArticleLine line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingStockShopsInvoker, {
     this.isShopLocked = false,
@@ -70,7 +69,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
           onPressed: () =>
-              Navigator.of(context).pushNamed(ArticleLinesFrameRoute.routePath),
+              Navigator.of(context).pushNamed(ArticleLineFrameRoute.routePath),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         title: Row(
@@ -152,7 +151,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
 }
 
 class ArticleBasketGlimpseWidgetFakeFrame extends StatelessWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   final ArticleBasket articleBasket;
   const ArticleBasketGlimpseWidgetFakeFrame(this.line, this.articleBasket,
       {Key key})

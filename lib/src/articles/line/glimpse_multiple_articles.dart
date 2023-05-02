@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article, ArticleLines;
+import 'package:models_weebi/weebi_models.dart' show ArticleRetail, ArticleLine;
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:mixins_weebi/stock.dart';
@@ -14,7 +14,7 @@ import 'package:views_weebi/views_article.dart';
 class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   LineArticlesGlimpseWidget(
-    ArticleLines line,
+    ArticleLine line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingStockShopsInvoker, {
     key,
@@ -32,7 +32,7 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
 }
 
 class LineArticlesGlimpseWidgetSateful extends StatefulWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   final double lineStockNow;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
@@ -84,7 +84,7 @@ class LineArticlesGlimpseWidgetSatefulState
           children: <Widget>[
             for (final article in widget.line.articles)
               ArticleWFrameView(
-                article as Article,
+                article as ArticleRetail,
                 true,
                 widget.ticketsInvoker,
                 widget.closingStockShopsInvoker,

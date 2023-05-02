@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 // Package imports:
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article;
+import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:mixins_weebi/stock.dart';
 
 import 'articleW_detail_section.dart';
 import 'article_glimpse.dart';
 
-class ArticleWFrameView extends ArticleStockStatelessAbstract<Article>
-    with ArticleStockNowMixin<Article> {
+class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleRetail>
+    with ArticleStockNowMixin<ArticleRetail> {
   final bool isGlimpse;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
   const ArticleWFrameView(
-    Article article,
+    ArticleRetail article,
     this.isGlimpse,
     this.ticketsInvoker,
     this.closingStockShopsInvoker,

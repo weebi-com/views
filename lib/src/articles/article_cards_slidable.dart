@@ -11,7 +11,7 @@ import 'dart:math';
 import 'package:views_weebi/src/articles/article_card_slide.dart';
 
 class SlidableCardsV2<A extends ArticleAbstract> extends StatefulWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   final int articleId;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;

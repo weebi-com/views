@@ -1,8 +1,8 @@
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
-import 'package:models_weebi/weebi_models.dart' show ArticleLines, Article;
+import 'package:models_weebi/weebi_models.dart' show ArticleLine, ArticleRetail;
 
-final lineDummySugar = ArticleLines(
+final lineDummySugar = ArticleLine(
   id: 3,
   title: 'Sucre',
   stockUnit: StockUnit.gram,
@@ -11,7 +11,7 @@ final lineDummySugar = ArticleLines(
   creationDate: WeebiDates.defaultDate,
   updateDate: WeebiDates.defaultDate,
   articles: [
-    Article(
+    ArticleRetail(
       lineId: 3,
       id: 1,
       fullName: 'Sucre g',

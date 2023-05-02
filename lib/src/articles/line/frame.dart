@@ -16,7 +16,7 @@ import 'package:views_weebi/views_line.dart';
 
 class LinesFrameW extends StatelessWidget {
   final BuildContext contextMain;
-  final ArticleLines line;
+  final ArticleLine line;
 
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;

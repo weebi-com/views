@@ -4,7 +4,7 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 
 // Package imports:
 
-import 'package:models_weebi/weebi_models.dart' show ArticleLines;
+import 'package:models_weebi/weebi_models.dart' show ArticleLine;
 import 'package:provider/provider.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
@@ -58,7 +58,7 @@ class EditArticleLineButton extends StatelessWidget {
 
 class DeleteArticleLineButton extends StatelessWidget {
   final bool isShopLocked;
-  final ArticleLines articleLine;
+  final ArticleLine articleLine;
   const DeleteArticleLineButton(this.articleLine, {this.isShopLocked, Key key})
       : super(key: key);
 
@@ -83,7 +83,7 @@ class DeleteArticleLineButton extends StatelessWidget {
               Provider.of<ArticlesStore>(context, listen: false);
           await articlesStore.deleteForeverLineArticle(articleLine);
 
-          Navigator.of(context).pushNamed(ArticleLinesFrameRoute.routePath);
+          Navigator.of(context).pushNamed(ArticleLineFrameRoute.routePath);
         });
   }
 }

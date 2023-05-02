@@ -34,7 +34,7 @@ class LineOfArticleUpdateRouteUnfinished extends RcRoute {
 }
 
 class LineOfArticleUpdateViewFakeFrame extends StatelessWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   const LineOfArticleUpdateViewFakeFrame(this.line, {Key key})
       : super(key: key);
 

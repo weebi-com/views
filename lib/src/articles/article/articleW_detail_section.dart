@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:models_weebi/utils.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article;
+import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:views_weebi/widgets.dart';
 
 class ArticleWDetailSection extends StatelessWidget {
-  final Article article;
+  final ArticleRetail article;
   final double articleLiveQt;
   const ArticleWDetailSection(
     this.article,

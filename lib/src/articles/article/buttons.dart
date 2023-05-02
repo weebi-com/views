@@ -54,7 +54,7 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         if (p.articles.length <= 1) {
           await articlesStore.deleteForeverLineArticle(p);
           Navigator.of(context)
-              .popAndPushNamed(ArticleLinesFrameRoute.routePath);
+              .popAndPushNamed(ArticleLineFrameRoute.routePath);
         } else {
           await articlesStore.deleteForeverArticle(article);
           Navigator.of(context).popAndPushNamed(

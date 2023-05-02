@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:models_weebi/utils.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article;
+import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ArticleWGlimpse2Widget extends StatelessWidget {
-  final Article article;
+  final ArticleRetail article;
   final double articleLiveQt;
   const ArticleWGlimpse2Widget(
     this.article,

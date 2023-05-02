@@ -26,7 +26,7 @@ class _ExampleAppState extends State<ExampleApp> {
     rcRoutes.routes.addAll([
       // this allows us to use different types of chassis in home while maintaining lower views untouched
       // I can reduce bottombar to x2 activities in my tutorial without changing anything else
-      ArticleLinesFrameRoute(
+      ArticleLineFrameRoute(
         mainNavigator,
         ChassisTutoProducts.buildChassisForArticles(
             mainNavigator, articlesStore),

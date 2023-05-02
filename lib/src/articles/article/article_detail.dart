@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show Article, ArticleBasket, ArticleLines;
+    show ArticleRetail, ArticleBasket, ArticleLine;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/article/article_basket_section_widget.dart';
@@ -34,10 +34,10 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
     this.isShopLocked = false,
   });
 
-  Future<Article> deactivateArticleW(ArticlesStore articlesStore) async {
-    final deactivated = (article as Article)
+  Future<ArticleRetail> deactivateArticleW(ArticlesStore articlesStore) async {
+    final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: false);
-    return await articlesStore.updateArticle<Article>(deactivated);
+    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
   }
 
   Future<ArticleBasket> deactivateArticleB(ArticlesStore articlesStore) async {
@@ -47,9 +47,9 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   }
 
   Future<dynamic> reactivateArticleW(ArticlesStore articlesStore) async {
-    final deactivated = (article as Article)
+    final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: true);
-    return await articlesStore.updateArticle<Article>(deactivated);
+    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
   }
 
   Future<dynamic> reactivateArticleB(ArticlesStore articlesStore) async {
@@ -62,7 +62,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    ArticleLines line = articlesStore.lines
+    ArticleLine line = articlesStore.lines
         .firstWhere((element) => element.id == article.lineId);
 
     return Scaffold(
@@ -81,7 +81,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                       tooltip: 'Désactiver l\'article',
                       backgroundColor: WeebiColors.greyLight,
                       onPressed: () async {
-                        final d = article is Article
+                        final d = article is ArticleRetail
                             ? await deactivateArticleW(articlesStore)
                             : await deactivateArticleB(articlesStore);
                         Navigator.of(context).popAndPushNamed(
@@ -95,7 +95,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                       backgroundColor: WeebiColors.orange,
                       child: const Icon(Icons.play_arrow, color: Colors.white),
                       onPressed: () async {
-                        final d = article is Article
+                        final d = article is ArticleRetail
                             ? await reactivateArticleW(articlesStore)
                             : await reactivateArticleB(articlesStore);
                         Navigator.of(context).popAndPushNamed(
@@ -148,10 +148,10 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                     // below local hack for weebi_app only
                     // * no longer working
                     // TODO fix this once article basket is included in weebi_view + chassis compat
-                    // Navigator.of(context).popAndPushNamed(ArticleLinesRoute
+                    // Navigator.of(context).popAndPushNamed(ArticleLineRoute
                     //     .routePath);
                     // Navigator.of(context)
-                    //     .popAndPushNamed(ArticleLinesFrameRoute.routePath);
+                    //     .popAndPushNamed(ArticleLineFrameRoute.routePath);
                   },
                   tooltip:
                       MaterialLocalizations.of(context).openAppDrawerTooltip),
@@ -179,7 +179,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             SliverToBoxAdapter(
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: ArticleWFrameView(article as Article, false,
+              child: ArticleWFrameView(article as ArticleRetail, false,
                   ticketsInvoker, closingStockShopsInvoker),
             )),
           if (article is ArticleBasket)

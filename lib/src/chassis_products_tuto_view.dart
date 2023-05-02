@@ -93,7 +93,7 @@ class ChassisTutoProducts extends ChassisAbstract {
 // should give more flexibility
 class _ViewsFrameState extends State<ChassisTutoProducts> {
   List<String> paths = [
-    ArticleLinesFrameRoute.routePath,
+    ArticleLineFrameRoute.routePath,
     InfoRoute.routePath,
   ];
 

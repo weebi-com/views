@@ -41,7 +41,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
       return const SizedBox();
     }
     //TODO remove below "as" once PhotoSource is embedded into ArticleAbstract
-    switch ((article as Article).photoSource) {
+    switch ((article as ArticleRetail).photoSource) {
       case PhotoSource.asset:
         return Image.asset(
           'assets/photos/${article.photo}',

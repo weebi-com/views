@@ -39,13 +39,13 @@ class ArticleUpdateRouteUnfinished extends RcRoute {
       value: article,
       child: isBasket
           ? ArticleBasketUpdateViewFakeFrame(article as ArticleBasket)
-          : ArticleUpdateViewFakeFrame(article as Article),
+          : ArticleUpdateViewFakeFrame(article as ArticleRetail),
     );
   }
 }
 
 class ArticleUpdateViewFakeFrame extends StatelessWidget {
-  final Article article;
+  final ArticleRetail article;
   const ArticleUpdateViewFakeFrame(this.article, {Key key}) : super(key: key);
 
   @override

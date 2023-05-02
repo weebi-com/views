@@ -11,7 +11,7 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
 
 class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   final A article;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
@@ -72,7 +72,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                     ),
                   ),
                   ArticleWFrameView(
-                    article as Article,
+                    article as ArticleRetail,
                     false,
                     ticketsInvoker,
                     closingStockShopsInvoker,

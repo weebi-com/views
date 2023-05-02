@@ -6,7 +6,8 @@ import 'package:models_weebi/utils.dart';
 // Package imports:
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article, ProxyArticle;
+import 'package:models_weebi/weebi_models.dart'
+    show ArticleRetail, ProxyArticle;
 import 'package:provider/provider.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:views_weebi/routes.dart';
@@ -15,7 +16,7 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ProxyAGlimpseWidget extends ArticleStockStatelessAbstract
     with ArticleStockNowMixin {
-  final Article article;
+  final ArticleRetail article;
   final ProxyArticle proxy;
 
   ProxyAGlimpseWidget({@required this.article, @required this.proxy})

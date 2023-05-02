@@ -6,7 +6,7 @@ import 'package:views_weebi/routes.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stock.dart';
-import 'package:models_weebi/weebi_models.dart' show ArticleLines;
+import 'package:models_weebi/weebi_models.dart' show ArticleLine;
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
@@ -14,7 +14,7 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 class ArticleSingleGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   ArticleSingleGlimpseWidget(
-    ArticleLines line,
+    ArticleLine line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingsInvoker, {
     key,

@@ -37,7 +37,7 @@ class ArticleBasketCreateRouteUnfinished extends RcRoute {
 }
 
 class ArticleBasketCreateViewFakeFrame extends StatelessWidget {
-  final ArticleLines line;
+  final ArticleLine line;
   const ArticleBasketCreateViewFakeFrame(this.line, {Key key})
       : super(key: key);
 

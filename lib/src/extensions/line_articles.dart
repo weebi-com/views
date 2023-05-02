@@ -5,7 +5,7 @@ import 'package:models_weebi/weebi_models.dart';
 // github fails to fetch latest verison of updated weebi dependencies
 // so i'm putting this meanwhile
 
-extension Shoubidou on ArticleLines<ArticleAbstract> {
+extension Shoubidou on ArticleLine<ArticleAbstract> {
   String get getArticleTitle {
     if (isBasket ?? false) {
       if (isSingleArticle) {

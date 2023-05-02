@@ -10,6 +10,7 @@ class ArticleLinesFrameRoute<T extends ChassisAbstract> extends WeebiRouteBase {
 
   ArticleLinesFrameRoute(GlobalKey<NavigatorState> mainNavigator, T child)
       : super(
-            child: HomeView<T>(child, mainNavigator: mainNavigator),
+            child:
+                HomeViewChassisBuilder<T>(child, mainNavigator: mainNavigator),
             routePath: ArticleLinesFrameRoute.routePath);
 }

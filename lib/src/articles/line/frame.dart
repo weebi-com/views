@@ -2,8 +2,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
-import 'package:models_weebi/base.dart';
+import 'package:mixins_weebi/stock.dart';
+
 import 'package:models_weebi/weebi_models.dart';
 
 import 'package:views_weebi/views_line.dart';
@@ -16,21 +16,20 @@ import 'package:views_weebi/views_line.dart';
 
 class LinesFrameW extends StatelessWidget {
   final BuildContext contextMain;
-  final LineOfArticles line;
+  final ArticleLines line;
 
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
   const LinesFrameW({
-    super.key,
-    required this.contextMain,
-    required this.line,
-    required this.ticketsInvoker,
-    required this.closingStockShopsInvoker,
+    @required this.contextMain,
+    @required this.line,
+    @required this.ticketsInvoker,
+    @required this.closingStockShopsInvoker,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (line.isSingleArticle) {
+    if (line.isSingleArticle ?? false) {
       return ArticleSingleGlimpseWidget(
           line, ticketsInvoker, closingStockShopsInvoker);
     } else {

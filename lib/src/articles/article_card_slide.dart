@@ -1,7 +1,7 @@
 //credits to Flutter Animation Gallery
 
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:views_weebi/routes.dart';
@@ -11,13 +11,16 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
 
 class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
-  final LineOfArticles line;
+  final ArticleLines line;
   final A article;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  const ArticleACardSlide(this.line, this.article, this.ticketsInvoker,
-      this.closingStockShopsInvoker,
-      {super.key});
+  const ArticleACardSlide(
+    this.line,
+    this.article,
+    this.ticketsInvoker,
+    this.closingStockShopsInvoker,
+  );
 
   @override
   Widget build(BuildContext context) {

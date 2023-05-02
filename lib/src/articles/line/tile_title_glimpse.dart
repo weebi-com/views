@@ -2,17 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart'
-    show Article, LineOfArticles, PhotoSource;
-import 'package:models_base/utils.dart';
+import 'package:models_weebi/weebi_models.dart' show ArticleLines;
+import 'package:models_weebi/utils.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 
 class LineArticleTileTitle extends StatelessWidget {
-  final LineOfArticles line;
+  final ArticleLines line;
   final double lineLiveQt;
   final Color iconColor;
   const LineArticleTileTitle(this.line, this.lineLiveQt, this.iconColor,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override

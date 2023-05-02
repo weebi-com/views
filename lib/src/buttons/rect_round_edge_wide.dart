@@ -5,10 +5,10 @@ class WeebiButtonOkRectWide extends StatelessWidget {
   final String string;
   final String tooltip;
   const WeebiButtonOkRectWide(
-      {required this.onPressed,
-      required this.string,
-      required this.tooltip,
-      Key? key})
+      {@required this.onPressed,
+      @required this.string,
+      @required this.tooltip,
+      Key key})
       : super(key: key);
 
   @override

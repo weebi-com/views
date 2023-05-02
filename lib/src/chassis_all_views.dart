@@ -2,21 +2,21 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:views_weebi/src/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 
 // Project imports:
 import 'package:views_weebi/styles.dart' show WeebiColors;
-import 'package:views_weebi/widgets.dart' show areYouSureQuitApp;
 import 'package:views_weebi/src/chassis_abstract.dart';
 
 class ChassisAllView extends ChassisAbstract {
   static const Key keyAppBarTitle = Key("AppBar");
 
   const ChassisAllView({
-    super.key,
-    required Widget body,
-    required int selectedIndex,
-    required GlobalKey<NavigatorState> mainNavigatorKey,
+    key,
+    @required Widget body,
+    @required int selectedIndex,
+    @required GlobalKey<NavigatorState> mainNavigatorKey,
     Widget floatingButton = const SizedBox(),
     List<Widget> actions = const [],
   }) : super(
@@ -98,7 +98,7 @@ class _ViewsFrameState extends State<ChassisAllView> {
           actions: widget.actions),
       drawer: const SizedBox(), //DrawerWeebi(),
       body: WillPopScope(
-          onWillPop: () async => areYouSureQuitApp(context),
+          onWillPop: () async => AskDialog.areYouSureQuitApp(context),
           child: widget.body),
       floatingActionButton: widget.floatingButton,
       bottomNavigationBar: BottomNavigationBar(

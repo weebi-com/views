@@ -4,22 +4,31 @@ import 'package:models_weebi/utils.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show Article;
+import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ArticleWGlimpse2Widget extends StatelessWidget {
   final Article article;
   final double articleLiveQt;
-  const ArticleWGlimpse2Widget(this.article, this.articleLiveQt, {super.key});
+  const ArticleWGlimpse2Widget(
+    this.article,
+    this.articleLiveQt,
+  );
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).pushNamed(LineOfArticlesDetailRoute.generateRoute(
+        Navigator.of(context).pushNamed(ArticleLinesDetailRoute.generateRoute(
             '${article.lineId}', 'false', // TODO isShopLocked
             articleId: '${article.id}'));
+        //Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
+        //    '${article.productId}', '${article.id}'));
+      },
+      onLongPress: () {
+        Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
+            '${article.lineId}', '${article.id}'));
         //Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
         //    '${article.productId}', '${article.id}'));
       },
@@ -30,9 +39,7 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
             height: 42,
             width: 42,
             child: ClipOval(
-              child: Hero(
-                  tag: '${article.lineId}.${article.id}',
-                  child: PhotoWidget(article)),
+              child: PhotoWidget(article),
             ),
           ),
           Padding(

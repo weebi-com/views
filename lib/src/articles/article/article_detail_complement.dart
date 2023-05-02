@@ -11,7 +11,9 @@ import 'package:views_weebi/widgets.dart';
 class ArticleDetailComplementarySection<A extends ArticleAbstract>
     extends StatelessWidget {
   final A article;
-  const ArticleDetailComplementarySection(this.article, {super.key});
+  const ArticleDetailComplementarySection(
+    this.article,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +22,18 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
         FieldValueWidget(const Icon(Icons.code), const Text('code'),
             SelectableText(article.articleCode.toString())),
         FieldValueWidget(const Icon(Icons.event), const Text('date création'),
-            SelectableText(article.creationDate!.toIso8601String())),
+            SelectableText(article.creationDate.toIso8601String())),
         FieldValueWidget(
             const Icon(Icons.event),
             const Text('date modification'),
-            SelectableText(article.updateDate!.toIso8601String())),
+            SelectableText(article.updateDate.toIso8601String())),
         FieldValueWidget(
             const Icon(Icons.event),
             const Text('date modification du statut'),
             SelectableText((article is Article
                     ? article as Article
                     : article as ArticleBasket)
-                .updateDate!
+                .updateDate
                 .toIso8601String())),
         FieldValueWidget(
             const Icon(Icons.settings_outlined),

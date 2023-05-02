@@ -1,7 +1,7 @@
 import 'package:models_weebi/weebi_models.dart';
 
 extension GetProxiesMinQt on Iterable<ProxyArticle> {
-  Iterable<ArticleWMinQt> getProxiesMinQt(Iterable<LineOfArticles> lines) {
+  Iterable<ArticleWMinQt> getProxiesMinQt(Iterable<ArticleLines> lines) {
     final articlesW = <ArticleWMinQt>[];
     for (final line in lines) {
       for (final proxy in this) {

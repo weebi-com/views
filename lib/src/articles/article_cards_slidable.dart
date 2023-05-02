@@ -1,7 +1,7 @@
 //credits to Flutter Animation Gallery
 
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
 
@@ -11,20 +11,20 @@ import 'dart:math';
 import 'package:views_weebi/src/articles/article_card_slide.dart';
 
 class SlidableCardsV2<A extends ArticleAbstract> extends StatefulWidget {
-  final LineOfArticles line;
+  final ArticleLines line;
   final int articleId;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
 
   const SlidableCardsV2(
       this.line, this.ticketsInvoker, this.closingStockShopsInvoker,
-      {this.articleId = 1, super.key});
+      {this.articleId = 1});
   @override
   SlidableCardsV2State createState() => SlidableCardsV2State();
 }
 
 class SlidableCardsV2State extends State<SlidableCardsV2> {
-  late PageController pageController;
+  PageController pageController;
   var currentPageValue = 0.0;
 
   @override
@@ -35,7 +35,7 @@ class SlidableCardsV2State extends State<SlidableCardsV2> {
     currentPageValue = (widget.articleId - 1).toDouble();
     pageController.addListener(() {
       setState(() {
-        currentPageValue = pageController.page!;
+        currentPageValue = pageController.page;
       });
     });
   }

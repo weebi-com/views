@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show TextStyle, Colors, FontWeight;
+import 'package:flutter/material.dart'
+    show Colors, FontWeight, TextDecoration, TextStyle;
 
 class WeebiTextStyles {
   static const white = TextStyle(color: Colors.white);
@@ -26,6 +27,11 @@ class WeebiTextStyles {
     fontFamily: 'PT_Sans-Narrow',
     fontSize: 14.0,
   );
+
+  static const supportSmallUnderline = TextStyle(
+      fontFamily: 'PT_Sans-Narrow',
+      fontSize: 14.0,
+      decoration: TextDecoration.underline);
 
   static const supportBig = TextStyle(
       fontFamily: 'PT_Sans-Narrow',

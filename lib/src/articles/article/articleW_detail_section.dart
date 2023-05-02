@@ -9,7 +9,10 @@ import 'package:views_weebi/widgets.dart';
 class ArticleWDetailSection extends StatelessWidget {
   final Article article;
   final double articleLiveQt;
-  const ArticleWDetailSection(this.article, this.articleLiveQt, {super.key});
+  const ArticleWDetailSection(
+    this.article,
+    this.articleLiveQt,
+  );
 
   @override
   Widget build(BuildContext context) {

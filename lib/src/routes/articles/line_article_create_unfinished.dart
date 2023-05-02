@@ -12,11 +12,15 @@ class ArticleLineCreateRouteUnfinished extends WeebiRouteBase {
 }
 
 class LineArticleCreateViewFakeFrame extends StatelessWidget {
-  const LineArticleCreateViewFakeFrame({Key? key}) : super(key: key);
+  const LineArticleCreateViewFakeFrame({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO here implement LineArticleCreateView()
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('en cours'),
+      ),
+    );
   }
 }

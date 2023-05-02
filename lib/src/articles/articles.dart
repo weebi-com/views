@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
-import 'package:mixins_weebi/mobx_stores/articles.dart';
-import 'package:mixins_weebi/mobx_stores/tickets.dart';
+import 'package:mixins_weebi/mobx_store_ticket.dart';
 import 'package:mobx/mobx.dart';
 import 'package:models_weebi/dummies.dart';
 
@@ -12,20 +12,22 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:views_weebi/src/articles/line/frame.dart';
+import 'package:views_weebi/src/routes/articles/line_article_create_unfinished.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 
 // * This is for web only now
 // articleBaskets are not included here yet
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
-class ArticlesLinesViewWIP extends StatefulWidget {
+class LinesArticlesViewWebOnly extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const ArticlesLinesViewWIP({super.key, required this.mainNavigator});
+  const LinesArticlesViewWebOnly({@required this.mainNavigator});
 
   @override
-  LinesArticlesViewStateWIP createState() => LinesArticlesViewStateWIP();
+  LinesArticlesViewWebOnlyState createState() =>
+      LinesArticlesViewWebOnlyState();
 }
 
-class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
+class LinesArticlesViewWebOnlyState extends State<LinesArticlesViewWebOnly> {
   final textController = TextEditingController();
   final scrollControllerVertical = ScrollController();
 
@@ -65,30 +67,30 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
           ? null
           : AppBar(
               backgroundColor: weebiTheme.scaffoldBackgroundColor,
-              leading: const Icon(Icons.search, color: Colors.black),
+              leading: const Icon(Icons.search, color: WeebiColors.grey),
               title: TextField(
                 autofocus: true,
                 style: const TextStyle(color: Colors.black),
                 keyboardType: TextInputType.text,
                 controller: textController,
                 decoration: const InputDecoration(
-                  hintText: "nom ",
+                  hintText: "Nom ",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
-              actions: [
-                IconButton(
-                    icon: const Icon(Icons.cancel),
-                    color: Colors.black,
-                    onPressed: () {
-                      articlesStore.clearFilter(data: [
-                        ...DummyArticleData.cola,
-                        ...DummyArticleData.babibel
-                      ]);
-                      // JamfBM.jams
-                      setState(() {});
-                    }),
-              ],
+              // actions: [
+              //   IconButton(
+              //       icon: const Icon(Icons.cancel),
+              //       color: Colors.black,
+              //       onPressed: () {
+              //         articlesStore.clearFilter(data: [
+              //           ...DummyArticleData.cola,
+              //           ...DummyArticleData.babibel
+              //         ]);
+              //         // JamfBM.jams
+              //         setState(() {});
+              //       }),
+              // ],
             ),
       body: ReactionBuilder(
         builder: (_) {
@@ -131,7 +133,7 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
                     : const Icon(Icons.close, color: WeebiColors.orange),
                 onPressed: () {
                   if (articlesStore.filteredBy != FilteredBy.title) {
-                    print('setFilteredBy(FilteredBy.title)');
+                    // print('setFilteredBy(FilteredBy.title)');
                     articlesStore.setFilteredBy(FilteredBy.title);
                   } else {
                     articlesStore.clearFilter(data: [
@@ -160,17 +162,17 @@ class LinesArticlesViewStateWIP extends State<ArticlesLinesViewWIP> {
           //         ),
           //         child: const IconAddArticleBasket(),
           //       )),
-          //   Align(
-          //     alignment: Alignment.bottomRight,
-          //     child: FloatingActionButton(
-          //       backgroundColor: WeebiColors.orange,
-          //       tooltip: 'Créer un article',
-          //       heroTag: "btn1Add",
-          //       onPressed: () => Navigator.of(context)
-          //           .pushNamed(ArticleLineCreateRoute.routePath),
-          //       child: const Icon(Icons.add, color: Colors.white),
-          //     ),
-          //   ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              backgroundColor: WeebiColors.orange,
+              tooltip: 'Créer un article',
+              heroTag: "btn1Add",
+              onPressed: () => Navigator.of(context)
+                  .pushNamed(ArticleLineCreateRouteUnfinished.routePath),
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
+          ),
           // ]
         ],
       ),

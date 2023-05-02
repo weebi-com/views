@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/mobx_stores/articles.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:rc_router/rc_router.dart';
+import 'package:rc_router2/rc_router2.dart';
 
 class LineOfArticleUpdateRouteUnfinished extends RcRoute {
   static String routePath = '/line_update/:lineId';
@@ -34,8 +34,8 @@ class LineOfArticleUpdateRouteUnfinished extends RcRoute {
 }
 
 class LineOfArticleUpdateViewFakeFrame extends StatelessWidget {
-  final LineOfArticles line;
-  const LineOfArticleUpdateViewFakeFrame(this.line, {Key? key})
+  final ArticleLines line;
+  const LineOfArticleUpdateViewFakeFrame(this.line, {Key key})
       : super(key: key);
 
   @override

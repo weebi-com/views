@@ -1,128 +1,75 @@
 import 'package:flutter/material.dart';
 
-void showDialogWeebi(String message, BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("Fermer"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-void showDialogWeebiOk(String message, BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        content: TextButton(
-          child: const Icon(Icons.sentiment_very_satisfied),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("ok"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-void showDialogWeebiNotOk(String message, BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(message),
-        content: TextButton(
-          child: const Icon(
-            Icons.sentiment_very_dissatisfied,
-            color: Colors.red,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("Fermer"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-class AskAreYouSure extends StatelessWidget {
-  final String text;
-  const AskAreYouSure(this.text, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      contentPadding: const EdgeInsets.all(16.0),
-      content: Text(text),
-      actions: <Widget>[
-        TextButton(
-            child: const Text('Annuler', style: TextStyle(color: Colors.red)),
-            onPressed: () => Navigator.pop(context, false)),
-        TextButton(
-            child: const Text('Valider', style: TextStyle(color: Colors.green)),
-            onPressed: () => Navigator.pop(context, true))
-      ],
+abstract class InformDialog {
+  static void showDialogWeebi(String message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Fermer"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
-}
 
-Future<bool> areYouSureQuitApp(BuildContext context) async {
-  return await showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Quitter l\'application ?'),
-        actions: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                child: const Text('Non'),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              TextButton(
-                child: const Text('Oui'),
-                style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
+  static void showDialogWeebiOk(String message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(message),
+          content: TextButton(
+            child: const Icon(Icons.sentiment_very_satisfied),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-        ],
-      );
-    },
-  );
+          actions: <Widget>[
+            TextButton(
+              child: const Text("ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static void showDialogWeebiNotOk(String message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(message),
+          content: TextButton(
+            child: const Icon(
+              Icons.sentiment_very_dissatisfied,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Fermer"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

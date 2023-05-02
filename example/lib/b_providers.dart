@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/mobx_store_ticket.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mixins_weebi/instantiate_stores/tickets.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/stores.dart';
 
@@ -9,7 +9,7 @@ class ZeProviders extends StatelessWidget {
   final Widget child;
   const ZeProviders(
     this.child, {
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

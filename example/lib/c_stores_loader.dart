@@ -4,10 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/dummies.dart';
+import 'package:views_weebi_example/line_dummy.dart';
 
 class StoresLoader extends StatelessWidget {
   final Widget child;
-  const StoresLoader(this.child, {Key? key}) : super(key: key);
+  const StoresLoader(this.child, {Key key}) : super(key: key);
 
   Future<bool> loadIt(ArticlesStore articlesStore, TicketsStore ticketsStore,
       ClosingsStore closingsStore) async {
@@ -15,8 +16,11 @@ class StoresLoader extends StatelessWidget {
     // await asyncWhen((_) => appStore.initialLoading == false);
     await closingsStore.init();
     await ticketsStore.init();
-    final isStillLoading = await articlesStore
-        .init(data: [...DummyArticleData.cola, ...DummyArticleData.babibel]);
+    final isStillLoading = await articlesStore.init(data: [
+      ...DummyArticleData.cola,
+      ...DummyArticleData.babibel,
+      lineDummySugar
+    ]);
     // JamfBM.jams
     return isStillLoading;
   }

@@ -6,7 +6,7 @@ import 'package:models_weebi/utils.dart';
 // Package imports:
 
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleBasket, LineOfArticles;
+    show ArticleBasket, ArticleLines;
 import 'package:views_weebi/src/articles/line/actions.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/views_article.dart';
@@ -15,7 +15,7 @@ import 'package:mixins_weebi/stock.dart';
 
 import 'package:views_weebi/widgets.dart';
 
-Gradient getLineGradient(LineOfArticles line) {
+Gradient getLineGradient(ArticleLines line) {
   if (line.status) {
     return const LinearGradient(
       begin: Alignment.bottomCenter,
@@ -39,14 +39,14 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
   final List<IconButton> iconButtonsInAppBar;
   final Widget fabButton;
   LineArticlesDetailWidget(
-    LineOfArticles line,
+    ArticleLines line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingStockShopsInvoker,
     this.iconButtonsInAppBar,
     this.fabButton, {
     this.isShopLocked = false,
     this.initArticle = 1,
-    super.key,
+    key,
   }) : super(line, ticketsInvoker, closingStockShopsInvoker);
 
   @override
@@ -93,8 +93,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
             const Icon(Icons.warehouse, color: Colors.black),
           ],
         ),
-        actions: actionsLineWidgetUnfinished(
-            context, isShopLocked, line, iconButtonsInAppBar),
+        actions: actionsLineWidgetUnfinished(isShopLocked, iconButtonsInAppBar),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -134,11 +133,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                     ),
                   ),
                 const SizedBox(height: 12),
-                SlidableCardsV2(
-                    line,
-                    articleId: initArticle,
-                    ticketsInvoker,
-                    closingStockShopsInvoker)
+                SlidableCardsV2(line, ticketsInvoker, closingStockShopsInvoker,
+                    articleId: initArticle)
               ] else ...[
                 for (final article in line.articles)
                   ArticleBasketGlimpseWidgetFakeFrame(
@@ -156,10 +152,10 @@ typedef ActionsWidget = List<Widget> Function(
     BuildContext context, bool isShopLocked);
 
 class ArticleBasketGlimpseWidgetFakeFrame extends StatelessWidget {
-  final LineOfArticles line;
+  final ArticleLines line;
   final ArticleBasket articleBasket;
   const ArticleBasketGlimpseWidgetFakeFrame(this.line, this.articleBasket,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override

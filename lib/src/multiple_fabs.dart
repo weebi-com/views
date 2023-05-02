@@ -4,7 +4,10 @@ class MultipleFABs extends StatelessWidget {
   final FloatingActionButton FABCenter;
   final FloatingActionButton FABRight;
 
-  const MultipleFABs(this.FABCenter, this.FABRight, {super.key});
+  const MultipleFABs(
+    this.FABCenter,
+    this.FABRight,
+  );
 
   @override
   Widget build(BuildContext context) {

@@ -15,10 +15,12 @@ class ArticleWFrameView extends ArticleStockStatelessAbstract<Article>
   final bool isGlimpse;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  const ArticleWFrameView(Article article, this.isGlimpse, this.ticketsInvoker,
-      this.closingStockShopsInvoker,
-      {super.key})
-      : super(article);
+  const ArticleWFrameView(
+    Article article,
+    this.isGlimpse,
+    this.ticketsInvoker,
+    this.closingStockShopsInvoker,
+  ) : super(article);
 
   @override
   Widget build(BuildContext context) {

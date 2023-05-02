@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:models_weebi/base.dart';
+import 'package:models_weebi/common.dart';
 import 'package:models_weebi/dummies.dart';
 import 'package:models_weebi/weebi_models.dart';
-import 'package:views_weebi/styles.dart';
 
 abstract class Loader {
   // * bad look
@@ -21,7 +21,7 @@ abstract class Loader {
   //     );
   static Image get productIcon =>
       Image.memory(base64Decode(Base64DummyProduct.productBase64),
-          color: Colors.black,
+          color: Colors.black, fit: BoxFit.scaleDown,
           frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
         // if (wasSynchronouslyLoaded)
 
@@ -32,11 +32,13 @@ abstract class Loader {
 
 class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
-  const PhotoWidget(this.article, {super.key});
+  const PhotoWidget(
+    this.article,
+  );
 
-  Image get getImage {
-    if ((article.photo == null || article.photo!.isEmpty)) {
-      return Loader.productIcon;
+  Widget get getImage {
+    if ((article.photo == null || article.photo.isEmpty)) {
+      return const SizedBox();
     }
     //TODO remove below "as" once PhotoSource is embedded into ArticleAbstract
     switch ((article as Article).photoSource) {
@@ -48,7 +50,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
         );
       case PhotoSource.file:
         return Image.memory(
-          base64Decode(article.photo!),
+          base64Decode(article.photo),
           fit: BoxFit.scaleDown,
           frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
             return child;
@@ -58,16 +60,16 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
           errorBuilder: (_, o, stack) => Loader.productIcon,
         );
       case PhotoSource.network:
-        return Image.network(article.photo!,
+        return Image.network(article.photo,
             fit: BoxFit.scaleDown,
             frameBuilder: ((context, child, frame, wasSynchronouslyLoaded) {
               return child;
             }),
             errorBuilder: (_, o, stack) => Loader.productIcon);
       case PhotoSource.unknown:
-        return Loader.productIcon;
+        return const SizedBox();
       default:
-        return Loader.productIcon;
+        return const SizedBox();
     }
   }
 

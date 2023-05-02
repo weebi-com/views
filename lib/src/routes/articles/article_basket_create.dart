@@ -4,7 +4,7 @@ import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:rc_router/rc_router.dart';
+import 'package:rc_router2/rc_router2.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
@@ -37,8 +37,8 @@ class ArticleBasketCreateRouteUnfinished extends RcRoute {
 }
 
 class ArticleBasketCreateViewFakeFrame extends StatelessWidget {
-  final LineOfArticles line;
-  const ArticleBasketCreateViewFakeFrame(this.line, {Key? key})
+  final ArticleLines line;
+  const ArticleBasketCreateViewFakeFrame(this.line, {Key key})
       : super(key: key);
 
   @override

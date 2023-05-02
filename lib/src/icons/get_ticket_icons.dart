@@ -90,7 +90,7 @@ Widget getTicketPaiementTypeIcon(
       child: Icon(FontAwesomeIcons.moneyBill1Wave, size: 18, color: color));
   if (thisPaiementType == PaiementType.cash) {
     return cashIcon;
-  } else if (thisPaiementType == PaiementType.yup) {
+  } else if (thisPaiementType == PaiementType.mobileMoney) {
     return Icon(Icons.phone_android, color: color);
   } else if (thisPaiementType == PaiementType.goods) {
     return Icon(Icons.local_shipping, color: color);

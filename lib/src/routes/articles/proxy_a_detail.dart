@@ -5,13 +5,13 @@ import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:rc_router/rc_router.dart';
+import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/icons.dart';
+import 'package:views_weebi/src/ask_are_you_sure.dart';
 import 'package:views_weebi/views_article.dart';
 
 import 'package:mixins_weebi/stores.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/src/dialogs.dart';
 import 'package:views_weebi/styles.dart'; // Flutter imports:
 import 'package:views_weebi/src/articles/article/article_detail.dart';
 
@@ -53,11 +53,11 @@ class ProxyADetailRoute extends RcRoute {
 
     final line = articlesStore.lines
         .firstWhere((p) => p.id.toString() == lineId, orElse: () {
-      throw 'no lines match for $lineId';
+      throw 'proxy no lines match for $lineId';
     });
     final ArticleBasket article = line.articles
         .firstWhere((a) => a.id.toString() == articleId, orElse: () {
-      throw 'no article match $lineId.$articleId';
+      throw 'proxy no article match $lineId.$articleId';
     }) as ArticleBasket;
 
     final ProxyArticle proxy = article.proxies.firstWhere(
@@ -106,11 +106,11 @@ class ProxyADetailRoute extends RcRoute {
         onPressed: () async {
           final articlesStore =
               Provider.of<ArticlesStore>(context, listen: false);
-          final isOkToDelete = await showDialog(
-            context: context,
+          final isOkToDelete = await AskDialog.areYouSure(
+            'Attention',
+            'effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?',
+            context,
             barrierDismissible: false,
-            builder: (c) => const AskAreYouSure(
-                'Attention effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?'),
           );
 
           if (!isOkToDelete) {
@@ -125,7 +125,7 @@ class ProxyADetailRoute extends RcRoute {
           } else {
             await articlesStore.deleteForeverArticle(article);
             Navigator.of(context).popAndPushNamed(
-                LineOfArticlesDetailRoute.generateRoute(
+                ArticleLinesDetailRoute.generateRoute(
                     '${p.id}', 'false', // cannot be locked if here
                     articleId: '1'));
           }

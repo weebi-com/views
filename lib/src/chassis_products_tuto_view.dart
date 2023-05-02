@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 // Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mixins_weebi/stores.dart';
+import 'package:views_weebi/src/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
+import 'package:views_weebi/src/routes/info.dart';
 
 // Project imports:
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views.dart';
-import 'package:views_weebi/widgets.dart' show areYouSureQuitApp;
 import 'package:views_weebi/src/chassis_abstract.dart';
 
 class InfoView extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const InfoView(this.mainNavigator, {Key? key}) : super(key: key);
-  static const routePath = '/info_view';
+  const InfoView(this.mainNavigator, {Key key}) : super(key: key);
+  // static const routePath = '/info_view';
   @override
   Widget build(BuildContext context) {
     return ChassisTutoProducts(
@@ -67,14 +67,14 @@ class ChassisTutoProducts extends ChassisAbstract {
           ),
         ],
         mainNavigatorKey: mainNavigator,
-        body: ArticlesLinesViewWIP(mainNavigator: mainNavigator),
+        body: LinesArticlesViewWebOnly(mainNavigator: mainNavigator),
       );
 
   const ChassisTutoProducts({
-    super.key,
-    required Widget body,
-    required int selectedIndex,
-    required GlobalKey<NavigatorState> mainNavigatorKey,
+    key,
+    @required Widget body,
+    @required int selectedIndex,
+    @required GlobalKey<NavigatorState> mainNavigatorKey,
     Widget floatingButton = const SizedBox(),
     List<Widget> actions = const [],
   }) : super(
@@ -94,7 +94,7 @@ class ChassisTutoProducts extends ChassisAbstract {
 class _ViewsFrameState extends State<ChassisTutoProducts> {
   List<String> paths = [
     ArticleLinesFrameRoute.routePath,
-    InfoView.routePath,
+    InfoRoute.routePath,
   ];
 
   List<Color> selectedColor = const [
@@ -129,7 +129,7 @@ class _ViewsFrameState extends State<ChassisTutoProducts> {
           elevation: 3,
           actions: widget.actions),
       body: WillPopScope(
-          onWillPop: () async => areYouSureQuitApp(context),
+          onWillPop: () async => AskDialog.areYouSureQuitApp(context),
           child: widget.body),
       floatingActionButton: widget.floatingButton,
       bottomNavigationBar: BottomNavigationBar(
@@ -139,6 +139,8 @@ class _ViewsFrameState extends State<ChassisTutoProducts> {
         type: BottomNavigationBarType.fixed,
         currentIndex: widget.selectedIndex,
         onTap: (newIndex) {
+          // print(widget.mainNavigatorKey);
+          // print(paths[newIndex]);
           widget.mainNavigatorKey.currentState
               ?.pushReplacementNamed(paths[newIndex]);
         },

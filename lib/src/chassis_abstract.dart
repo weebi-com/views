@@ -8,10 +8,10 @@ abstract class ChassisAbstract extends StatefulWidget {
   final Widget floatingButton;
   final List<Widget> actions;
   const ChassisAbstract(
-      {super.key,
-      required this.body,
-      required this.selectedIndex,
-      required this.mainNavigatorKey,
-      required this.floatingButton,
-      required this.actions});
+      {key,
+      @required this.body,
+      @required this.selectedIndex,
+      @required this.mainNavigatorKey,
+      @required this.floatingButton,
+      @required this.actions});
 }

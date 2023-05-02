@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart' show Article, LineOfArticles;
+import 'package:models_weebi/weebi_models.dart' show Article, ArticleLines;
 import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:mixins_weebi/stock.dart';
@@ -14,10 +14,10 @@ import 'package:views_weebi/views_article.dart';
 class LineArticlesGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   LineArticlesGlimpseWidget(
-    LineOfArticles line,
+    ArticleLines line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingStockShopsInvoker, {
-    super.key,
+    key,
   }) : super(
           line,
           ticketsInvoker,
@@ -32,13 +32,16 @@ class LineArticlesGlimpseWidget extends LineArticleStockAbstract
 }
 
 class LineArticlesGlimpseWidgetSateful extends StatefulWidget {
-  final LineOfArticles line;
+  final ArticleLines line;
   final double lineStockNow;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  const LineArticlesGlimpseWidgetSateful(this.line, this.lineStockNow,
-      this.ticketsInvoker, this.closingStockShopsInvoker,
-      {super.key});
+  const LineArticlesGlimpseWidgetSateful(
+    this.line,
+    this.lineStockNow,
+    this.ticketsInvoker,
+    this.closingStockShopsInvoker,
+  );
 
   @override
   LineArticlesGlimpseWidgetSatefulState createState() =>
@@ -47,7 +50,7 @@ class LineArticlesGlimpseWidgetSateful extends StatefulWidget {
 
 class LineArticlesGlimpseWidgetSatefulState
     extends State<LineArticlesGlimpseWidgetSateful> {
-  Color? iconColor;
+  Color iconColor;
   @override
   void initState() {
     super.initState();
@@ -57,13 +60,17 @@ class LineArticlesGlimpseWidgetSatefulState
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Appui long pour voir tous les articles de la ligne',
+      message: widget.line.isBasket == false
+          ? 'Appui long pour voir tous les articles de la ligne'
+          : '',
       child: InkWell(
         onLongPress: () {
-          Navigator.of(context).pushNamed(LineOfArticlesDetailRoute.generateRoute(
-              '${widget.line.id}', 'false', // TODO get isShopLocked for real
-              articleId:
-                  '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
+          if (widget.line.isBasket == false) {
+            Navigator.of(context).pushNamed(ArticleLinesDetailRoute.generateRoute(
+                '${widget.line.id}', 'false', // TODO get isShopLocked for real
+                articleId:
+                    '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
+          }
         },
         child: ExpansionTile(
           onExpansionChanged: (bool expanding) {
@@ -72,8 +79,8 @@ class LineArticlesGlimpseWidgetSatefulState
                   expanding ? WeebiColors.buttonColor : WeebiColors.grey,
             );
           },
-          title: LineArticleTileTitle(
-              widget.line, widget.lineStockNow, iconColor!),
+          title:
+              LineArticleTileTitle(widget.line, widget.lineStockNow, iconColor),
           children: <Widget>[
             for (final article in widget.line.articles)
               ArticleWFrameView(

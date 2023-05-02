@@ -5,7 +5,11 @@ class FieldValueWidget extends StatelessWidget {
   final Icon icon;
   final Text fieldName;
   final SelectableText value;
-  const FieldValueWidget(this.icon, this.fieldName, this.value, {super.key});
+  const FieldValueWidget(
+    this.icon,
+    this.fieldName,
+    this.value,
+  );
 
   @override
   Widget build(BuildContext context) {

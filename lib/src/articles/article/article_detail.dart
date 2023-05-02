@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/stock/abstracts/line_stock_abstract.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 
 // Package imports:
@@ -8,10 +8,11 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show Article, ArticleBasket, LineOfArticles, PhotoSource;
+    show Article, ArticleBasket, ArticleLines;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/src/articles/article/actions.dart';
 import 'package:views_weebi/routes.dart';
+import 'package:views_weebi/src/articles/article/article_basket_section_widget.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
@@ -26,10 +27,15 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   final List<IconButton> iconButtonsInAppBar;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  final FloatingActionButton fabButton;
-  const ArticleDetailWidget(this.article, this.iconButtonsInAppBar,
-      this.fabButton, this.ticketsInvoker, this.closingStockShopsInvoker,
-      {this.isShopLocked = false, super.key});
+  final Widget fabButton;
+  const ArticleDetailWidget(
+    this.article,
+    this.iconButtonsInAppBar,
+    this.fabButton,
+    this.ticketsInvoker,
+    this.closingStockShopsInvoker, {
+    this.isShopLocked = false,
+  });
 
   Future<Article> deactivateArticleW(ArticlesStore articlesStore) async {
     final deactivated = (article as Article)
@@ -59,41 +65,55 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    LineOfArticles line = articlesStore.lines
-        .firstWhere((element) => element.id == article.productId);
+    ArticleLines line = articlesStore.lines
+        .firstWhere((element) => element.id == article.lineId);
 
     return Scaffold(
       floatingActionButton: isShopLocked
           ? const SizedBox()
-          : MultipleFABs(
-              article.status
-                  ? FloatingActionButton(
-                      heroTag: 'deactivate',
-                      tooltip: 'Désactiver l\'article',
-                      backgroundColor: WeebiColors.greyLight,
-                      onPressed: () async {
-                        final d = article is Article
-                            ? await deactivateArticleW(articlesStore)
-                            : await deactivateArticleB(articlesStore);
-                        Navigator.of(context).popAndPushNamed(
-                            ArticleDetailRoute.generateRoute(
-                                '${d.lineId}', '${d.id}'));
-                      },
-                      child: const Icon(Icons.pause, color: Colors.white))
-                  : FloatingActionButton(
-                      heroTag: 'reactivate',
-                      tooltip: 'Réactiver l\'article',
-                      backgroundColor: WeebiColors.orange,
-                      child: const Icon(Icons.play_arrow, color: Colors.white),
-                      onPressed: () async {
-                        final d = article is Article
-                            ? await reactivateArticleW(articlesStore)
-                            : await reactivateArticleB(articlesStore);
-                        Navigator.of(context).popAndPushNamed(
-                            ArticleDetailRoute.generateRoute(
-                                '${d.lineId}', '${d.id}'));
-                      }),
-              fabButton),
+          : (line.isBasket ?? false)
+              ? const SizedBox()
+              : MultipleFABs(
+                  FloatingActionButton(
+                    heroTag: 'créer un sous-article',
+                    tooltip: 'créer un sous-article',
+                    backgroundColor: Colors.orange[700],
+                    onPressed: () => Navigator.of(context).pushNamed(
+                        ArticleDetailRoute.generateArticleCreateRoute(
+                            '${line.id}')),
+                    child: const Icon(
+                      Icons.library_add,
+                      color: Colors.white,
+                    ),
+                  ),
+                  article.status
+                      ? FloatingActionButton(
+                          heroTag: 'deactivate',
+                          tooltip: 'Désactiver l\'article',
+                          backgroundColor: WeebiColors.greyLight,
+                          onPressed: () async {
+                            final d = article is Article
+                                ? await deactivateArticleW(articlesStore)
+                                : await deactivateArticleB(articlesStore);
+                            Navigator.of(context).popAndPushNamed(
+                                ArticleDetailRoute.generateRoute(
+                                    '${d.lineId}', '${d.id}'));
+                          },
+                          child: const Icon(Icons.pause, color: Colors.white))
+                      : FloatingActionButton(
+                          heroTag: 'reactivate',
+                          tooltip: 'Réactiver l\'article',
+                          backgroundColor: WeebiColors.orange,
+                          child:
+                              const Icon(Icons.play_arrow, color: Colors.white),
+                          onPressed: () async {
+                            final d = article is Article
+                                ? await reactivateArticleW(articlesStore)
+                                : await reactivateArticleB(articlesStore);
+                            Navigator.of(context).popAndPushNamed(
+                                ArticleDetailRoute.generateRoute(
+                                    '${d.lineId}', '${d.id}'));
+                          })),
       body: CustomScrollView(
         //scrollBehavior: ,
         controller: controller,
@@ -116,11 +136,11 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               centerTitle: false,
               collapseMode: CollapseMode.parallax,
               // TODO update with photo widget here
-              background: article.photo == null || article.photo!.isEmpty
+              background: article.photo == null || article.photo.isEmpty
                   ? (line.isBasket ?? false)
                       ? const Icon(Icons.shopping_basket,
                           color: WeebiColors.grey)
-                      : Loader.productIcon
+                      : const Icon(Icons.article)
                   : Hero(
                       tag: '${article.lineId}.${article.id}',
                       child: PhotoWidget(article),
@@ -136,8 +156,14 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
                 onPressed: () {
-                  // * if article has just been created it would be nice to go back
                   Navigator.of(context).pop();
+                  // below local hack for weebi_app only
+                  // * no longer working
+                  // TODO fix this once article basket is included in weebi_view + chassis compat
+                  // Navigator.of(context).popAndPushNamed(ArticleLinesRoute
+                  //     .routePath);
+                  // Navigator.of(context)
+                  //     .popAndPushNamed(ArticleLinesFrameRoute.routePath);
                 },
                 tooltip:
                     MaterialLocalizations.of(context).openAppDrawerTooltip),
@@ -170,8 +196,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: ArticleBasketDetailSectionWidgetFakeFrame(
-                    article as ArticleBasket),
+                child:
+                    ArticleBasketDetailSectionWidget(article as ArticleBasket),
               ),
             ),
           SliverToBoxAdapter(
@@ -182,7 +208,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 84)),
 
-          // * consider displaying tickets where this was solved
+          // * consider displaying tickets when this is solved
           //Divider(height: 12),
           // display latest tickets ?
           // SliverPadding(
@@ -205,18 +231,5 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class ArticleBasketDetailSectionWidgetFakeFrame extends StatelessWidget {
-  final ArticleBasket articleBasket;
-  const ArticleBasketDetailSectionWidgetFakeFrame(this.articleBasket,
-      {Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO here implement ArticleBasketDetailSectionWidget(article as ArticleBasket)
-    return Container();
   }
 }

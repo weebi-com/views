@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.9.0"
+    version: "2.8.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -21,35 +21,42 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
+  charcode:
+    dependency: transitive
+    description:
+      name: charcode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.1"
   clock:
     dependency: transitive
     description:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   closing:
     dependency: "direct main"
     description:
       path: "../../closing"
       relative: true
     source: path
-    version: "1.0.7"
+    version: "1.0.8"
   collection:
     dependency: transitive
     description:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.16.0"
+    version: "1.15.0"
   fake_async:
     dependency: transitive
     description:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1"
+    version: "1.2.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -61,7 +68,7 @@ packages:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "1.0.4"
   flutter_mobx:
     dependency: "direct main"
     description:
@@ -108,56 +115,56 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "1.0.1"
   matcher:
     dependency: transitive
     description:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.12"
+    version: "0.12.11"
   material_color_utilities:
     dependency: transitive
     description:
       name: material_color_utilities
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.7.0"
   mixins_weebi:
     dependency: "direct main"
     description:
       path: "../../mixins_weebi"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.8"
   mobx:
     dependency: "direct main"
     description:
       name: mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.4"
+    version: "2.0.7"
   models_base:
     dependency: transitive
     description:
       name: models_base
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.3"
+    version: "1.3.9"
   models_weebi:
     dependency: "direct main"
     description:
       path: "../../models_weebi"
       relative: true
     source: path
-    version: "1.0.5"
+    version: "1.0.12"
   nested:
     dependency: transitive
     description:
@@ -171,7 +178,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.2"
+    version: "1.8.0"
   pedantic:
     dependency: transitive
     description:
@@ -186,29 +193,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.5"
-  rc_router:
+  rc_router2:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ebba3a3bd845fdf031e43aa85683d3c5abe4345c
-      url: "https://gitlab.com/weebi_git/dependencies/rc_router"
-    source: git
-    version: "0.3.0"
+      name: rc_router2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   sembast:
     dependency: transitive
     description:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.0+6"
+    version: "3.3.1+1"
   services_weebi:
     dependency: transitive
     description:
       path: "../../services_weebi"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -220,7 +225,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.0"
+    version: "1.8.1"
   stack_trace:
     dependency: transitive
     description:
@@ -241,49 +246,49 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   synchronized:
     dependency: transitive
     description:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.0+3"
   term_glyph:
     dependency: transitive
     description:
       name: term_glyph
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.12"
+    version: "0.4.8"
   typed_data:
     dependency: transitive
     description:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1"
+    version: "1.3.0"
   vector_math:
     dependency: transitive
     description:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.1"
   views_weebi:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.3"
 sdks:
-  dart: ">=2.18.5 <3.0.0"
+  dart: ">=2.16.2 <3.0.0"
   flutter: ">=1.17.0"

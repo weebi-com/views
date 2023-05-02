@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/mobx_stores/articles.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:rc_router/rc_router.dart';
+import 'package:rc_router2/rc_router2.dart';
 
 class ArticleUpdateRouteUnfinished extends RcRoute {
   static String routePath = '/article_update/:lineId/:articleId';
@@ -46,7 +46,7 @@ class ArticleUpdateRouteUnfinished extends RcRoute {
 
 class ArticleUpdateViewFakeFrame extends StatelessWidget {
   final Article article;
-  const ArticleUpdateViewFakeFrame(this.article, {Key? key}) : super(key: key);
+  const ArticleUpdateViewFakeFrame(this.article, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class ArticleUpdateViewFakeFrame extends StatelessWidget {
 
 class ArticleBasketUpdateViewFakeFrame extends StatelessWidget {
   final ArticleBasket articleBasket;
-  const ArticleBasketUpdateViewFakeFrame(this.articleBasket, {Key? key})
+  const ArticleBasketUpdateViewFakeFrame(this.articleBasket, {Key key})
       : super(key: key);
 
   @override

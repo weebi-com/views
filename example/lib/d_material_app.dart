@@ -33,7 +33,7 @@ class _ExampleAppState extends State<ExampleApp> {
       ),
       // ArticleBasketCreateRoute(),
       // ArticleLineCreateRoute(),
-      ArticleLinesDetailRoute(),
+      ArticlesLineDetailRoute(),
       // LineOfArticleUpdateRoute(),
       // ArticleCreateRoute(),
       ArticleDetailRoute(),

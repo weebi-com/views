@@ -66,7 +66,7 @@ class LineArticlesGlimpseWidgetSatefulState
       child: InkWell(
         onLongPress: () {
           if (widget.line.isBasket == false) {
-            Navigator.of(context).pushNamed(ArticleLinesDetailRoute.generateRoute(
+            Navigator.of(context).pushNamed(ArticlesLineDetailRoute.generateRoute(
                 '${widget.line.id}', 'false', // TODO get isShopLocked for real
                 articleId:
                     '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,

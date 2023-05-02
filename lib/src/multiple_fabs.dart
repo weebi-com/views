@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MultipleFABs extends StatelessWidget {
-  final FloatingActionButton FABCenter;
-  final FloatingActionButton FABRight;
+  final Widget FABCenter;
+  final Widget FABRight;
 
   const MultipleFABs(
     this.FABCenter,

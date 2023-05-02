@@ -20,17 +20,13 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).pushNamed(ArticleLinesDetailRoute.generateRoute(
+        Navigator.of(context).pushNamed(ArticlesLineDetailRoute.generateRoute(
             '${article.lineId}', 'false', // TODO isShopLocked
             articleId: '${article.id}'));
-        //Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-        //    '${article.productId}', '${article.id}'));
       },
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
             '${article.lineId}', '${article.id}'));
-        //Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-        //    '${article.productId}', '${article.id}'));
       },
       leading: const CircleAvatar(backgroundColor: Colors.transparent),
       title: Row(

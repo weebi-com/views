@@ -10,9 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:models_weebi/weebi_models.dart'
     show Article, ArticleBasket, ArticleLines;
 import 'package:views_weebi/extensions.dart';
-import 'package:views_weebi/src/articles/article/actions.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/article/article_basket_section_widget.dart';
+import 'package:views_weebi/src/articles/article/buttons.dart';
+import 'package:views_weebi/src/articles/line/line_buttons.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
@@ -24,14 +25,10 @@ import 'package:views_weebi/widgets.dart';
 class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
   final bool isShopLocked;
-  final List<IconButton> iconButtonsInAppBar;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  final Widget fabButton;
   const ArticleDetailWidget(
     this.article,
-    this.iconButtonsInAppBar,
-    this.fabButton,
     this.ticketsInvoker,
     this.closingStockShopsInvoker, {
     this.isShopLocked = false,
@@ -69,108 +66,101 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
         .firstWhere((element) => element.id == article.lineId);
 
     return Scaffold(
-      floatingActionButton: isShopLocked
+      floatingActionButton: isShopLocked ||
+              // ! only one basket per line
+              (line.isBasket ?? false)
           ? const SizedBox()
-          : (line.isBasket ?? false)
-              ? const SizedBox()
-              : MultipleFABs(
-                  FloatingActionButton(
-                    heroTag: 'créer un sous-article',
-                    tooltip: 'créer un sous-article',
-                    backgroundColor: Colors.orange[700],
-                    onPressed: () => Navigator.of(context).pushNamed(
-                        ArticleDetailRoute.generateArticleCreateRoute(
-                            '${line.id}')),
-                    child: const Icon(
-                      Icons.library_add,
-                      color: Colors.white,
-                    ),
-                  ),
-                  article.status
-                      ? FloatingActionButton(
-                          heroTag: 'deactivate',
-                          tooltip: 'Désactiver l\'article',
-                          backgroundColor: WeebiColors.greyLight,
-                          onPressed: () async {
-                            final d = article is Article
-                                ? await deactivateArticleW(articlesStore)
-                                : await deactivateArticleB(articlesStore);
-                            Navigator.of(context).popAndPushNamed(
-                                ArticleDetailRoute.generateRoute(
-                                    '${d.lineId}', '${d.id}'));
-                          },
-                          child: const Icon(Icons.pause, color: Colors.white))
-                      : FloatingActionButton(
-                          heroTag: 'reactivate',
-                          tooltip: 'Réactiver l\'article',
-                          backgroundColor: WeebiColors.orange,
-                          child:
-                              const Icon(Icons.play_arrow, color: Colors.white),
-                          onPressed: () async {
-                            final d = article is Article
-                                ? await reactivateArticleW(articlesStore)
-                                : await reactivateArticleB(articlesStore);
-                            Navigator.of(context).popAndPushNamed(
-                                ArticleDetailRoute.generateRoute(
-                                    '${d.lineId}', '${d.id}'));
-                          })),
+          : MultipleFABs(
+              line.isSingleArticle == false
+                  ? const SizedBox()
+                  : CreateArticleWithinLineButton(line.id,
+                      isShopLocked: isShopLocked),
+              article.status
+                  ? FloatingActionButton(
+                      heroTag: 'deactivate',
+                      tooltip: 'Désactiver l\'article',
+                      backgroundColor: WeebiColors.greyLight,
+                      onPressed: () async {
+                        final d = article is Article
+                            ? await deactivateArticleW(articlesStore)
+                            : await deactivateArticleB(articlesStore);
+                        Navigator.of(context).popAndPushNamed(
+                            ArticleDetailRoute.generateRoute(
+                                '${d.lineId}', '${d.id}'));
+                      },
+                      child: const Icon(Icons.pause, color: Colors.white))
+                  : FloatingActionButton(
+                      heroTag: 'reactivate',
+                      tooltip: 'Réactiver l\'article',
+                      backgroundColor: WeebiColors.orange,
+                      child: const Icon(Icons.play_arrow, color: Colors.white),
+                      onPressed: () async {
+                        final d = article is Article
+                            ? await reactivateArticleW(articlesStore)
+                            : await reactivateArticleB(articlesStore);
+                        Navigator.of(context).popAndPushNamed(
+                            ArticleDetailRoute.generateRoute(
+                                '${d.lineId}', '${d.id}'));
+                      })),
       body: CustomScrollView(
         //scrollBehavior: ,
         controller: controller,
         shrinkWrap: false,
         slivers: <Widget>[
           SliverAppBar(
-            //forceElevated: true,
-            elevation: 3,
-            // toolbarHeight: context.screenHeight * .12,
-            //*ncollapsedHeight: context.screenHeight * .08,
-            expandedHeight: context.screenHeight * .47,
-            centerTitle: false,
-            //floating: true,
-            //snap: true,
-            stretch: true,
-            pinned: true,
-            backgroundColor: weebiTheme.scaffoldBackgroundColor,
-            automaticallyImplyLeading: false,
-            flexibleSpace: FlexibleSpaceBar(
+              //forceElevated: true,
+              elevation: 3,
+              // toolbarHeight: context.screenHeight * .12,
+              //*ncollapsedHeight: context.screenHeight * .08,
+              expandedHeight: context.screenHeight * .47,
               centerTitle: false,
-              collapseMode: CollapseMode.parallax,
-              // TODO update with photo widget here
-              background: article.photo == null || article.photo.isEmpty
-                  ? (line.isBasket ?? false)
-                      ? const Icon(Icons.shopping_basket,
-                          color: WeebiColors.grey)
-                      : const Icon(Icons.article)
-                  : Hero(
-                      tag: '${article.lineId}.${article.id}',
-                      child: PhotoWidget(article),
-                    ),
-              title: Text(
-                  '#${line.id}.${article.id} ${article.status ? '' : ' \ndésactivé'}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.black),
-                  overflow: TextOverflow.ellipsis),
-            ),
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // below local hack for weebi_app only
-                  // * no longer working
-                  // TODO fix this once article basket is included in weebi_view + chassis compat
-                  // Navigator.of(context).popAndPushNamed(ArticleLinesRoute
-                  //     .routePath);
-                  // Navigator.of(context)
-                  //     .popAndPushNamed(ArticleLinesFrameRoute.routePath);
-                },
-                tooltip:
-                    MaterialLocalizations.of(context).openAppDrawerTooltip),
-
-            actions: actionsArticleWidgetUnfinished(
-                context, isShopLocked, article, iconButtonsInAppBar),
-          ),
+              //floating: true,
+              //snap: true,
+              stretch: true,
+              pinned: true,
+              backgroundColor: weebiTheme.scaffoldBackgroundColor,
+              automaticallyImplyLeading: false,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: false,
+                collapseMode: CollapseMode.parallax,
+                // TODO update with photo widget here
+                background: article.photo == null || article.photo.isEmpty
+                    ? (line.isBasket ?? false)
+                        ? const Icon(Icons.shopping_basket,
+                            color: WeebiColors.grey)
+                        : const Icon(Icons.article)
+                    : Hero(
+                        tag: '${article.lineId}.${article.id}',
+                        child: PhotoWidget(article),
+                      ),
+                title: Text(
+                    '#${line.id}.${article.id} ${article.status ? '' : ' \ndésactivé'}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black),
+                    overflow: TextOverflow.ellipsis),
+              ),
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    // below local hack for weebi_app only
+                    // * no longer working
+                    // TODO fix this once article basket is included in weebi_view + chassis compat
+                    // Navigator.of(context).popAndPushNamed(ArticleLinesRoute
+                    //     .routePath);
+                    // Navigator.of(context)
+                    //     .popAndPushNamed(ArticleLinesFrameRoute.routePath);
+                  },
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip),
+              actions: isShopLocked
+                  ? []
+                  : [
+                      EditArticleButton(line.id, article.id),
+                      DeleteArticleButton<A>(article),
+                    ]),
 
           SliverToBoxAdapter(
             child: Padding(

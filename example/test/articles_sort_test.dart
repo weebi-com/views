@@ -44,7 +44,7 @@ void main() {
     expect(1, itemCodeAfterRereorder.line.id);
 
     // check sort by title works
-    final sortByTitleFound = find.byTooltip('Trier par titre');
+    final sortByTitleFound = find.byTooltip('Trier par nom');
     expect(sortByTitleFound, findsOneWidget);
     await tester.tap(sortByTitleFound);
     await tester.pump();

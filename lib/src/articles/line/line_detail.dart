@@ -7,7 +7,8 @@ import 'package:models_weebi/utils.dart';
 
 import 'package:models_weebi/weebi_models.dart'
     show ArticleBasket, ArticleLines;
-import 'package:views_weebi/src/articles/line/actions.dart';
+import 'package:views_weebi/src/articles/line/line_buttons.dart';
+
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, WeebiTextStyles;
@@ -36,14 +37,11 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
   final int initArticle;
   final bool isShopLocked;
-  final List<IconButton> iconButtonsInAppBar;
-  final Widget fabButton;
+
   LineArticlesDetailWidget(
     ArticleLines line,
     TicketsInvoker ticketsInvoker,
-    ClosingStockShopsInvoker closingStockShopsInvoker,
-    this.iconButtonsInAppBar,
-    this.fabButton, {
+    ClosingStockShopsInvoker closingStockShopsInvoker, {
     this.isShopLocked = false,
     this.initArticle = 1,
     key,
@@ -52,14 +50,17 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
-    final lineLiveQt = lineStockNow;
 
     return Scaffold(
       floatingActionButton: Stack(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 31),
-            child: Align(alignment: Alignment.bottomRight, child: fabButton),
+            child: Align(
+                alignment: Alignment.bottomRight,
+                child: isShopLocked || (line.isBasket ?? false)
+                    ? const SizedBox()
+                    : CreateArticleWithinLineButton(line.id)),
           )
         ],
       ),
@@ -84,7 +85,7 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(numFormat.format(lineLiveQt),
+                  child: Text(numFormat.format(lineStockNow),
                       textAlign: TextAlign.end,
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold)),
@@ -93,7 +94,9 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
             const Icon(Icons.warehouse, color: Colors.black),
           ],
         ),
-        actions: actionsLineWidgetUnfinished(isShopLocked, iconButtonsInAppBar),
+        actions: isShopLocked
+            ? []
+            : [EditArticleLineButton(line.id), DeleteArticleLineButton(line)],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -147,9 +150,6 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
     );
   }
 }
-
-typedef ActionsWidget = List<Widget> Function(
-    BuildContext context, bool isShopLocked);
 
 class ArticleBasketGlimpseWidgetFakeFrame extends StatelessWidget {
   final ArticleLines line;

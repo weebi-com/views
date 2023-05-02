@@ -53,7 +53,7 @@ class ChassisTutoProducts extends ChassisAbstract {
             ),
           ),
           Tooltip(
-            message: 'Trier par titre',
+            message: 'Trier par nom',
             child: IconButton(
               icon: const Icon(Icons.sort_by_alpha),
               onPressed: () {

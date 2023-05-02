@@ -78,19 +78,6 @@ class LinesArticlesViewWebOnlyState extends State<LinesArticlesViewWebOnly> {
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
-              // actions: [
-              //   IconButton(
-              //       icon: const Icon(Icons.cancel),
-              //       color: Colors.black,
-              //       onPressed: () {
-              //         articlesStore.clearFilter(data: [
-              //           ...DummyArticleData.cola,
-              //           ...DummyArticleData.babibel
-              //         ]);
-              //         // JamfBM.jams
-              //         setState(() {});
-              //       }),
-              // ],
             ),
       body: ReactionBuilder(
         builder: (_) {

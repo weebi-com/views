@@ -6,13 +6,10 @@ import 'package:models_weebi/weebi_models.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/icons.dart';
-import 'package:views_weebi/src/ask_are_you_sure.dart';
 import 'package:views_weebi/views_article.dart';
 
 import 'package:mixins_weebi/stores.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/styles.dart'; // Flutter imports:
 import 'package:views_weebi/src/articles/article/article_detail.dart';
 
 class ProxyADetailRoute extends RcRoute {
@@ -30,13 +27,6 @@ class ProxyADetailRoute extends RcRoute {
         'articleId': articleId,
         'lotId': lotId
       });
-
-  static String generateArticleCreateRoute(String lineId) =>
-      RcRoute.generateRoute(ArticleCreateRouteUnfinished.routePath,
-          pathParams: {'lineId': lineId});
-  static String generateArticleBasketCreateRoute(String lineId) =>
-      RcRoute.generateRoute(ArticleBasketCreateRouteUnfinished.routePath,
-          pathParams: {'lineId': lineId});
 
   ProxyADetailRoute() : super(path: ProxyADetailRoute.routePath);
 
@@ -68,78 +58,13 @@ class ProxyADetailRoute extends RcRoute {
       throw 'no proxy match $lineId.$articleId.$lotId';
     });
 
-    final fabButton = (line.isBasket ?? false)
-        ? FloatingActionButton(
-            heroTag: 'createBasketSameLine',
-            tooltip: 'Créer un sous-panier d\'articles',
-            backgroundColor: WeebiColors.orange,
-            child: const IconAddArticleBasket(),
-            onPressed: () {
-              articlesStore.clearAllArticleMinQtInSelected();
-              Navigator.of(context)
-                  .pushNamed(generateArticleBasketCreateRoute('${line.id}'));
-            })
-        : FloatingActionButton(
-            heroTag: 'createArticleSameLine',
-            tooltip: 'Créer un article dans la même ligne',
-            backgroundColor: WeebiColors.orange,
-            onPressed: () => Navigator.of(context)
-                .pushNamed(generateArticleCreateRoute('${line.id}')),
-            child: const Icon(Icons.library_add, color: Colors.white),
-          );
-
-    final iconButons = [
-      IconButton(
-        tooltip: "Editer l'article",
-        icon: const Icon(Icons.edit, color: WeebiColors.grey),
-        onPressed: () async {
-          Navigator.of(context).pushNamed(generateUpdateRoute(
-              // using this hack instead of below to avoid mixing components
-              // ArticleUpdateRoute.generateRoute(
-              '${article.productId}',
-              '${article.id}'));
-        },
-      ),
-      IconButton(
-        tooltip: "Supprimer l'article",
-        icon: const Icon(Icons.delete, color: WeebiColors.grey),
-        onPressed: () async {
-          final articlesStore =
-              Provider.of<ArticlesStore>(context, listen: false);
-          final isOkToDelete = await AskDialog.areYouSure(
-            'Attention',
-            'effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?',
-            context,
-            barrierDismissible: false,
-          );
-
-          if (!isOkToDelete) {
-            return;
-          }
-          final p = articlesStore.lines
-              .firstWhere((element) => element.id == article.productId);
-          if (p.articles.length <= 1) {
-            await articlesStore.deleteForeverLineArticle(p);
-            Navigator.of(context)
-                .popAndPushNamed(ArticleLinesFrameRoute.routePath);
-          } else {
-            await articlesStore.deleteForeverArticle(article);
-            Navigator.of(context).popAndPushNamed(
-                ArticleLinesDetailRoute.generateRoute(
-                    '${p.id}', 'false', // cannot be locked if here
-                    articleId: '1'));
-          }
-        },
-      )
-    ];
     return Provider.value(
       value: proxy,
       child: ArticleDetailWidget(
-          article,
-          iconButons,
-          fabButton,
-          () => ticketsStore.tickets,
-          () => closingsStore.closingStockShops), // TODO add isShopLocked
+        article,
+        () => ticketsStore.tickets,
+        () => closingsStore.closingStockShops,
+      ), // TODO add isShopLocked
     );
   }
 }

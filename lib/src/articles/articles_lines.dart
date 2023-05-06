@@ -18,16 +18,16 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 // * This is for web only now
 // articleBaskets are not included here yet
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
-class LinesArticlesViewWebOnly extends StatefulWidget {
+class ArticlesLinesViewWebOnly extends StatefulWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const LinesArticlesViewWebOnly({@required this.mainNavigator});
+  const ArticlesLinesViewWebOnly({@required this.mainNavigator});
 
   @override
-  LinesArticlesViewWebOnlyState createState() =>
-      LinesArticlesViewWebOnlyState();
+  ArticlesLinesViewWebOnlyState createState() =>
+      ArticlesLinesViewWebOnlyState();
 }
 
-class LinesArticlesViewWebOnlyState extends State<LinesArticlesViewWebOnly> {
+class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
   final textController = TextEditingController();
   final scrollControllerVertical = ScrollController();
 

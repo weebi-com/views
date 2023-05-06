@@ -67,7 +67,7 @@ class ChassisTutoProducts extends ChassisAbstract {
           ),
         ],
         mainNavigatorKey: mainNavigator,
-        body: LinesArticlesViewWebOnly(mainNavigator: mainNavigator),
+        body: ArticlesLinesViewWebOnly(mainNavigator: mainNavigator),
       );
 
   const ChassisTutoProducts({

@@ -14,7 +14,7 @@ import 'package:views_weebi/src/articles/app_bar_search.dart';
 // Project imports:
 import 'package:views_weebi/src/articles/line/frame.dart';
 import 'package:views_weebi/src/routes/articles/line_article_create_unfinished.dart';
-import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
+import 'package:views_weebi/styles.dart' show WeebiColors;
 
 // * This is for web only now
 // articleBaskets are not included here yet

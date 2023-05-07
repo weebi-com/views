@@ -21,8 +21,8 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
     return ListTile(
       onTap: () {
         Navigator.of(context).pushNamed(ArticlesLineDetailRoute.generateRoute(
-            '${article.lineId}', 'false', // TODO isShopLocked
-            articleId: '${article.id}'));
+            '${article.lineId}',
+            articleId: '${article.id}')); // TODO isShopLocked
       },
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(

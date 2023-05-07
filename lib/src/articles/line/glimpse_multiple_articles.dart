@@ -67,7 +67,7 @@ class LineArticlesGlimpseWidgetSatefulState
         onLongPress: () {
           if (widget.line.isBasket == false) {
             Navigator.of(context).pushNamed(ArticlesLineDetailRoute.generateRoute(
-                '${widget.line.id}', 'false', // TODO get isShopLocked for real
+                '${widget.line.id}', // TODO get isShopLocked for real
                 articleId:
                     '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
           }

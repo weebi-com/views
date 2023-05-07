@@ -13,8 +13,8 @@ import 'package:views_weebi/views_line.dart' show LineArticlesDetailWidget;
 class ArticlesLineDetailRoute extends RcRoute {
   static String routePath = '/lines/:lineId/slide/:articleId';
 
-  static String generateRoute(String lineId, String isShopLocked,
-          {@required String articleId}) =>
+  static String generateRoute(String lineId,
+          {@required String articleId, String isShopLocked = 'false'}) =>
       RcRoute.generateRoute(routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 

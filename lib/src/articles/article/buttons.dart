@@ -58,9 +58,8 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         } else {
           await articlesStore.deleteForeverArticle(article);
           Navigator.of(context).popAndPushNamed(
-              ArticlesLineDetailRoute.generateRoute(
-                  '${p.id}', 'false', // cannot be locked if here
-                  articleId: '1'));
+              ArticlesLineDetailRoute.generateRoute('${p.id}',
+                  articleId: '1')); // TODO isShopLocked
         }
       },
     );

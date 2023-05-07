@@ -14,13 +14,13 @@ import 'package:views_weebi/views_line.dart';
 // this can be accessed from LinesArticlesViewWIP articles_main_view_wip.dart
 // also for web only
 
-class LinesFrameW extends StatelessWidget {
+class ArticleLineFrame extends StatelessWidget {
   final BuildContext contextMain;
   final ArticleLine line;
 
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  const LinesFrameW({
+  const ArticleLineFrame({
     @required this.contextMain,
     @required this.line,
     @required this.ticketsInvoker,
@@ -30,7 +30,7 @@ class LinesFrameW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (line.isSingleArticle ?? false) {
-      return ArticleSingleGlimpseWidget(
+      return LineArticleSingleGlimpseWidget(
           line, ticketsInvoker, closingStockShopsInvoker);
     } else {
       return LineArticlesGlimpseWidget(

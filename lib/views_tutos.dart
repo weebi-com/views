@@ -1,3 +1,3 @@
 library views_tutos;
 
-export 'src/chassis_products_tuto_view.dart';
+export 'src/chassis_articles_tuto_view.dart';

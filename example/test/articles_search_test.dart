@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:views_weebi/views.dart' show LinesFrameW;
+import 'package:views_weebi/views.dart' show ArticleLineFrame;
 import 'package:views_weebi_example/example.dart';
 
 void main() {
@@ -19,12 +19,14 @@ void main() {
     expect(searchBar, findsOneWidget);
     await tester.enterText(searchBar, 'ba');
     await tester.pump();
-    int itemsLength =
-        tester.widgetList<LinesFrameW>(find.byType(LinesFrameW)).length;
+    int itemsLength = tester
+        .widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame))
+        .length;
     expect(itemsLength, 1);
 
-    LinesFrameW item =
-        tester.widgetList<LinesFrameW>(find.byType(LinesFrameW)).elementAt(0);
+    ArticleLineFrame item = tester
+        .widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame))
+        .elementAt(0);
     expect('Babibel', item.line.title);
     expect(2, item.line.id);
 
@@ -36,7 +38,7 @@ void main() {
 
     expect(searchBar, findsNothing);
     final linesSearchClose =
-        tester.widgetList<LinesFrameW>(find.byType(LinesFrameW));
+        tester.widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame));
     final colaSearchClose = linesSearchClose.elementAt(0);
     expect(linesSearchClose, 2);
     expect('Noix de cola', colaSearchClose.line.title);

@@ -11,9 +11,9 @@ import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
-class ArticleSingleGlimpseWidget extends LineArticleStockAbstract
+class LineArticleSingleGlimpseWidget extends LineArticleStockAbstract
     with LineArticleStockNowMixin {
-  ArticleSingleGlimpseWidget(
+  LineArticleSingleGlimpseWidget(
     ArticleLine line,
     TicketsInvoker ticketsInvoker,
     ClosingStockShopsInvoker closingsInvoker, {

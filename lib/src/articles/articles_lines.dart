@@ -63,7 +63,7 @@ class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return Scaffold(
-      appBar: articlesStore.filteredBy != FilteredBy.title
+      appBar: articlesStore.searchedBy != SearchedBy.titleOrId
           ? null
           : AppBar(
               backgroundColor: weebiTheme.scaffoldBackgroundColor,
@@ -74,7 +74,7 @@ class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
                 keyboardType: TextInputType.text,
                 controller: textController,
                 decoration: const InputDecoration(
-                  hintText: "Nom ",
+                  hintText: "Nom ou #",
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -84,17 +84,14 @@ class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
           // using reaction here is a bit trickier than in the addListener
           // but it will allow us to move textedit anywhere in the widget tree
           return reaction((_) => articlesStore.queryString,
-              (val) => articlesStore.filterByTitle()
-              //print(articlesStore.lines.length);
-              //print(val);
-              );
+              (val) => articlesStore.searchByTitleOrId());
         },
         child: Observer(builder: (context) {
           return ListView.builder(
             shrinkWrap: true,
             controller: scrollControllerVertical,
             itemCount: articlesStore.linesPalpableFiltered.length,
-            itemBuilder: (BuildContext context, int index) => LinesFrameW(
+            itemBuilder: (BuildContext context, int index) => ArticleLineFrame(
                 contextMain: context,
                 line: articlesStore.linesPalpableFiltered[index],
                 ticketsInvoker: () => ticketsStore.tickets,
@@ -115,19 +112,18 @@ class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
                 heroTag: 'btnSearchArticles',
                 tooltip: 'Chercher un article',
                 backgroundColor: Colors.white,
-                child: articlesStore.filteredBy != FilteredBy.title
+                child: articlesStore.searchedBy != SearchedBy.titleOrId
                     ? const Icon(Icons.search, color: WeebiColors.orange)
                     : const Icon(Icons.close, color: WeebiColors.orange),
                 onPressed: () {
-                  if (articlesStore.filteredBy != FilteredBy.title) {
+                  if (articlesStore.searchedBy != SearchedBy.titleOrId) {
                     // print('setFilteredBy(FilteredBy.title)');
-                    articlesStore.setFilteredBy(FilteredBy.title);
+                    articlesStore.setSearchedBy(SearchedBy.titleOrId);
                   } else {
                     articlesStore.clearFilter(data: [
                       ...DummyArticleData.cola,
                       ...DummyArticleData.babibel
                     ]);
-                    // JamfBM.jams);
                   }
                   setState(() {});
                 },

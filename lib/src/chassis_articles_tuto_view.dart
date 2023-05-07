@@ -35,18 +35,18 @@ class ChassisTutoProducts extends ChassisAbstract {
       ChassisTutoProducts(
         selectedIndex: 0,
         actions: <Widget>[
-          Observer(
-            builder: (context) => Tooltip(
-              message: 'Trier par code',
-              child: IconButton(
-                icon: articlesStore.sortedBy.value == SortedBy.codeShortcut
+          Tooltip(
+            message: 'Trier par code',
+            child: Observer(
+              builder: (context) => IconButton(
+                icon: articlesStore.sortedBy.value == SortedBy.id
                     ? const Icon(Icons.keyboard_arrow_down)
                     : const Icon(Icons.keyboard_arrow_up),
                 onPressed: () {
-                  if (articlesStore.sortedBy.value == SortedBy.codeShortcut) {
-                    articlesStore.sortBy(SortedBy.codeShortcutReversed);
+                  if (articlesStore.sortedBy.value == SortedBy.id) {
+                    articlesStore.sortBy(SortedBy.idReversed);
                   } else {
-                    articlesStore.sortBy(SortedBy.codeShortcut);
+                    articlesStore.sortBy(SortedBy.id);
                   }
                 },
               ),

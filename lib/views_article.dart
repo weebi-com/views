@@ -11,3 +11,5 @@ export 'src/articles/article/article_detail_complement.dart';
 
 export 'src/articles/article_card_slide.dart';
 export 'src/articles/article_cards_slidable.dart';
+
+export 'src/articles/app_bar_search.dart';

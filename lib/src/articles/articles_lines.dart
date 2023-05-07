@@ -9,6 +9,7 @@ import 'package:models_weebi/dummies.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/articles/app_bar_search.dart';
 
 // Project imports:
 import 'package:views_weebi/src/articles/line/frame.dart';
@@ -18,87 +19,51 @@ import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 // * This is for web only now
 // articleBaskets are not included here yet
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
-class ArticlesLinesViewWebOnly extends StatefulWidget {
+class ArticlesLinesViewWebOnly extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigator;
   const ArticlesLinesViewWebOnly({@required this.mainNavigator});
 
   @override
-  ArticlesLinesViewWebOnlyState createState() =>
-      ArticlesLinesViewWebOnlyState();
-}
-
-class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
-  final textController = TextEditingController();
-  final scrollControllerVertical = ScrollController();
-
-  bool submitting = false;
-
-  @override
-  void initState() {
-    super.initState();
-    textController.addListener(() {
-      final String text = textController.text;
-      textController.value = textController.value.copyWith(
-        text: text,
-        selection:
-            TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-      final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-      articlesStore.setQueryString(textController.value.text);
-    });
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    scrollControllerVertical.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // final top = Provider.of<TopProvider>(context, listen: false);
+    final scrollControllerVertical = ScrollController();
+
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return Scaffold(
-      appBar: articlesStore.searchedBy != SearchedBy.titleOrId
-          ? null
-          : AppBar(
-              backgroundColor: weebiTheme.scaffoldBackgroundColor,
-              leading: const Icon(Icons.search, color: WeebiColors.grey),
-              title: TextField(
-                autofocus: true,
-                style: const TextStyle(color: Colors.black),
-                keyboardType: TextInputType.text,
-                controller: textController,
-                decoration: const InputDecoration(
-                  hintText: "Nom ou #",
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
+      body: Column(
+        children: [
+          Observer(
+            builder: (context) =>
+                articlesStore.searchedBy == SearchedBy.titleOrId
+                    ? const TopBarSearchArticles()
+                    : const SizedBox(),
+          ),
+          Expanded(
+            child: ReactionBuilder(
+              builder: (_) {
+                // using reaction here is a bit trickier than in the addListener
+                // but it will allow us to move textedit anywhere in the widget tree
+                return reaction((_) => articlesStore.queryString,
+                    (val) => articlesStore.searchByTitleOrId());
+              },
+              child: Observer(builder: (context) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  controller: scrollControllerVertical,
+                  itemCount: articlesStore.linesPalpableFiltered.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      ArticleLineFrame(
+                          contextMain: context,
+                          line: articlesStore.linesPalpableFiltered[index],
+                          ticketsInvoker: () => ticketsStore.tickets,
+                          closingStockShopsInvoker: () =>
+                              closingsStore.closingStockShops),
+                );
+              }),
             ),
-      body: ReactionBuilder(
-        builder: (_) {
-          // using reaction here is a bit trickier than in the addListener
-          // but it will allow us to move textedit anywhere in the widget tree
-          return reaction((_) => articlesStore.queryString,
-              (val) => articlesStore.searchByTitleOrId());
-        },
-        child: Observer(builder: (context) {
-          return ListView.builder(
-            shrinkWrap: true,
-            controller: scrollControllerVertical,
-            itemCount: articlesStore.linesPalpableFiltered.length,
-            itemBuilder: (BuildContext context, int index) => ArticleLineFrame(
-                contextMain: context,
-                line: articlesStore.linesPalpableFiltered[index],
-                ticketsInvoker: () => ticketsStore.tickets,
-                closingStockShopsInvoker: () =>
-                    closingsStore.closingStockShops),
-          );
-        }),
+          ),
+        ],
       ),
       floatingActionButton: Stack(
         children: <Widget>[
@@ -108,25 +73,26 @@ class ArticlesLinesViewWebOnlyState extends State<ArticlesLinesViewWebOnly> {
               padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width / 14,
               ),
-              child: FloatingActionButton(
-                heroTag: 'btnSearchArticles',
-                tooltip: 'Chercher un article',
-                backgroundColor: Colors.white,
-                child: articlesStore.searchedBy != SearchedBy.titleOrId
-                    ? const Icon(Icons.search, color: WeebiColors.orange)
-                    : const Icon(Icons.close, color: WeebiColors.orange),
-                onPressed: () {
-                  if (articlesStore.searchedBy != SearchedBy.titleOrId) {
-                    // print('setFilteredBy(FilteredBy.title)');
-                    articlesStore.setSearchedBy(SearchedBy.titleOrId);
-                  } else {
-                    articlesStore.clearFilter(data: [
-                      ...DummyArticleData.cola,
-                      ...DummyArticleData.babibel
-                    ]);
-                  }
-                  setState(() {});
-                },
+              child: Observer(
+                builder: (context) => FloatingActionButton(
+                  heroTag: 'btnSearchArticles',
+                  tooltip: 'Chercher un article',
+                  backgroundColor: Colors.white,
+                  child: articlesStore.searchedBy != SearchedBy.titleOrId
+                      ? const Icon(Icons.search, color: WeebiColors.orange)
+                      : const Icon(Icons.close, color: WeebiColors.orange),
+                  onPressed: () {
+                    if (articlesStore.searchedBy != SearchedBy.titleOrId) {
+                      // print('setFilteredBy(FilteredBy.title)');
+                      articlesStore.setSearchedBy(SearchedBy.titleOrId);
+                    } else {
+                      articlesStore.clearSearch(data: [
+                        ...DummyArticleData.cola,
+                        ...DummyArticleData.babibel
+                      ]);
+                    }
+                  },
+                ),
               ),
             ),
           ),

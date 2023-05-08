@@ -27,7 +27,7 @@ class CreateArticleWithinLineButton extends StatelessWidget {
       tooltip: 'créer un sous-article',
       backgroundColor: Colors.orange[700],
       onPressed: () => Navigator.of(context).pushNamed(
-          ArticlesLineDetailRoute.generateCreateArticleWithinLineRoute(
+          ArticleLineDetailRoute.generateCreateArticleWithinLineRoute(
               '${articleLineId}')),
       child: const Icon(Icons.library_add, color: Colors.white),
     );
@@ -47,7 +47,7 @@ class EditArticleLineButton extends StatelessWidget {
       tooltip: "Editer toute la ligne d'articles",
       onPressed: () {
         Navigator.of(context)
-            .pushNamed(ArticlesLineDetailRoute.generateUpdateRoute(
+            .pushNamed(ArticleLineDetailRoute.generateUpdateRoute(
           '${articleLineId}',
           '$isShopLocked' ?? false,
         )); // route unnoying

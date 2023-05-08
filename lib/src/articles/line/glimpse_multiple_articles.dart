@@ -59,38 +59,33 @@ class LineArticlesGlimpseWidgetSatefulState
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: widget.line.isBasket == false
-          ? 'Appui long pour voir tous les articles de la ligne'
-          : '',
-      child: InkWell(
-        onLongPress: () {
-          if (widget.line.isBasket == false) {
-            Navigator.of(context).pushNamed(ArticlesLineDetailRoute.generateRoute(
-                '${widget.line.id}', // TODO get isShopLocked for real
-                articleId:
-                    '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
-          }
+    return InkWell(
+      onLongPress: () {
+        if (widget.line.isBasket == false) {
+          Navigator.of(context).pushNamed(ArticleLineDetailRoute.generateRoute(
+              '${widget.line.id}', // TODO get isShopLocked for real
+              articleId:
+                  '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
+        }
+      },
+      child: ExpansionTile(
+        onExpansionChanged: (bool expanding) {
+          setState(
+            () => iconColor =
+                expanding ? WeebiColors.buttonColor : WeebiColors.grey,
+          );
         },
-        child: ExpansionTile(
-          onExpansionChanged: (bool expanding) {
-            setState(
-              () => iconColor =
-                  expanding ? WeebiColors.buttonColor : WeebiColors.grey,
-            );
-          },
-          title:
-              LineArticleTileTitle(widget.line, widget.lineStockNow, iconColor),
-          children: <Widget>[
-            for (final article in widget.line.articles)
-              ArticleWFrameView(
-                article as ArticleRetail,
-                true,
-                widget.ticketsInvoker,
-                widget.closingStockShopsInvoker,
-              )
-          ],
-        ),
+        title:
+            LineArticleTileTitle(widget.line, widget.lineStockNow, iconColor),
+        children: <Widget>[
+          for (final article in widget.line.articles)
+            ArticleWFrameView(
+              article as ArticleRetail,
+              true,
+              widget.ticketsInvoker,
+              widget.closingStockShopsInvoker,
+            )
+        ],
       ),
     );
   }

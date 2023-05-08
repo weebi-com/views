@@ -16,7 +16,7 @@ final lineDummySugar = ArticleLine(
       id: 1,
       fullName: 'Sucre g',
       photo: '',
-      photoSource: PhotoSource.network,
+      photoSource: PhotoSource.unknown,
       weight: 1.0,
       price: 10,
       cost: 5,

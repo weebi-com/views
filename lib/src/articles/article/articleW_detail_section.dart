@@ -44,19 +44,20 @@ class ArticleWDetailSection extends StatelessWidget {
         ),
         FieldValueWidget(
           const Icon(Icons.style),
-          const Text("Vendu par lots de "),
+          const Text("Unités par pièce"),
           SelectableText(
             "${article.weight}",
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        if (article.articleCode != null &&
-            '${article.articleCode}' != '${article.lineId}${article.id}')
+        if (article.barcodeEAN != null &&
+            article.barcodeEAN.isNotEmpty &&
+            '${article.barcodeEAN}' != '${article.lineId}${article.id}')
           FieldValueWidget(
             const Icon(Icons.speaker_phone),
             const Text("Code barre"),
             SelectableText(
-              "${article.articleCode}",
+              "${article.barcodeEAN}",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),

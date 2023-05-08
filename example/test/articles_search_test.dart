@@ -5,8 +5,8 @@ import 'package:views_weebi_example/example.dart';
 
 void main() {
   testWidgets('check articles search by title', (tester) async {
-    await tester.pumpWidget(const ZeProviders(StoresLoader(ExampleApp())));
     // pumps ChassisTutoProducts and also ArticlesLinesViewWIP
+    await tester.pumpWidget(const ZeProviders(StoresLoader(ExampleApp())));
     await tester.pump();
     expect(find.text('Articles'), findsWidgets);
 
@@ -24,24 +24,26 @@ void main() {
         .length;
     expect(itemsLength, 1);
 
-    ArticleLineFrame item = tester
+    ArticleLineFrame lineFrameViewBabibel = tester
         .widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame))
         .elementAt(0);
-    expect('Babibel', item.line.title);
-    expect(2, item.line.id);
+    expect(lineFrameViewBabibel.line.title, 'Babibel');
+    expect(lineFrameViewBabibel.line.id, 2);
 
     // verify that close icon is there and works
-    final closeIcon = find.byIcon(Icons.cancel);
+    final closeIcon = find.byTooltip('Chercher un article');
     expect(closeIcon, findsOneWidget);
     await tester.tap(closeIcon);
     await tester.pump();
-
     expect(searchBar, findsNothing);
+
     final linesSearchClose =
         tester.widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame));
-    final colaSearchClose = linesSearchClose.elementAt(0);
-    expect(linesSearchClose, 2);
-    expect('Noix de cola', colaSearchClose.line.title);
-    expect(1, colaSearchClose.line.id);
+    expect(linesSearchClose.isNotEmpty, isTrue);
+
+    final ArticleLineFrame lineFrameView2 = linesSearchClose.elementAt(0);
+    expect(lineFrameView2.line.articles.length, 3);
+    expect(lineFrameView2.line.title, 'Noix de cola');
+    expect(lineFrameView2.line.id, 1);
   });
 }

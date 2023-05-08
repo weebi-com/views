@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/base.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/ask_are_you_sure.dart';
+import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
@@ -58,7 +58,7 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         } else {
           await articlesStore.deleteForeverArticle(article);
           Navigator.of(context).popAndPushNamed(
-              ArticlesLineDetailRoute.generateRoute('${p.id}',
+              ArticleLineDetailRoute.generateRoute('${p.id}',
                   articleId: '1')); // TODO isShopLocked
         }
       },

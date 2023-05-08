@@ -10,7 +10,7 @@ import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/line/line_detail.dart';
 import 'package:views_weebi/views_line.dart' show LineArticlesDetailWidget;
 
-class ArticlesLineDetailRoute extends RcRoute {
+class ArticleLineDetailRoute extends RcRoute {
   static String routePath = '/lines/:lineId/slide/:articleId';
 
   static String generateRoute(String lineId,
@@ -22,7 +22,7 @@ class ArticlesLineDetailRoute extends RcRoute {
     String lineId,
     String isShopLocked,
   ) =>
-      RcRoute.generateRoute(LineOfArticleUpdateRouteUnfinished.routePath,
+      RcRoute.generateRoute(LineOfArticleUpdateRoute.routePath,
           pathParams: {'lineId': lineId, 'isShopLocked': isShopLocked});
 
 // temporary hack to avoid mixing components
@@ -34,9 +34,9 @@ class ArticlesLineDetailRoute extends RcRoute {
 // temporary hack to avoid mixing components
 // even more complex for creation...
   static String generateArticleLineCreateRouteUnfinished() =>
-      RcRoute.generateRoute(ArticleLineCreateRouteUnfinished.routePath);
+      RcRoute.generateRoute(ArticleLineCreateRoute.routePath);
 
-  ArticlesLineDetailRoute() : super(path: ArticlesLineDetailRoute.routePath);
+  ArticleLineDetailRoute() : super(path: ArticleLineDetailRoute.routePath);
 
   @override
   Widget build(BuildContext context) {

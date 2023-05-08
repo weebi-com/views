@@ -33,12 +33,12 @@ class _ExampleAppState extends State<ExampleApp> {
       ),
       // ArticleBasketCreateRoute(),
       // ArticleLineCreateRoute(),
-      ArticlesLineDetailRoute(),
+      ArticleLineDetailRoute(),
       // LineOfArticleUpdateRoute(),
       // ArticleCreateRoute(),
       ArticleDetailRoute(),
       ArticleUpdateRouteUnfinished(), // unfinished here
-      ArticleLineCreateRouteUnfinished(), // unfinished here
+      ArticleLineCreateRoute(), // unfinished here
       // PrinterSettingsRoute(),
       // PromoCreateRoute(),
       ProxyADetailRoute(),

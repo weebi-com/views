@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:views_weebi/src/ask_are_you_sure.dart';
+import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 
 // Project imports:

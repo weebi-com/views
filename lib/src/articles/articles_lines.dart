@@ -30,41 +30,61 @@ class ArticlesLinesViewWebOnly extends StatelessWidget {
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
+    ticketsInvoker() =>
+        Provider.of<TicketsStore>(context, listen: false).tickets;
+    closingStockShopsInvoker() =>
+        Provider.of<ClosingsStore>(context, listen: false).closingStockShops;
     return Scaffold(
-      body: Column(
-        children: [
-          Observer(
-            builder: (context) =>
-                articlesStore.searchedBy == SearchedBy.titleOrId
-                    ? const TopBarSearchArticles()
-                    : const SizedBox(),
-          ),
-          Expanded(
-            child: ReactionBuilder(
-              builder: (_) {
-                // using reaction here is a bit trickier than in the addListener
-                // but it will allow us to move textedit anywhere in the widget tree
-                return reaction((_) => articlesStore.queryString,
-                    (val) => articlesStore.searchByTitleOrId());
-              },
-              child: Observer(builder: (context) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  controller: scrollControllerVertical,
-                  itemCount: articlesStore.linesPalpableFiltered.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      ArticleLineFrame(
+      body: Observer(builder: (context) {
+        return Column(
+          children: [
+            articlesStore.searchedBy == SearchedBy.titleOrId
+                ? const TopBarSearchArticles()
+                : const SizedBox(),
+            Expanded(
+              child: articlesStore.searchedBy != SearchedBy.titleOrId
+                  ? Observer(
+                      builder: (context) => ListView.builder(
+                        shrinkWrap: true,
+                        controller: scrollControllerVertical,
+                        itemCount: articlesStore.lines.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            ArticleLineFrame(
                           contextMain: context,
-                          line: articlesStore.linesPalpableFiltered[index],
-                          ticketsInvoker: () => ticketsStore.tickets,
-                          closingStockShopsInvoker: () =>
-                              closingsStore.closingStockShops),
-                );
-              }),
+                          line: articlesStore.lines[index],
+                          ticketsInvoker: ticketsInvoker,
+                          closingStockShopsInvoker: closingStockShopsInvoker,
+                        ),
+                      ),
+                    )
+                  : ReactionBuilder(
+                      builder: (_) {
+                        // using reaction here is a bit trickier than in the addListener
+                        // but it will allow us to move textedit anywhere in the widget tree
+                        return reaction(
+                            (_) => articlesStore.queryString,
+                            (val) =>
+                                articlesStore.searchPalpablesByTitleOrId());
+                      },
+                      child: Observer(
+                        builder: (context) => ListView.builder(
+                          shrinkWrap: true,
+                          controller: scrollControllerVertical,
+                          itemCount: articlesStore.linesPalpableFiltered.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              ArticleLineFrame(
+                            contextMain: context,
+                            line: articlesStore.linesPalpableFiltered[index],
+                            ticketsInvoker: ticketsInvoker,
+                            closingStockShopsInvoker: closingStockShopsInvoker,
+                          ),
+                        ),
+                      ),
+                    ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
       floatingActionButton: Stack(
         children: <Widget>[
           Align(
@@ -75,7 +95,7 @@ class ArticlesLinesViewWebOnly extends StatelessWidget {
               ),
               child: Observer(
                 builder: (context) => FloatingActionButton(
-                  heroTag: 'btnSearchArticles',
+                  heroTag: 'ArticleLinesFAB',
                   tooltip: 'Chercher un article',
                   backgroundColor: Colors.white,
                   child: articlesStore.searchedBy != SearchedBy.titleOrId
@@ -111,17 +131,23 @@ class ArticlesLinesViewWebOnly extends StatelessWidget {
           //         ),
           //         child: const IconAddArticleBasket(),
           //       )),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              backgroundColor: WeebiColors.orange,
-              tooltip: 'Créer un article',
-              heroTag: "btn1Add",
-              onPressed: () => Navigator.of(context)
-                  .pushNamed(ArticleLineCreateRouteUnfinished.routePath),
-              child: const Icon(Icons.add, color: Colors.white),
-            ),
-          ),
+          Observer(builder: (context) {
+            return articlesStore.searchedBy != SearchedBy.titleOrId
+                ? Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton(
+                      backgroundColor: WeebiColors.orange,
+                      tooltip: 'Créer un article',
+                      heroTag: "btn1Add",
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(ArticleLineCreateRoute.routePath);
+                      },
+                      child: const Icon(Icons.add, color: Colors.white),
+                    ),
+                  )
+                : const SizedBox();
+          }),
           // ]
         ],
       ),

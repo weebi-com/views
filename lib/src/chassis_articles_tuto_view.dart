@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 // Package imports:
 import 'package:mixins_weebi/stores.dart';
-import 'package:views_weebi/src/ask_are_you_sure.dart';
+import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/info.dart';
 

@@ -27,7 +27,7 @@ class LineOfArticleUpdateRoute extends RcRoute {
     });
     return Provider.value(
       value: line,
-      child: ArticleLineUpateView(line),
+      child: ArticleLineUpdateView(line),
     );
   }
 }

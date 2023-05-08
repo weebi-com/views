@@ -19,11 +19,11 @@ void main() {
 
     await tester.pump();
 
-    expect(find.byIcon(Icons.short_text), findsOneWidget);
-    expect(find.byIcon(Icons.local_offer), findsWidgets);
-    expect(find.byIcon(Icons.filter_frames), findsOneWidget);
-    expect(find.byIcon(Icons.style), findsOneWidget);
-    expect(find.byIcon(Icons.speaker_phone), findsOneWidget);
+    expect(find.byIcon(Icons.short_text), findsOneWidget); // lineName
+    expect(find.byIcon(Icons.local_offer), findsWidgets); // price & cost
+    expect(find.byIcon(Icons.filter_frames), findsOneWidget); // stockUnit
+    expect(find.byIcon(Icons.style), findsOneWidget); // units per piece
+    expect(find.byIcon(Icons.speaker_phone), findsOneWidget); // barcode
 
     final name = find.byKey(ArticleLineCreateView.nameKey);
     await tester.enterText(name, ArticleLine.dummy.title);
@@ -45,7 +45,7 @@ void main() {
 
     expect(articlesStore.lines.length, 0);
     await tester.tap(actionButton);
-    await tester.pump(); //Duration(milliseconds: 4)
+    await tester.pump();
     await tester.pump();
     await tester.pump();
     expect(articlesStore.lines.length, 1);

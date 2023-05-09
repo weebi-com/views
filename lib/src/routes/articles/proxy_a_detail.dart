@@ -18,7 +18,7 @@ class ProxyADetailRoute extends RcRoute {
   // temporary hack to avoid mixing components
   // TODO fix this when web is stabilized
   static String generateUpdateRoute(String lineId, String articleId) =>
-      RcRoute.generateRoute(ArticleUpdateRouteUnfinished.routePath,
+      RcRoute.generateRoute(ArticleRetailUpdateRoute.routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 
   static String generateRoute(String lineId, String articleId, String lotId) =>

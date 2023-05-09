@@ -71,7 +71,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                       child: PhotoWidget(article),
                     ),
                   ),
-                  ArticleWFrameView(
+                  ArticleRetailFrameView(
                     article as ArticleRetail,
                     false,
                     ticketsInvoker,

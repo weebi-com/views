@@ -6,16 +6,16 @@ import 'package:models_weebi/weebi_models.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
+import 'package:views_weebi/src/articles/article/article_basket/update.dart';
 
-class ArticleUpdateRouteUnfinished extends RcRoute {
-  static String routePath = '/article_update/:lineId/:articleId';
+class ArticleBasketUpdateRoute extends RcRoute {
+  static String routePath = '/article_basket_update/:lineId/:articleId';
 
   static String generateRoute(String lineId, String articleId) =>
       RcRoute.generateRoute(routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 
-  ArticleUpdateRouteUnfinished()
-      : super(path: ArticleUpdateRouteUnfinished.routePath);
+  ArticleBasketUpdateRoute() : super(path: ArticleBasketUpdateRoute.routePath);
 
   @override
   Widget build(BuildContext context) {
@@ -36,35 +36,7 @@ class ArticleUpdateRouteUnfinished extends RcRoute {
       articlesStore.clearAllArticleMinQtInSelected();
     }
     return Provider.value(
-      value: article,
-      child: isBasket
-          ? ArticleBasketUpdateViewFakeFrame(article as ArticleBasket)
-          : ArticleUpdateViewFakeFrame(article as ArticleRetail),
-    );
-  }
-}
-
-class ArticleUpdateViewFakeFrame extends StatelessWidget {
-  final ArticleRetail article;
-  const ArticleUpdateViewFakeFrame(this.article, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    //TODO implement ArticleWUpdateView(article:article) here
-    print('implement ArticleWUpdateView(article:article) here');
-    return Container();
-  }
-}
-
-class ArticleBasketUpdateViewFakeFrame extends StatelessWidget {
-  final ArticleBasket articleBasket;
-  const ArticleBasketUpdateViewFakeFrame(this.articleBasket, {Key key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    //TODO implement ArticleBasketUpdateView() here
-    print('implement ArticleBasketUpdateView() here');
-    return Container();
+        value: article,
+        child: ArticleBasketUpdateView(article as ArticleBasket));
   }
 }

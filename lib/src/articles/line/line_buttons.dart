@@ -6,9 +6,10 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 
 import 'package:models_weebi/weebi_models.dart' show ArticleLine;
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/routes/articles/create_article_retail.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
+import 'package:views_weebi/src/routes/articles/update_line.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 import 'package:views_weebi/widgets.dart';
@@ -27,8 +28,7 @@ class CreateArticleWithinLineButton extends StatelessWidget {
       tooltip: 'créer un sous-article',
       backgroundColor: Colors.orange[700],
       onPressed: () => Navigator.of(context).pushNamed(
-          ArticleLineDetailRoute.generateCreateArticleWithinLineRoute(
-              '${articleLineId}')),
+          ArticleRetailCreateRoute.generateRoute('${articleLineId}')),
       child: const Icon(Icons.library_add, color: Colors.white),
     );
   }
@@ -43,13 +43,11 @@ class EditArticleLineButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.edit, color: WeebiColors.grey),
+      icon: const Icon(Icons.edit, color: WeebiColors.orange),
       tooltip: "Editer toute la ligne d'articles",
       onPressed: () {
-        Navigator.of(context)
-            .pushNamed(ArticleLineDetailRoute.generateUpdateRoute(
+        Navigator.of(context).pushNamed(ArticleLineUpdateRoute.generateRoute(
           '${articleLineId}',
-          '$isShopLocked' ?? false,
         )); // route unnoying
       },
     );
@@ -66,7 +64,7 @@ class DeleteArticleLineButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         tooltip: "Supprimer toute le ligne d'articles",
-        icon: const Icon(Icons.delete_forever, color: WeebiColors.grey),
+        icon: const Icon(Icons.delete_forever, color: WeebiColors.orange),
         onPressed: () async {
           final isOkToDelete = await AskDialog.areYouSure(
             'Attention',
@@ -83,7 +81,7 @@ class DeleteArticleLineButton extends StatelessWidget {
               Provider.of<ArticlesStore>(context, listen: false);
           await articlesStore.deleteForeverLineArticle(articleLine);
 
-          Navigator.of(context).pushNamed(ArticleLineFrameRoute.routePath);
+          Navigator.of(context).pushNamed(ArticlesLinesAllFrameRoute.routePath);
         });
   }
 }

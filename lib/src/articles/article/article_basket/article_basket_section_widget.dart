@@ -13,7 +13,7 @@ import 'package:models_weebi/weebi_models.dart'
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:mixins_weebi/stores.dart' show TicketsStore;
 import 'package:models_weebi/utils.dart';
-import 'package:views_weebi/src/articles/article/proxy_article_glimpse_frame.dart';
+import 'package:views_weebi/src/articles/article/article_basket/proxy_article_glimpse_frame.dart';
 import 'package:views_weebi/styles.dart';
 import 'package:views_weebi/widgets.dart';
 

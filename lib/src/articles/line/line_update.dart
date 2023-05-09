@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/stores.dart';
+import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/weebi_models.dart';
@@ -54,9 +55,9 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
           }
           try {
             final lineC = await store.updateLineArticleFromForm<A>(widget.line);
-            // toastSuccessArticle(context, message: 'article créé');
+            // toastSuccessArticle(context, message: 'ligne mise à jour');
             Navigator.of(context).popAndPushNamed(
-                ArticleLineDetailRoute.generateRoute('${lineC.id}',
+                ArticleLineRetailDetailRoute.generateRoute('${lineC.id}',
                     articleId: '1'));
           } on Exception catch (e) {
             return InformDialog.showDialogWeebiNotOk(

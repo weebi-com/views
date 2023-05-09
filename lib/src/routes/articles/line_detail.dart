@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/routes.dart';
 
 import 'package:views_weebi/src/articles/line/line_detail.dart';
 import 'package:views_weebi/views_line.dart' show LineArticlesDetailWidget;
 
-class ArticleLineDetailRoute extends RcRoute {
+class ArticleLineRetailDetailRoute extends RcRoute {
   static String routePath = '/lines/:lineId/slide/:articleId';
 
   static String generateRoute(String lineId,
@@ -18,25 +17,8 @@ class ArticleLineDetailRoute extends RcRoute {
       RcRoute.generateRoute(routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 
-  static String generateUpdateRoute(
-    String lineId,
-    String isShopLocked,
-  ) =>
-      RcRoute.generateRoute(LineOfArticleUpdateRoute.routePath,
-          pathParams: {'lineId': lineId, 'isShopLocked': isShopLocked});
-
-// temporary hack to avoid mixing components
-// even more complex for creation...
-  static String generateCreateArticleWithinLineRoute(String lineId) =>
-      RcRoute.generateRoute(ArticleCreateRouteUnfinished.routePath,
-          pathParams: {'lineId': lineId});
-
-// temporary hack to avoid mixing components
-// even more complex for creation...
-  static String generateArticleLineCreateRouteUnfinished() =>
-      RcRoute.generateRoute(ArticleLineCreateRoute.routePath);
-
-  ArticleLineDetailRoute() : super(path: ArticleLineDetailRoute.routePath);
+  ArticleLineRetailDetailRoute()
+      : super(path: ArticleLineRetailDetailRoute.routePath);
 
   @override
   Widget build(BuildContext context) {
@@ -59,28 +41,15 @@ class ArticleLineDetailRoute extends RcRoute {
     final line =
         articlesStore.lines.firstWhere((line) => line.id.toString() == lineId);
 
-    if (articleId.isNotEmpty && int.tryParse(articleId) != null) {
-      // this would yield error on deletion
-      // print('articleId $articleId');
-      // final article = line.articles.firstWhere(
-      //     (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
-      //   throw 'no article match $lineId.$articleId';
-      // });
-      return Provider.value(
-        value: line,
-        child: LineArticlesDetailWidget(
-          line,
-          () => ticketsStore.tickets,
-          () => closingsStore.closingStockShops,
-          isShopLocked: isShopLocked,
-          initArticle: int.parse(articleId ?? '1'),
-        ),
-      );
-    } else {
-      return Provider.value(
-        value: line,
-        child: ArticleCreateViewFakeFrame(line),
-      );
-    }
+    return Provider.value(
+      value: line,
+      child: LineArticlesDetailWidget(
+        line,
+        () => ticketsStore.tickets,
+        () => closingsStore.closingStockShops,
+        isShopLocked: isShopLocked,
+        initArticle: int.tryParse(articleId ?? '1') ?? '1',
+      ),
+    );
   }
 }

@@ -62,10 +62,11 @@ class LineArticlesGlimpseWidgetSatefulState
     return InkWell(
       onLongPress: () {
         if (widget.line.isBasket == false) {
-          Navigator.of(context).pushNamed(ArticleLineDetailRoute.generateRoute(
-              '${widget.line.id}', // TODO get isShopLocked for real
-              articleId:
-                  '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
+          Navigator.of(context).pushNamed(
+              ArticleLineRetailDetailRoute.generateRoute(
+                  '${widget.line.id}', // TODO get isShopLocked for real
+                  articleId:
+                      '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
         }
       },
       child: ExpansionTile(
@@ -79,7 +80,7 @@ class LineArticlesGlimpseWidgetSatefulState
             LineArticleTileTitle(widget.line, widget.lineStockNow, iconColor),
         children: <Widget>[
           for (final article in widget.line.articles)
-            ArticleWFrameView(
+            ArticleRetailFrameView(
               article as ArticleRetail,
               true,
               widget.ticketsInvoker,

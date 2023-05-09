@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/stores.dart';
-import 'package:models_weebi/common.dart';
+import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/utils.dart';
+import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
 
-class ArticleLineCreateView extends StatefulWidget {
-  static const nameKey = Key('nom');
+class ArticleUpdateView extends StatefulWidget {
+  static const fullNameKey = Key('nom');
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
-  const ArticleLineCreateView({Key key}) : super(key: key);
+  final ArticleRetail articleRetail;
+  const ArticleUpdateView(this.articleRetail, {Key key}) : super(key: key);
 
   @override
-  State<ArticleLineCreateView> createState() => _ArticleLineCreateViewState();
+  State<ArticleUpdateView> createState() => _ArticleUpdateViewState();
 }
 
-class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
-  ArticleLineCreateFormStore store;
+class _ArticleUpdateViewState extends State<ArticleUpdateView> {
+  ArticleRetailUpdateFormStore store;
   ScrollController controller;
 
   @override
@@ -30,7 +32,7 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
     super.initState();
     controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    store = ArticleLineCreateFormStore(articlesStore);
+    store = ArticleRetailUpdateFormStore(articlesStore, widget.articleRetail);
     store.setupValidations();
   }
 
@@ -44,8 +46,9 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWeebiUpdateNotSaved('Créer un article',
-          backgroundColor: Colors.orange[800]),
+      appBar: appBarWeebiUpdateNotSaved(
+          'Editer l\'article ${widget.articleRetail.lineId}.${widget.articleRetail.id}',
+          backgroundColor: Colors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           store.validateAll();
@@ -53,14 +56,17 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
             return;
           }
           try {
-            final articleLine =
-                await store.createLineAndArticleRetailFromForm();
-            // toastSuccessArticle(context, message: 'article créé');
+            final articleRetailUpdated =
+                await store.updateArticleRetailFromForm();
+            // toastSuccessArticle(context, message: 'article mis à jour');
+            await Navigator.of(context).pop(); // remove the past detail view
             Navigator.of(context).popAndPushNamed(
-                ArticleDetailRoute.generateRoute('${articleLine.id}', '1'));
+                ArticleDetailRoute.generateRoute(
+                    '${widget.articleRetail.lineId}',
+                    '${articleRetailUpdated.id}'));
           } catch (e) {
             return InformDialog.showDialogWeebiNotOk(
-                "Erreur lors de la création de l'article $e", context);
+                "Erreur lors de la mise à jour de l'article $e", context);
           }
         },
         backgroundColor: Colors.orange[800],
@@ -76,22 +82,24 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
                     duration: const Duration(milliseconds: 300),
                     opacity: store.isArticleCreationPending ? 1 : 0)),
             Observer(
-              name: 'nom',
-              builder: (_) => TextField(
-                key: ArticleLineCreateView.nameKey,
-                onChanged: (value) => store.name = value,
+              name: 'fullName',
+              builder: (_) => TextFormField(
+                initialValue: store.fullName,
+                key: ArticleUpdateView.fullNameKey,
+                onChanged: (value) => store.fullName = value,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     labelText: 'Nom de l\'article*',
                     icon: const Icon(Icons.short_text),
-                    errorText: store.errorStore.nameError),
+                    errorText: store.errorStore.fullNameError),
                 autofocus: true,
               ),
             ),
             Observer(
               name: 'prix',
-              builder: (_) => TextField(
-                key: ArticleLineCreateView.priceKey,
+              builder: (_) => TextFormField(
+                initialValue: store.price,
+                key: ArticleUpdateView.priceKey,
                 onChanged: (value) => store.price = value,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -107,8 +115,8 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
             Observer(
               name: 'coût',
               builder: (_) => TextFormField(
-                key: ArticleLineCreateView.costKey,
-                initialValue: '0',
+                key: ArticleUpdateView.costKey,
+                initialValue: store.cost,
                 onChanged: (value) => store.cost = value,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -122,30 +130,9 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
               ),
             ),
             Observer(
-              name: 'unité de compte',
-              builder: (context) => DropdownButtonFormField<StockUnit>(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.filter_frames),
-                  label: const Text('Unité de compte'),
-                ),
-                items: StockUnit.units
-                    .map((unit) => DropdownMenuItem<StockUnit>(
-                          child: Text(unit.stockUnitText),
-                          value: unit,
-                        ))
-                    .toList(),
-                value: store.stockUnit,
-                onChanged: (value) {
-                  setState(() {
-                    store.stockUnit = value;
-                  });
-                },
-              ),
-            ),
-            Observer(
               name: 'unités par pièce',
               builder: (_) => TextFormField(
-                initialValue: '1',
+                initialValue: store.unitsPerPiece,
                 onChanged: (value) => store.unitsPerPiece = value,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -157,7 +144,8 @@ class _ArticleLineCreateViewState extends State<ArticleLineCreateView> {
                     errorText: store.errorStore.unitsPerPieceError),
               ),
             ),
-            TextField(
+            TextFormField(
+              initialValue: store.barcodeEAN,
               onChanged: (value) => store.barcodeEAN = value,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(

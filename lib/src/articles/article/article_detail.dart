@@ -11,7 +11,7 @@ import 'package:models_weebi/weebi_models.dart'
     show ArticleRetail, ArticleBasket, ArticleLine;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/src/articles/article/article_basket_section_widget.dart';
+import 'package:views_weebi/src/articles/article/article_basket/article_basket_section_widget.dart';
 import 'package:views_weebi/src/articles/article/buttons.dart';
 import 'package:views_weebi/src/articles/line/line_buttons.dart';
 import 'package:views_weebi/src/articles/photo.dart';
@@ -37,25 +37,25 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   Future<ArticleRetail> deactivateArticleW(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: false);
-    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
+    return await articlesStore.updateArticleRetail<ArticleRetail>(deactivated);
   }
 
   Future<ArticleBasket> deactivateArticleB(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleBasket)
         .copyWith(statusUpdateDate: DateTime.now(), status: false);
-    return await articlesStore.updateArticle<ArticleBasket>(deactivated);
+    return await articlesStore.updateArticleRetail<ArticleBasket>(deactivated);
   }
 
   Future<dynamic> reactivateArticleW(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: true);
-    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
+    return await articlesStore.updateArticleRetail<ArticleRetail>(deactivated);
   }
 
   Future<dynamic> reactivateArticleB(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleBasket)
         .copyWith(statusUpdateDate: DateTime.now(), status: true);
-    return await articlesStore.updateArticle<ArticleBasket>(deactivated);
+    return await articlesStore.updateArticleRetail<ArticleBasket>(deactivated);
   }
 
   @override
@@ -158,7 +158,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               actions: isShopLocked
                   ? []
                   : [
-                      EditArticleButton(line.id, article.id),
+                      EditArticleButton(article),
                       DeleteArticleButton<A>(article),
                     ]),
 
@@ -179,7 +179,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
             SliverToBoxAdapter(
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: ArticleWFrameView(article as ArticleRetail, false,
+              child: ArticleRetailFrameView(article as ArticleRetail, false,
                   ticketsInvoker, closingStockShopsInvoker),
             )),
           if (article is ArticleBasket)

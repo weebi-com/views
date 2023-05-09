@@ -7,15 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:mixins_weebi/stock.dart';
 
-import 'articleW_detail_section.dart';
-import 'article_glimpse.dart';
+import 'article_retail_detail_section.dart';
+import 'retail_glimpse.dart';
 
-class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleRetail>
+class ArticleRetailFrameView
+    extends ArticleStockStatelessAbstract<ArticleRetail>
     with ArticleStockNowMixin<ArticleRetail> {
   final bool isGlimpse;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
-  const ArticleWFrameView(
+  const ArticleRetailFrameView(
     ArticleRetail article,
     this.isGlimpse,
     this.ticketsInvoker,
@@ -28,7 +29,7 @@ class ArticleWFrameView extends ArticleStockStatelessAbstract<ArticleRetail>
         articleStockNow(closingStockShopsInvoker.call(), ticketsInvoker.call());
 
     return isGlimpse
-        ? ArticleWGlimpse2Widget(article, articleLiveQt)
-        : ArticleWDetailSection(article, articleLiveQt);
+        ? ArticleRetailGlimpseWidget(article, articleLiveQt)
+        : ArticleRetailDetailSection(article, articleLiveQt);
   }
 }

@@ -68,8 +68,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
-          onPressed: () =>
-              Navigator.of(context).pushNamed(ArticleLineFrameRoute.routePath),
+          onPressed: () => Navigator.of(context)
+              .pushNamed(ArticlesLinesAllFrameRoute.routePath),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         title: Row(
@@ -84,10 +84,13 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(numFormat.format(lineStockNow),
-                      textAlign: TextAlign.end,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold)),
+                  child: Tooltip(
+                    message: 'stock disponible',
+                    child: Text(numFormat.format(lineStockNow),
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold)),
+                  ),
                 ),
               ),
             const Icon(Icons.warehouse, color: Colors.black),

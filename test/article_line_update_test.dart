@@ -4,13 +4,13 @@ import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/line/update.dart';
+import 'package:views_weebi/src/articles/line/line_update.dart';
 import 'package:views_weebi/src/providers.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 
 void main() {
   testWidgets('article line update widget test', (tester) async {
-    final rcRoutes = RcRoutes(routes: [ArticleLineDetailRoute()]);
+    final rcRoutes = RcRoutes(routes: [ArticleLineRetailDetailRoute()]);
 
     await tester.pumpWidget(
       ZeProviders(

@@ -5,16 +5,16 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/line/update.dart';
+import 'package:views_weebi/src/articles/line/line_update.dart';
 
-class LineOfArticleUpdateRoute extends RcRoute {
+class ArticleLineUpdateRoute extends RcRoute {
   static String routePath = '/line_update/:lineId';
   // how about products/product_update/:id ?
 
   static String generateRoute(String lineId) =>
       RcRoute.generateRoute(routePath, pathParams: {'lineId': lineId});
 
-  LineOfArticleUpdateRoute() : super(path: LineOfArticleUpdateRoute.routePath);
+  ArticleLineUpdateRoute() : super(path: ArticleLineUpdateRoute.routePath);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:views_weebi/views.dart' show ArticleLineFrame;
+import 'package:views_weebi/views_line.dart';
 import 'package:views_weebi_example/example.dart';
 import 'package:views_weebi/providers.dart';
 
@@ -33,8 +33,8 @@ void main() {
     ArticleLineFrame itemCodeAfterReorder = tester
         .widgetList<ArticleLineFrame>(find.byType(ArticleLineFrame))
         .elementAt(0);
-    expect('Babibel', itemCodeAfterReorder.line.title);
-    expect(2, itemCodeAfterReorder.line.id);
+    expect('Sucre', itemCodeAfterReorder.line.title);
+    expect(3, itemCodeAfterReorder.line.id);
 
     // and verify that icon is updated and list reordered back
     await tester.tap(sortByCodeFound);

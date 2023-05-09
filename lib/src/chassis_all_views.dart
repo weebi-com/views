@@ -32,7 +32,7 @@ class ChassisAllView extends ChassisAbstract {
 
 class _ViewsFrameState extends State<ChassisAllView> {
   List<String> paths = [
-    ArticleLineFrameRoute.routePath,
+    ArticlesLinesAllFrameRoute.routePath,
     '', '', '', ''
     // not available here yet
     //HerdersRoute.routePath,

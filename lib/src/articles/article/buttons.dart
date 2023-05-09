@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/base.dart';
+import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/routes/articles/update_article_basket.dart';
+import 'package:views_weebi/src/routes/articles/update_article_retail.dart';
 import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
-class EditArticleButton extends StatelessWidget {
-  final int articleLineId, articleId;
-  const EditArticleButton(this.articleLineId, this.articleId, {Key key})
-      : super(key: key);
+class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
+  final A article;
+  const EditArticleButton(this.article, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,15 @@ class EditArticleButton extends StatelessWidget {
       tooltip: "Editer l'article",
       icon: const Icon(Icons.edit, color: WeebiColors.grey),
       onPressed: () async {
-        Navigator.of(context).pushNamed(ArticleDetailRoute.generateUpdateRoute(
-            // using this hack instead of below to avoid mixing components
-            // ArticleUpdateRoute.generateRoute(
-            '${articleLineId}',
-            '${articleId}'));
+        if (article is ArticleRetail) {
+          Navigator.of(context).pushNamed(
+              ArticleRetailUpdateRoute.generateRoute(
+                  '${this.article.lineId}', '${this.article.id}'));
+        } else {
+          Navigator.of(context).pushNamed(
+              ArticleBasketUpdateRoute.generateRoute(
+                  '${this.article.lineId}', '${this.article.id}'));
+        }
       },
     );
   }
@@ -54,11 +60,11 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         if (p.articles.length <= 1) {
           await articlesStore.deleteForeverLineArticle(p);
           Navigator.of(context)
-              .popAndPushNamed(ArticleLineFrameRoute.routePath);
+              .popAndPushNamed(ArticlesLinesAllFrameRoute.routePath);
         } else {
           await articlesStore.deleteForeverArticle(article);
           Navigator.of(context).popAndPushNamed(
-              ArticleLineDetailRoute.generateRoute('${p.id}',
+              ArticleLineRetailDetailRoute.generateRoute('${p.id}',
                   articleId: '1')); // TODO isShopLocked
         }
       },

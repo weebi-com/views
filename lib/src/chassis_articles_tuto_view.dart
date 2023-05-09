@@ -67,7 +67,7 @@ class ChassisTutoProducts extends ChassisAbstract {
           ),
         ],
         mainNavigatorKey: mainNavigator,
-        body: ArticlesLinesViewWebOnly(mainNavigator: mainNavigator),
+        body: ArticlesLinesOverviewWebOnly(mainNavigator: mainNavigator),
       );
 
   const ChassisTutoProducts({
@@ -93,7 +93,7 @@ class ChassisTutoProducts extends ChassisAbstract {
 // should give more flexibility
 class _ViewsFrameState extends State<ChassisTutoProducts> {
   List<String> paths = [
-    ArticleLineFrameRoute.routePath,
+    ArticlesLinesAllFrameRoute.routePath,
     InfoRoute.routePath,
   ];
 

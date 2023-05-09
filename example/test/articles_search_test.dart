@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:views_weebi/views.dart' show ArticleLineFrame;
+import 'package:views_weebi/views_line.dart';
 import 'package:views_weebi_example/example.dart';
 import 'package:views_weebi/providers.dart';
 

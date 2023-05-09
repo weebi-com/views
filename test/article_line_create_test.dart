@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/line/create.dart';
+import 'package:views_weebi/src/articles/line/line_create_retail.dart';
 
 void main() {
   testWidgets('article line create widget test', (tester) async {
@@ -12,7 +12,7 @@ void main() {
       Provider<ArticlesStore>(
         create: (_) => ArticlesStoreInstantiater.noPersistence,
         child: MaterialApp(
-          home: const ArticleLineCreateView(),
+          home: const ArticleLineRetailCreateView(),
         ),
       ),
     );
@@ -25,16 +25,16 @@ void main() {
     expect(find.byIcon(Icons.style), findsOneWidget); // units per piece
     expect(find.byIcon(Icons.speaker_phone), findsOneWidget); // barcode
 
-    final name = find.byKey(ArticleLineCreateView.nameKey);
+    final name = find.byKey(ArticleLineRetailCreateView.nameKey);
     await tester.enterText(name, ArticleLine.dummy.title);
     await tester.pump();
 
-    final price = find.byKey(ArticleLineCreateView.priceKey);
+    final price = find.byKey(ArticleLineRetailCreateView.priceKey);
     await tester.enterText(
         price, ArticleLine.dummy.articles.first.price.toString());
     await tester.pump();
 
-    final cost = find.byKey(ArticleLineCreateView.costKey);
+    final cost = find.byKey(ArticleLineRetailCreateView.costKey);
     await tester.enterText(
         cost, ArticleLine.dummy.articles.first.cost.toString());
     await tester.pump();

@@ -6,10 +6,10 @@ import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:views_weebi/widgets.dart';
 
-class ArticleWDetailSection extends StatelessWidget {
+class ArticleRetailDetailSection extends StatelessWidget {
   final ArticleRetail article;
   final double articleLiveQt;
-  const ArticleWDetailSection(
+  const ArticleRetailDetailSection(
     this.article,
     this.articleLiveQt,
   );

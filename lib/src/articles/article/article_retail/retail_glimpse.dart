@@ -8,10 +8,10 @@ import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
-class ArticleWGlimpse2Widget extends StatelessWidget {
+class ArticleRetailGlimpseWidget extends StatelessWidget {
   final ArticleRetail article;
   final double articleLiveQt;
-  const ArticleWGlimpse2Widget(
+  const ArticleRetailGlimpseWidget(
     this.article,
     this.articleLiveQt,
   );
@@ -20,9 +20,9 @@ class ArticleWGlimpse2Widget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(context).pushNamed(ArticleLineDetailRoute.generateRoute(
-            '${article.lineId}',
-            articleId: '${article.id}')); // TODO isShopLocked
+        Navigator.of(context).pushNamed(
+            ArticleLineRetailDetailRoute.generateRoute('${article.lineId}',
+                articleId: '${article.id}')); // TODO isShopLocked
       },
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(

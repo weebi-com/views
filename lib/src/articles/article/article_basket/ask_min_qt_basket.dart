@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:views_weebi/src/amount_provider.dart';
+import 'package:views_weebi/src/providers/amount_provider.dart';
 import 'package:views_weebi/src/widgets/pad/numeric_pad.dart';
 import 'package:views_weebi/src/widgets/pad/numpad_qt.dart';
 import 'package:views_weebi/src/widgets/pad/ok_padd_qt_double.dart.dart';

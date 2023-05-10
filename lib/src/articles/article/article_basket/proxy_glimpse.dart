@@ -29,11 +29,13 @@ class ProxyAGlimpseWidget extends ArticleStockStatelessAbstract
 
     double articleLiveQt = articleStockNow(
         closingsStore.closingStockShops ?? [], ticketsStore.tickets);
+    print('i hear');
+    print('${proxy.lineId}' + '${proxy.articleId}' + '${proxy.id}');
 
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ProxyADetailRoute.generateRoute(
-            '${proxy.productId}', '${proxy.articleId}', '${proxy.id}'));
+            '${proxy.lineId}', '${proxy.articleId}', '${proxy.id}'));
       },
       child: ListTile(
         leading: SizedBox(

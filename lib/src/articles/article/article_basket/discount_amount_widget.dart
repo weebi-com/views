@@ -18,23 +18,14 @@ class DiscountAmountWidget extends StatefulWidget {
 }
 
 class _DiscountAmountWidgetState extends State<DiscountAmountWidget> {
-  String discountAmountString;
-  FocusNode focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    discountAmountString = '${widget.oldDiscountAmount}';
-  }
-
-  String discountAmountValidator() {
-    if (discountAmountString.isEmpty) {
+  String discountAmountValidator(String val) {
+    if (val.isEmpty) {
       return null;
     } else {
-      if (int.tryParse(discountAmountString) == null) {
+      if (int.tryParse(val) == null) {
         return 'Montant incorrect';
       } else {
-        if (int.parse(discountAmountString) > widget.totalPrice) {
+        if (int.parse(val) > widget.totalPrice) {
           return 'le montant de la réduction ne peut être supérieur au total du panier';
         } else {
           return null;
@@ -49,28 +40,27 @@ class _DiscountAmountWidgetState extends State<DiscountAmountWidget> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         Expanded(
-          child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Réduction',
-                icon: const Icon(Icons.redeem),
-              ),
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                //FilteringTextInputFormatter.allow(RegExpWeebi.regExpDecimal)
-              ],
-              autofocus: true,
-              onChanged: (val) {
-                setState(() {
-                  discountAmountString = val;
-                });
-                if (discountAmountValidator() == null) {
-                  DiscountAmountChangedNotif(int.parse(val.isEmpty ? '0' : val))
-                      .dispatch(context);
-                }
-              },
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.start,
-              style: const TextStyle(fontSize: 20)),
+          child: TextFormField(
+            initialValue: '${widget.oldDiscountAmount}' ?? '',
+            decoration: InputDecoration(
+              labelText: 'Réduction',
+              icon: const Icon(Icons.redeem),
+            ),
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+              //FilteringTextInputFormatter.allow(RegExpWeebi.regExpDecimal)
+            ],
+            autofocus: false,
+            validator: (val) => discountAmountValidator(val),
+            onChanged: (val) {
+              DiscountAmountChangedNotif(int.parse(val.isEmpty ? '0' : val))
+                  .dispatch(context);
+              setState(() {});
+            },
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.start,
+            // style: const TextStyle(fontSize: 20),
+          ),
         ),
       ]),
     );

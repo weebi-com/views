@@ -11,9 +11,9 @@ import 'package:models_weebi/weebi_models.dart'
     show ArticleRetail, ArticleBasket, ArticleLine;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/src/articles/article/article_basket/article_basket_section_widget.dart';
+import 'package:views_weebi/src/articles/article/article_basket/section_widget_a_basket.dart';
 import 'package:views_weebi/src/articles/article/buttons.dart';
-import 'package:views_weebi/src/articles/line/line_buttons.dart';
+import 'package:views_weebi/src/articles/line/buttons_line.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
@@ -101,7 +101,8 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                         Navigator.of(context).popAndPushNamed(
                             ArticleDetailRoute.generateRoute(
                                 '${d.lineId}', '${d.id}'));
-                      })),
+                      }),
+            ),
       body: CustomScrollView(
         //scrollBehavior: ,
         controller: controller,
@@ -109,13 +110,13 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
               //forceElevated: true,
-              elevation: 3,
               // toolbarHeight: context.screenHeight * .12,
               //*ncollapsedHeight: context.screenHeight * .08,
-              expandedHeight: context.screenHeight * .47,
-              centerTitle: false,
               //floating: true,
               //snap: true,
+              elevation: 3,
+              expandedHeight: context.screenHeight * .47,
+              centerTitle: false,
               stretch: true,
               pinned: true,
               backgroundColor: weebiTheme.scaffoldBackgroundColor,
@@ -145,13 +146,6 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    // below local hack for weebi_app only
-                    // * no longer working
-                    // TODO fix this once article basket is included in weebi_view + chassis compat
-                    // Navigator.of(context).popAndPushNamed(ArticleLineRoute
-                    //     .routePath);
-                    // Navigator.of(context)
-                    //     .popAndPushNamed(ArticleLineFrameRoute.routePath);
                   },
                   tooltip:
                       MaterialLocalizations.of(context).openAppDrawerTooltip),
@@ -175,21 +169,17 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               ),
             ),
           ),
-          if (line.isBasket == false)
-            SliverToBoxAdapter(
-                child: Padding(
+
+          SliverToBoxAdapter(
+            child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: ArticleRetailFrameView(article as ArticleRetail, false,
-                  ticketsInvoker, closingStockShopsInvoker),
-            )),
-          if (article is ArticleBasket)
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child:
-                    ArticleBasketDetailSectionWidget(article as ArticleBasket),
-              ),
+              child: line.isBasket
+                  ? ArticleBasketDetailSectionWidget(article as ArticleBasket)
+                  : ArticleRetailFrameView(article as ArticleRetail, false,
+                      ticketsInvoker, closingStockShopsInvoker),
             ),
+          ),
+
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),

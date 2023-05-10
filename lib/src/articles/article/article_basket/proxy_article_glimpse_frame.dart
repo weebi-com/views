@@ -15,8 +15,15 @@ class ProxyArticleGlimpseFrameWidget extends StatelessWidget {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final _line =
         articlesStore.lines.firstWhereOrNull((l) => l.id == proxy.proxyLineId);
+    if (_line == null) {
+      print('_line not found for proxy.proxyLineId ${proxy.proxyLineId}');
+    }
     final _article = _line.articles.firstWhere(
         (a) => a.lineId == proxy.proxyLineId && a.id == proxy.proxyArticleId);
+    if (_article == null) {
+      print(
+          '_article not found for proxy.proxyLineId ${proxy.proxyLineId} && proxy.proxyArticleId ${proxy.proxyArticleId}');
+    }
     return ProxyAGlimpseWidget(article: _article, proxy: proxy);
   }
 }

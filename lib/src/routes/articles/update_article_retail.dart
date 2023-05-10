@@ -6,7 +6,7 @@ import 'package:models_weebi/weebi_models.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/article/article_retail/retail_update.dart';
+import 'package:views_weebi/src/articles/article/article_retail/update_a_retail.dart';
 
 class ArticleRetailUpdateRoute extends RcRoute {
   static String routePath = '/article_retail_update/:lineId/:articleId';

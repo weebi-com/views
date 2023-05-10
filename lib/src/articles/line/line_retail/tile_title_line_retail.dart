@@ -6,11 +6,11 @@ import 'package:models_weebi/weebi_models.dart' show ArticleLine;
 import 'package:models_weebi/utils.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 
-class LineArticleTileTitle extends StatelessWidget {
+class LineArticleRetailTileTitle extends StatelessWidget {
   final ArticleLine line;
   final double lineLiveQt;
   final Color iconColor;
-  const LineArticleTileTitle(this.line, this.lineLiveQt, this.iconColor,
+  const LineArticleRetailTileTitle(this.line, this.lineLiveQt, this.iconColor,
       {Key key})
       : super(key: key);
 

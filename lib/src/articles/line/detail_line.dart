@@ -6,7 +6,8 @@ import 'package:models_weebi/utils.dart';
 // Package imports:
 
 import 'package:models_weebi/weebi_models.dart' show ArticleBasket, ArticleLine;
-import 'package:views_weebi/src/articles/line/line_buttons.dart';
+import 'package:views_weebi/src/articles/article/article_basket/glimpse_a_basket.dart';
+import 'package:views_weebi/src/articles/line/buttons_line.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/views_article.dart';
@@ -142,27 +143,12 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                     articleId: initArticle)
               ] else ...[
                 for (final article in line.articles)
-                  ArticleBasketGlimpseWidgetFakeFrame(
-                      line, article as ArticleBasket)
+                  ArticleBasketGlimpseWidget(line, article as ArticleBasket)
               ],
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class ArticleBasketGlimpseWidgetFakeFrame extends StatelessWidget {
-  final ArticleLine line;
-  final ArticleBasket articleBasket;
-  const ArticleBasketGlimpseWidgetFakeFrame(this.line, this.articleBasket,
-      {Key key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO implement ArticleBasketGlimpseWidget(line,articleBasket)
-    return Container();
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show ArticleRetail, ArticleLine;
-import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
+import 'package:views_weebi/src/articles/line/line_retail/tile_title_line_retail.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
@@ -76,8 +76,8 @@ class LineArticlesGlimpseWidgetSatefulState
                 expanding ? WeebiColors.buttonColor : WeebiColors.grey,
           );
         },
-        title:
-            LineArticleTileTitle(widget.line, widget.lineStockNow, iconColor),
+        title: LineArticleRetailTileTitle(
+            widget.line, widget.lineStockNow, iconColor),
         children: <Widget>[
           for (final article in widget.line.articles)
             ArticleRetailFrameView(

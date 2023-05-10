@@ -11,6 +11,7 @@ import 'package:views_weebi/src/routes/articles/article_detail.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
+import 'package:views_weebi/src/widgets/toast.dart';
 
 class ArticleLineRetailCreateView extends StatefulWidget {
   static const nameKey = Key('nom');
@@ -58,7 +59,7 @@ class _ArticleLineRetailCreateViewState
           try {
             final articleLine =
                 await store.createLineAndArticleRetailFromForm();
-            // toastSuccessArticle(context, message: 'article créé');
+            toastSuccessArticle(context, message: 'article créé');
             Navigator.of(context).popAndPushNamed(
                 ArticleDetailRoute.generateRoute('${articleLine.id}', '1'));
           } catch (e) {

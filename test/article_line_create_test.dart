@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/line/line_create_retail.dart';
+import 'package:views_weebi/src/articles/line/line_retail/create_line_retail.dart';
 
 void main() {
   testWidgets('article line create widget test', (tester) async {

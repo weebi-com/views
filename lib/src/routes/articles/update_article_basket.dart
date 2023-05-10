@@ -6,7 +6,8 @@ import 'package:models_weebi/weebi_models.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/article/article_basket/update.dart';
+import 'package:views_weebi/src/articles/article/article_basket/update_basket.dart';
+import 'package:views_weebi/src/extensions/proxy_article.dart';
 
 class ArticleBasketUpdateRoute extends RcRoute {
   static String routePath = '/article_basket_update/:lineId/:articleId';
@@ -31,12 +32,20 @@ class ArticleBasketUpdateRoute extends RcRoute {
         (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
       throw 'no line match $lineId';
     });
-    final isBasket = line.isBasket ?? false;
-    if (isBasket) {
-      articlesStore.clearAllArticleMinQtInSelected();
+
+    articlesStore.clearAllArticleMinQtInSelected();
+    final articlesMinQtWeebi = <ArticleWMinQt>[];
+
+    final lines =
+        articlesStore.lines.where((element) => element.isBasket == false);
+    articlesMinQtWeebi
+        .addAll((article as ArticleBasket).proxies.getProxiesMinQt(lines));
+    for (final a in articlesMinQtWeebi) {
+      articlesStore.addArticleWInSelected(a);
     }
     return Provider.value(
-        value: article,
-        child: ArticleBasketUpdateView(article as ArticleBasket));
+      value: article,
+      child: ArticleBasketUpdateView(article as ArticleBasket),
+    );
   }
 }

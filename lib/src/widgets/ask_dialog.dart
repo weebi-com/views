@@ -1,7 +1,44 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:models_weebi/base.dart';
+import 'package:views_weebi/src/articles/article/article_basket/ask_min_qt_basket.dart';
+import 'package:views_weebi/src/widgets/ask_big_quantity.dart';
 
 abstract class AskDialog {
+  static Future<double> askBigQuantityDialog<A extends ArticleAbstract>(
+      bool isStockOutput, A thisArticle, BuildContext context,
+      {double articleStockNow,
+      double articleQtInCart,
+      bool isBasket = false}) async {
+    double lotBigQuantity = 0.0;
+    lotBigQuantity = await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (c) {
+        return AskBigQuantity(isStockOutput,
+            articleStockNow: articleStockNow,
+            articleQtInCart: articleQtInCart,
+            isBasket: isBasket);
+      },
+    );
+    if (lotBigQuantity == null) {
+      throw 'Annulé';
+    }
+    return lotBigQuantity;
+  }
+
+  static Future<double> askMinimumQuantityDialog(BuildContext context) async {
+    double minimumQuantity = 0.0;
+    minimumQuantity = await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (c) => const AskMinimumQuantity());
+    if (minimumQuantity == null) {
+      throw 'Annulé';
+    }
+    return minimumQuantity;
+  }
+
   static Future<bool> areYouSure(
       String title, String message, BuildContext context,
       {@required bool barrierDismissible}) async {

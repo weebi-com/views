@@ -4,27 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:models_weebi/utils.dart';
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/article/article_basket/ask_min_qt_basket.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-
-Future<double> askMinimumQuantityDialog(
-  BuildContext context,
-) async {
-  double minimumQuantity = 0.0;
-  minimumQuantity = await showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (c) {
-      return const AskMinimumQuantity();
-    },
-  );
-  if (minimumQuantity == null) {
-    throw 'Annulé';
-  }
-  return minimumQuantity;
-}
+import 'package:views_weebi/src/widgets/ask_dialog.dart';
 
 class PreviewArticlesProxiesSelectedWidget extends StatelessWidget {
   const PreviewArticlesProxiesSelectedWidget({Key key}) : super(key: key);
@@ -37,6 +20,7 @@ class PreviewArticlesProxiesSelectedWidget extends StatelessWidget {
       child: Observer(builder: (context) {
         return Wrap(
           spacing: 8,
+          runSpacing: 8,
           direction: Axis.vertical,
           children: [
             for (final articleSelected
@@ -50,19 +34,33 @@ class PreviewArticlesProxiesSelectedWidget extends StatelessWidget {
                     // TORuminate display article full info to avoid mistakes
                   },
                   onTap: () async {
-                    final minQt = await askMinimumQuantityDialog(context);
+                    final minQt =
+                        await AskDialog.askMinimumQuantityDialog(context);
                     articlesStore.updateArticleMinQtInSelected(
                         articleSelected, minQt);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(articleSelected.fullName),
-                      const Text('qt minimum/panier :'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(articleSelected.fullName,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                      ),
                       Wrap(
                         children: [
-                          const Icon(Icons.style),
-                          Text('x ${numFormat.format(articleSelected.minQt)}')
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: const Icon(Icons.style),
+                          ),
+                          Text(
+                            'x ${numFormat.format(articleSelected.minQt)}',
+                            style: const TextStyle(
+                                decoration: TextDecoration.underline),
+                          ),
+                          const Text(' unités/panier'),
                         ],
                       ),
                     ],

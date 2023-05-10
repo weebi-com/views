@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
 
-import 'package:views_weebi/src/articles/line/line_detail.dart';
+import 'package:views_weebi/src/articles/line/detail_line.dart';
 import 'package:views_weebi/views_line.dart' show LineArticlesDetailWidget;
 
 class ArticleLineRetailDetailRoute extends RcRoute {

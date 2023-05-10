@@ -7,6 +7,6 @@ import 'package:views_weebi/providers.dart';
 
 void main() {
   runApp(
-    const ZeProviders(StoresLoader(ExampleApp())),
+    const ProvidersW(StoresLoader(ExampleApp())),
   );
 }

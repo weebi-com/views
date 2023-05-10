@@ -5,7 +5,7 @@ import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/update_article_basket.dart';
 import 'package:views_weebi/src/routes/articles/update_article_retail.dart';
-import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
+import 'package:views_weebi/src/widgets/ask_dialog.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
@@ -26,7 +26,7 @@ class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
               ArticleRetailUpdateRoute.generateRoute(
                   '${this.article.lineId}', '${this.article.id}'));
         } else {
-          Navigator.of(context).pushNamed(
+          Navigator.of(context).popAndPushNamed(
               ArticleBasketUpdateRoute.generateRoute(
                   '${this.article.lineId}', '${this.article.id}'));
         }

@@ -13,7 +13,7 @@ import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/article/article_detail.dart';
 
 class ProxyADetailRoute extends RcRoute {
-  static String routePath = '/products/:lineId/:articleId/:lotId';
+  static String routePath = '/articles/:lineId/:articleId/:proxyId';
 
   // temporary hack to avoid mixing components
   // TODO fix this when web is stabilized
@@ -21,11 +21,12 @@ class ProxyADetailRoute extends RcRoute {
       RcRoute.generateRoute(ArticleRetailUpdateRoute.routePath,
           pathParams: {'lineId': lineId, 'articleId': articleId});
 
-  static String generateRoute(String lineId, String articleId, String lotId) =>
+  static String generateRoute(
+          String lineId, String articleId, String proxyId) =>
       RcRoute.generateRoute(routePath, pathParams: {
         'lineId': lineId,
         'articleId': articleId,
-        'lotId': lotId
+        'proxyId': proxyId
       });
 
   ProxyADetailRoute() : super(path: ProxyADetailRoute.routePath);
@@ -33,20 +34,24 @@ class ProxyADetailRoute extends RcRoute {
   @override
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
-    final lineId = routeParams.pathParameters['productId'];
+    final lineId = routeParams.pathParameters['lineId'];
     final articleId = routeParams.pathParameters['articleId'];
-    final lotId = routeParams.pathParameters['lotId'];
+    final proxyId = routeParams.pathParameters['proxyId'];
+    print('lineId ${lineId}');
+    print('articleId ${articleId}');
+    print('proxyId ${proxyId}');
+
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
 
     final line = articlesStore.lines
-        .firstWhere((p) => p.id.toString() == lineId, orElse: () {
+        .firstWhere((line) => '${line.id}' == lineId, orElse: () {
       throw 'proxy no lines match for $lineId';
     });
-    final ArticleBasket article = line.articles
-        .firstWhere((a) => a.id.toString() == articleId, orElse: () {
+    final ArticleBasket article =
+        line.articles.firstWhere((a) => '${a.id}' == articleId, orElse: () {
       throw 'proxy no article match $lineId.$articleId';
     }) as ArticleBasket;
 
@@ -54,17 +59,23 @@ class ProxyADetailRoute extends RcRoute {
         (p) =>
             p.lineId.toString() == lineId &&
             p.articleId.toString() == articleId &&
-            p.id.toString() == lotId, orElse: () {
-      throw 'no proxy match $lineId.$articleId.$lotId';
+            p.id.toString() == proxyId, orElse: () {
+      throw 'no proxy match $lineId.$articleId.$proxyId';
     });
 
+    final lineProxy =
+        articlesStore.lines.firstWhere((line) => line.id == proxy.proxyLineId);
+    final articleProxy = lineProxy.articles.firstWhere((article) =>
+        article.lineId == proxy.proxyLineId &&
+        article.id == proxy.proxyArticleId);
+
     return Provider.value(
-      value: proxy,
+      value: articleProxy,
       child: ArticleDetailWidget(
-        article,
+        articleProxy,
         () => ticketsStore.tickets,
         () => closingsStore.closingStockShops,
-      ), // TODO add isShopLocked
+      ),
     );
   }
 }

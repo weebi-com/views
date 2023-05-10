@@ -63,6 +63,9 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
     }
   }
 
+  // TODO put _areArticlesSelected in a validator or a notification to alert the above view
+  // when FAB is pressed
+
   @override
   Widget build(BuildContext context) {
     return TypeAheadField(
@@ -82,7 +85,7 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
           onSelected(val);
         },
         decoration: InputDecoration(
-          labelText: "Articles*",
+          labelText: "Choisir les articles*",
           errorText: _areArticlesSelected == TriState.no
               ? 'Choisir les articles'
               : null,
@@ -104,30 +107,47 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
       suggestionsCallback: (pattern) {
         final articlesStore =
             Provider.of<ArticlesStore>(context, listen: false);
+
         return articlesStore.getSuggestions;
       },
       itemBuilder: (context, String suggestion) {
+        if (suggestion == null || suggestion.isEmpty) {
+          return const SizedBox();
+        }
+        final articlesStore =
+            Provider.of<ArticlesStore>(context, listen: false);
+        ArticleRetail _article;
+        for (final line in articlesStore.lines) {
+          for (final article in line.articles) {
+            if (article.fullName == suggestion) {
+              _article = article;
+            }
+          }
+        }
         if (kIsWeb) {
-          return suggestion == null || suggestion.isEmpty
-              ? const SizedBox()
-              : GestureDetector(
-                  onPanDown: (_) {
-                    _articleNameCtr.text = suggestion;
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 2, 0, 2),
-                    child: ListTile(title: Text(suggestion)),
-                  ));
+          return GestureDetector(
+              onPanDown: (_) {
+                _articleNameCtr.text = suggestion;
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(22, 2, 0, 2),
+                child: ListTile(
+                  leading: Text('#${_article.id}'),
+                  title: Text(suggestion),
+                  trailing: Text('prix : ${_article.price}'),
+                ),
+              ));
         } else {
-          return suggestion == null || suggestion.isEmpty
-              ? const ListTile(title: const Text('no match'))
-              : Padding(
-                  padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
-                  child: ListTile(title: Text(suggestion)),
-                );
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
+            child: ListTile(
+              leading: Text('#${_article.id}'),
+              title: Text(suggestion),
+              trailing: Text('prix : ${_article.price}'),
+            ),
+          );
         }
       },
-
       noItemsFoundBuilder: (context) {
         return const Text("Aucun article correspondant");
       },

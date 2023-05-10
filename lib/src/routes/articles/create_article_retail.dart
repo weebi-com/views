@@ -7,7 +7,7 @@ import 'package:rc_router2/rc_router2.dart';
 
 // Project imports:
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:views_weebi/src/articles/article/article_retail/retail_create.dart';
+import 'package:views_weebi/src/articles/article/article_retail/create_a_retail.dart';
 
 class ArticleRetailCreateRoute extends RcRoute {
   static String routePath = '/lines/:lineId/article_retail_create';

@@ -11,6 +11,7 @@ import 'package:views_weebi/src/routes/articles/line_detail.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
+import 'package:views_weebi/src/widgets/toast.dart';
 
 class ArticleLineUpdateView<A extends ArticleAbstract> extends StatefulWidget {
   static const nameKey = Key('nom');
@@ -55,7 +56,7 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
           }
           try {
             final lineC = await store.updateLineArticleFromForm<A>(widget.line);
-            // toastSuccessArticle(context, message: 'ligne mise à jour');
+            toastSuccessArticle(context, message: 'ligne mise à jour');
             Navigator.of(context).popAndPushNamed(
                 ArticleLineRetailDetailRoute.generateRoute('${lineC.id}',
                     articleId: '1'));

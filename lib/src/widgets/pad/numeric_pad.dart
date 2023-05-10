@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/amount_provider.dart';
+import 'package:views_weebi/src/providers/amount_provider.dart';
 import 'package:views_weebi/buttons.dart';
 
 class WeebiNumericPad extends StatelessWidget {
@@ -41,6 +41,7 @@ class WeebiNumericPad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _amountProvider = Provider.of<AmountProvider>(context, listen: true);
+
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 2, 0, 22.0),
         child: Column(

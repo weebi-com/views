@@ -7,7 +7,7 @@ import 'package:views_weebi/providers.dart';
 void main() {
   testWidgets('check articles sorting by title and codeShortcut',
       (tester) async {
-    await tester.pumpWidget(const ZeProviders(StoresLoader(ExampleApp())));
+    await tester.pumpWidget(const ProvidersW(StoresLoader(ExampleApp())));
     // pumps ChassisTutoProducts and also ArticlesLinesViewWIP
     await tester.pump();
 

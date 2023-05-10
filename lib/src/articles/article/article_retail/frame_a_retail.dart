@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:models_weebi/weebi_models.dart' show ArticleRetail;
 import 'package:mixins_weebi/stock.dart';
 
-import 'article_retail_detail_section.dart';
-import 'retail_glimpse.dart';
+import 'detail_section_article_retail.dart';
+import 'glimpse_a_retail.dart';
 
 class ArticleRetailFrameView
     extends ArticleStockStatelessAbstract<ArticleRetail>

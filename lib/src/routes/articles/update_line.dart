@@ -5,7 +5,7 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/line/line_update.dart';
+import 'package:views_weebi/src/articles/line/update_line.dart';
 
 class ArticleLineUpdateRoute extends RcRoute {
   static String routePath = '/line_update/:lineId';

@@ -5,12 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/stores.dart';
 
-class ZeProviders extends StatelessWidget {
+class ProvidersW extends StatelessWidget {
   final Widget child;
-  const ZeProviders(
-    this.child, {
-    Key key,
-  }) : super(key: key);
+  const ProvidersW(this.child, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

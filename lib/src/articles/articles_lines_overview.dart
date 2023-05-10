@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/app_bar_search.dart';
 
 // Project imports:
-import 'package:views_weebi/src/articles/line/line_frame.dart';
-import 'package:views_weebi/src/routes/articles/create_line_article_retail.dart';
+import 'package:views_weebi/src/articles/line/frame_line.dart';
+import 'package:views_weebi/src/routes/articles/create_line_retail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 // * This is for web only now

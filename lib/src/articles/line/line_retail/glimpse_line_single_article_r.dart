@@ -7,7 +7,7 @@ import 'package:views_weebi/routes.dart';
 // Project imports:
 import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/weebi_models.dart' show ArticleLine;
-import 'package:views_weebi/src/articles/line/tile_title_glimpse.dart';
+import 'package:views_weebi/src/articles/line/line_retail/tile_title_line_retail.dart';
 
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
@@ -37,7 +37,8 @@ class LineArticleSingleGlimpseWidget extends LineArticleStockAbstract
       },
       child: ListTile(
           trailing: const Icon(Icons.ac_unit, color: Colors.transparent),
-          title: LineArticleTileTitle(line, lineStockNow, WeebiColors.grey,
+          title: LineArticleRetailTileTitle(
+              line, lineStockNow, WeebiColors.grey,
               key: Key('#${line.id}'))),
     );
   }

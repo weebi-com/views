@@ -40,28 +40,6 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if ((article as ArticleBasket).discountAmountSalesOnly > 0) ...[
-          FieldValueWidget(
-            const Icon(Icons.info),
-            const Text("Prix de vente cumulés des articles"),
-            SelectableText(
-              numFormat?.format((article as ArticleBasket)
-                  .getProxiesListWithPriceAndCost(
-                      articlesStore.linesPalpableNoBasket)
-                  .totalPrice),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          FieldValueWidget(
-            const Icon(Icons.redeem),
-            const Text("Réduction sur le total"),
-            SelectableText(
-              numFormat
-                  .format((article as ArticleBasket).discountAmountSalesOnly),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
         FieldValueWidget(
           const Icon(Icons.local_offer, color: Colors.teal),
           const Text("Prix de vente du panier"),
@@ -77,6 +55,29 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
+        if ((article as ArticleBasket).discountAmountSalesOnly > 0) ...[
+          FieldValueWidget(
+            const Icon(Icons.redeem),
+            const Text("Réduction sur le total"),
+            SelectableText(
+              numFormat
+                  .format((article as ArticleBasket).discountAmountSalesOnly),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          FieldValueWidget(
+            const Icon(Icons.info),
+            const Text("Prix de vente sans réduction"),
+            SelectableText(
+              numFormat?.format((article as ArticleBasket)
+                  .getProxiesListWithPriceAndCost(
+                      articlesStore.linesPalpableNoBasket)
+                  .totalPrice),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: const Text('Articles contenus dans le panier : ',
@@ -91,7 +92,7 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
           ),
-        // * consider displaying this is in better looking fashion
+        // * display this is in better looking fashion
         for (final proxy in (article as ArticleBasket).proxies)
           ProxyArticleGlimpseFrameWidget(proxy),
         Divider(),

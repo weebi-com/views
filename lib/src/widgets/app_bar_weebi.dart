@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:views_weebi/src/widgets/ask_are_you_sure.dart';
+import 'package:views_weebi/src/widgets/ask_dialog.dart';
 import 'package:views_weebi/widgets.dart' show AskDialog;
 
 PreferredSizeWidget appBarWeebiUpdateNotSaved(String title,
-    {Color backgroundColor, List<Widget> actions}) {
+    {Color backgroundColor,
+    List<Widget> actions,
+    String pushThatRouteInstead = ''}) {
   return AppBar(
     backgroundColor: backgroundColor,
     leading: Builder(
@@ -14,8 +16,14 @@ PreferredSizeWidget appBarWeebiUpdateNotSaved(String title,
           onPressed: () async {
             final isSureAboutQuitting =
                 await AskDialog.areYouSureUpdateNotSaved(context);
+
             if (isSureAboutQuitting ?? false) {
-              Navigator.of(context).pop();
+              if (pushThatRouteInstead.isNotEmpty) {
+                return Navigator.of(context)
+                    .popAndPushNamed(pushThatRouteInstead);
+              } else {
+                return Navigator.of(context).pop();
+              }
             }
           },
         );

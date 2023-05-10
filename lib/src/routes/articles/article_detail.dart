@@ -9,7 +9,6 @@ import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/views_article.dart';
 
 import 'package:mixins_weebi/stores.dart';
-import 'package:views_weebi/routes.dart';
 
 class ArticleDetailRoute extends RcRoute {
   static String routePath = '/lines/:lineId/:articleId';
@@ -41,7 +40,7 @@ class ArticleDetailRoute extends RcRoute {
     return Provider.value(
       value: article,
       child: ArticleDetailWidget(article, () => ticketsStore.tickets,
-          () => closingStore.closingStockShops), // todo add isShopLocked here
+          () => closingStore.closingStockShops),
     );
   }
 }

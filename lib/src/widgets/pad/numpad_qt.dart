@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:models_weebi/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/amount_provider.dart';
+import 'package:views_weebi/src/providers/amount_provider.dart';
 import 'package:views_weebi/src/platform_info.dart';
 
 import 'package:flutter/material.dart';

@@ -8,24 +8,24 @@ import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
+import 'package:views_weebi/src/widgets/toast.dart';
 
-class ArticleCreateView extends StatefulWidget {
+class ArticleUpdateView extends StatefulWidget {
   static const fullNameKey = Key('nom');
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
-  final ArticleLine line;
-  const ArticleCreateView({@required this.line, Key key}) : super(key: key);
+  final ArticleRetail articleRetail;
+  const ArticleUpdateView(this.articleRetail, {Key key}) : super(key: key);
 
   @override
-  State<ArticleCreateView> createState() => _ArticleCreateViewState();
+  State<ArticleUpdateView> createState() => _ArticleUpdateViewState();
 }
 
-class _ArticleCreateViewState extends State<ArticleCreateView> {
-  ArticleRetailCreateFormStore store;
+class _ArticleUpdateViewState extends State<ArticleUpdateView> {
+  ArticleRetailUpdateFormStore store;
   ScrollController controller;
 
   @override
@@ -33,7 +33,7 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
     super.initState();
     controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    store = ArticleRetailCreateFormStore(articlesStore, widget.line);
+    store = ArticleRetailUpdateFormStore(articlesStore, widget.articleRetail);
     store.setupValidations();
   }
 
@@ -48,7 +48,7 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWeebiUpdateNotSaved(
-          'Créer un sous-article dans la ligne #${widget.line.id}',
+          'Editer l\'article ${widget.articleRetail.lineId}.${widget.articleRetail.id}',
           backgroundColor: Colors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -57,15 +57,17 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
             return;
           }
           try {
-            final articleRetailCreated =
-                await store.createArticleRetailFromForm();
-            // toastSuccessArticle(context, message: 'article créé');
+            final articleRetailUpdated =
+                await store.updateArticleRetailFromForm();
+            toastSuccessArticle(context, message: 'article mis à jour');
+            await Navigator.of(context).pop(); // remove the past detail view
             Navigator.of(context).popAndPushNamed(
-                ArticleLineRetailDetailRoute.generateRoute('${widget.line.id}',
-                    articleId: '${articleRetailCreated.id}'));
+                ArticleDetailRoute.generateRoute(
+                    '${widget.articleRetail.lineId}',
+                    '${articleRetailUpdated.id}'));
           } catch (e) {
             return InformDialog.showDialogWeebiNotOk(
-                "Erreur lors de la création de l'article $e", context);
+                "Erreur lors de la mise à jour de l'article $e", context);
           }
         },
         backgroundColor: Colors.orange[800],
@@ -83,8 +85,8 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
             Observer(
               name: 'fullName',
               builder: (_) => TextFormField(
-                key: ArticleCreateView.fullNameKey,
                 initialValue: store.fullName,
+                key: ArticleUpdateView.fullNameKey,
                 onChanged: (value) => store.fullName = value,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -96,8 +98,9 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
             ),
             Observer(
               name: 'prix',
-              builder: (_) => TextField(
-                key: ArticleCreateView.priceKey,
+              builder: (_) => TextFormField(
+                initialValue: store.price,
+                key: ArticleUpdateView.priceKey,
                 onChanged: (value) => store.price = value,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -113,8 +116,8 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
             Observer(
               name: 'coût',
               builder: (_) => TextFormField(
-                key: ArticleCreateView.costKey,
-                initialValue: '0',
+                key: ArticleUpdateView.costKey,
+                initialValue: store.cost,
                 onChanged: (value) => store.cost = value,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -130,7 +133,7 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
             Observer(
               name: 'unités par pièce',
               builder: (_) => TextFormField(
-                initialValue: '1',
+                initialValue: store.unitsPerPiece,
                 onChanged: (value) => store.unitsPerPiece = value,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -142,7 +145,8 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
                     errorText: store.errorStore.unitsPerPieceError),
               ),
             ),
-            TextField(
+            TextFormField(
+              initialValue: store.barcodeEAN,
               onChanged: (value) => store.barcodeEAN = value,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(

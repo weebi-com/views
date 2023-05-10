@@ -7,7 +7,7 @@ import 'package:views_weebi/providers.dart';
 void main() {
   testWidgets('check articles search by title', (tester) async {
     // pumps ChassisTutoProducts and also ArticlesLinesViewWIP
-    await tester.pumpWidget(const ZeProviders(StoresLoader(ExampleApp())));
+    await tester.pumpWidget(const ProvidersW(StoresLoader(ExampleApp())));
     await tester.pump();
     expect(find.text('Articles'), findsWidgets);
 

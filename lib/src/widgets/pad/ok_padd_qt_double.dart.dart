@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:views_weebi/src/amount_provider.dart';
+import 'package:views_weebi/src/providers/amount_provider.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

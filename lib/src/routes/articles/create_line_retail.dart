@@ -1,4 +1,4 @@
-import 'package:views_weebi/src/articles/line/line_create_retail.dart';
+import 'package:views_weebi/src/articles/line/line_retail/create_line_retail.dart';
 import 'package:views_weebi/src/routes/route_base.dart';
 
 class ArticleLineRetailCreateRoute extends WeebiRouteBase {

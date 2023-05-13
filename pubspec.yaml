@@ -10,7 +10,7 @@ environment:
 dependencies: 
   flutter: 
     sdk: flutter
-  collection: ^1.15.0
+  collection: ^1.14.12
   font_awesome_flutter: ^10.1.0 #icons 
   flutter_mobx: ^2.0.6+1
   mobx: ^2.0.1

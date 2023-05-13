@@ -48,7 +48,7 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
           Expanded(
             child: Text(
               article.fullName,
-              style: article.status == false
+              style: (article.status ?? true) == false
                   ? const TextStyle(decoration: TextDecoration.lineThrough)
                   : const TextStyle(),
             ),

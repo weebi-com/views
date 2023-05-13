@@ -22,6 +22,7 @@ import 'package:views_weebi/views_article_basket.dart';
 // * This is for web only now
 // articleBaskets are not included here yet
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
+
 class ArticlesLinesOverviewWebOnly extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigator;
   const ArticlesLinesOverviewWebOnly({@required this.mainNavigator});
@@ -48,11 +49,11 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                       builder: (context) => ListView.builder(
                         shrinkWrap: true,
                         controller: scrollControllerVertical,
-                        itemCount: articlesStore.lines.length,
+                        itemCount: articlesStore.lines.palpables.length,
                         itemBuilder: (BuildContext context, int index) =>
                             ArticleLineFrame(
                           contextMain: context,
-                          line: articlesStore.lines[index],
+                          line: articlesStore.lines.palpables[index],
                           ticketsInvoker: ticketsInvoker,
                           closingStockShopsInvoker: closingStockShopsInvoker,
                         ),

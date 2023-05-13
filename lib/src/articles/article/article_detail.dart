@@ -75,7 +75,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                   ? const SizedBox()
                   : CreateArticleWithinLineButton(line.id,
                       isShopLocked: isShopLocked),
-              article.status
+              (article.status ?? true)
                   ? FloatingActionButton(
                       heroTag: 'deactivate',
                       tooltip: 'Désactiver l\'article',
@@ -135,7 +135,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                         child: PhotoWidget(article),
                       ),
                 title: Text(
-                    '#${line.id}.${article.id} ${article.status ? '' : ' \ndésactivé'}',
+                    '#${line.id}.${article.id} ${(article.status ?? true) ? '' : ' \ndésactivé'}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

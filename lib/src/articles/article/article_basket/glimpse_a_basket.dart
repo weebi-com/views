@@ -101,7 +101,7 @@ class _ArticleBasketGlimpseWidStateFulState
             Expanded(
               child: Text(
                 '${widget.article.fullName}',
-                style: widget.article.status == false
+                style: (widget.article.status ?? true) == false
                     ? const TextStyle(decoration: TextDecoration.lineThrough)
                     : const TextStyle(),
               ),

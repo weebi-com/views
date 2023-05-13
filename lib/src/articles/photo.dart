@@ -80,7 +80,8 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
   ]);
 
   Image get getImage {
-    if ((article.photo == null ||
+    if ((article.photoSource == PhotoSource.unknown ||
+        article.photo == null ||
         article.photo.isEmpty ||
         article.photo == 'photo')) {
       return Image.memory(blankBytes, height: 1);
@@ -120,7 +121,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('photoSource ${article.photoSource}');
+/*     print('photoSource ${article.photoSource}'); */
     return getImage;
   }
 }

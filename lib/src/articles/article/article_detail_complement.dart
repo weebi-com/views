@@ -39,10 +39,11 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
         FieldValueWidget(
             const Icon(Icons.settings_outlined),
             const Text('statut'),
-            SelectableText((article is ArticleRetail
-                        ? article as ArticleRetail
-                        : article as ArticleBasket)
-                    .status
+            SelectableText(((article is ArticleRetail
+                            ? article as ArticleRetail
+                            : article as ArticleBasket)
+                        .status ??
+                    true)
                 ? 'activé'
                 : 'désactivé')),
       ],

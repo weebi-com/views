@@ -56,7 +56,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                       overflow: TextOverflow.ellipsis),
                   Text(article.fullName,
                       style: TextStyle(
-                          decoration: article.status == false
+                          decoration: (article.status ?? true) == false
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                           fontWeight: FontWeight.normal,

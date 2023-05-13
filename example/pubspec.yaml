@@ -17,24 +17,24 @@ dependencies:
   provider: ^6.0.3
   views_weebi:
     path: ../../views_weebi
+  #  git:
+  #    url: https://github.com/weebi-com/views
   models_weebi:
-    path: ../../models_weebi 
+    git:
+      url: https://github.com/weebi-com/models
+    #path: ../models_weebi 
     #hosted:
     #  url: https://onepub.dev/api/xnxpsdavuh/
     #  name: models_weebi
     #version: ^1.0.11
   mixins_weebi:
-    path: ../../mixins_weebi
+    git:
+      url: https://github.com/weebi-com/mixins
+    #path: ../mixins_weebi
     #hosted:
     #  url: https://onepub.dev/api/xnxpsdavuh/
     #  name: mixins_weebi
     #version: ^0.0.7
-  closing:
-    path: ../../closing
-    #hosted:
-    #  url: https://onepub.dev/api/xnxpsdavuh/
-    #  name: closing
-    #version: ^1.0.7
   rc_router2: ^1.0.0
  
 

@@ -67,7 +67,7 @@ class _ArticleBasketGlimpseWidStateFulState
     return GestureDetector(
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-            '${widget.article.productId}', '${widget.article.id}'));
+            '${widget.article.lineId}', '${widget.article.id}'));
       },
       child: ExpansionTile(
         onExpansionChanged: (bool expanding) => setState(() =>

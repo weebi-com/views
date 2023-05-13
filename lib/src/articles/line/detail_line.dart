@@ -117,13 +117,22 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                 if (line.stockUnit != StockUnit.unit)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: FieldValueWidget(
-                      const Icon(Icons.style),
-                      const Text("Unité"),
-                      SelectableText(
-                        line.stockUnit.stockUnitText,
-                        style: WeebiTextStyles.blackAndBold,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Icon(Icons.filter_frames),
+                        ),
+                        const Text("Unité"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SelectableText(
+                            line.stockUnit.stockUnitText,
+                            style: WeebiTextStyles.blackAndBold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 if (line.status == false)

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/update_article_basket.dart';
 import 'package:views_weebi/src/routes/articles/update_article_retail.dart';
 import 'package:views_weebi/src/widgets/ask_dialog.dart';
-import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
@@ -18,7 +17,8 @@ class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: "Editer l'article",
+      tooltip:
+          article is ArticleRetail ? "Editer l'article" : "Editer le panier",
       icon: const Icon(Icons.edit, color: WeebiColors.grey),
       onPressed: () async {
         if (article is ArticleRetail) {
@@ -26,6 +26,9 @@ class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
               ArticleRetailUpdateRoute.generateRoute(
                   '${this.article.lineId}', '${this.article.id}'));
         } else {
+          final articlesStore =
+              Provider.of<ArticlesStore>(context, listen: false);
+          await articlesStore.clearAllArticleMinQtInSelected();
           Navigator.of(context).popAndPushNamed(
               ArticleBasketUpdateRoute.generateRoute(
                   '${this.article.lineId}', '${this.article.id}'));
@@ -42,7 +45,9 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: "Supprimer l'article",
+      tooltip: article is ArticleRetail
+          ? "Supprimer l'article"
+          : "Supprimer le panier",
       icon: const Icon(Icons.delete, color: WeebiColors.grey),
       onPressed: () async {
         final articlesStore =

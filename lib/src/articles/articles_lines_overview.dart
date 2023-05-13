@@ -13,8 +13,11 @@ import 'package:views_weebi/src/articles/app_bar_search.dart';
 
 // Project imports:
 import 'package:views_weebi/src/articles/line/frame_line.dart';
+import 'package:views_weebi/src/icons/add_basket.dart';
+import 'package:views_weebi/src/routes/articles/create_line_basket.dart';
 import 'package:views_weebi/src/routes/articles/create_line_retail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
+import 'package:views_weebi/views_article_basket.dart';
 
 // * This is for web only now
 // articleBaskets are not included here yet
@@ -27,8 +30,6 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
   Widget build(BuildContext context) {
     final scrollControllerVertical = ScrollController();
 
-    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
-    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     ticketsInvoker() =>
         Provider.of<TicketsStore>(context, listen: false).tickets;
@@ -106,31 +107,35 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                       // print('setFilteredBy(FilteredBy.title)');
                       articlesStore.setSearchedBy(SearchedBy.titleOrId);
                     } else {
-                      articlesStore.clearSearch(data: [
-                        ...DummyArticleData.cola,
-                        ...DummyArticleData.babibel
-                      ]);
+                      articlesStore.clearSearch();
                     }
                   },
                 ),
               ),
             ),
           ),
-          // if (!_isSearch) ...[
-          //   Align(
-          //       alignment: Alignment.bottomCenter,
-          //       child: FloatingActionButton(
-          //         heroTag: 'Créer un panier',
-          //         tooltip: 'Créer un panier d\'articles',
-          //         backgroundColor: WeebiColors.orange,
-          //         onPressed: () => Navigator.of(context).push(
-          //           MaterialPageRoute(
-          //             builder: (context) =>
-          //                 const LineArticleBasketCreateView(),
-          //           ),
-          //         ),
-          //         child: const IconAddArticleBasket(),
-          //       )),
+          Builder(builder: (context) {
+            return articlesStore.searchedBy != SearchedBy.titleOrId &&
+                    articlesStore.lines.isNotEmpty
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 80),
+                    child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: FloatingActionButton(
+                          heroTag: 'Créer un panier',
+                          tooltip: 'Créer un panier d\'articles',
+                          backgroundColor: WeebiColors.orange,
+                          onPressed: () async {
+                            await articlesStore
+                                .clearAllArticleMinQtInSelected();
+                            Navigator.of(context).pushNamed(
+                                ArticleLineBasketCreateRoute.routePath);
+                          },
+                          child: const IconAddArticleBasket(),
+                        )),
+                  )
+                : const SizedBox();
+          }),
           Observer(builder: (context) {
             return articlesStore.searchedBy != SearchedBy.titleOrId
                 ? Align(

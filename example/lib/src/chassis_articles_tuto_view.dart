@@ -3,28 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 // Package imports:
 import 'package:mixins_weebi/stores.dart';
-import 'package:views_weebi/src/widgets/ask_dialog.dart';
-import 'package:views_weebi/src/routes/articles/frame.dart';
-import 'package:views_weebi/src/routes/info.dart';
+import 'package:views_weebi/routes.dart';
 
 // Project imports:
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views.dart';
-import 'package:views_weebi/src/chassis_abstract.dart';
-
-class InfoView extends StatelessWidget {
-  final GlobalKey<NavigatorState> mainNavigator;
-  const InfoView(this.mainNavigator, {Key key}) : super(key: key);
-  // static const routePath = '/info_view';
-  @override
-  Widget build(BuildContext context) {
-    return ChassisTutoProducts(
-      selectedIndex: 1,
-      mainNavigatorKey: mainNavigator,
-      body: const Center(child: Text('hey')),
-    );
-  }
-}
+import 'package:views_weebi/widgets.dart';
+import 'package:views_weebi_example/src/info_route.dart';
+import 'package:views_weebi/chassis.dart' show ChassisAbstract;
 
 class ChassisTutoProducts extends ChassisAbstract {
   static const Key keyAppBarTitle = Key("AppBar");

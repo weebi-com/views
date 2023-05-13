@@ -33,7 +33,6 @@ class ArticleBasketUpdateRoute extends RcRoute {
       throw 'no line match $lineId';
     });
 
-    articlesStore.clearAllArticleMinQtInSelected();
     final articlesMinQtWeebi = <ArticleWMinQt>[];
 
     final lines =

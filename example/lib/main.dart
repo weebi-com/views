@@ -1,12 +1,9 @@
-import 'package:views_weebi_example/c_stores_loader.dart';
-
+import 'package:models_weebi/dummies.dart';
+import 'package:views_weebi_example/example.dart';
 import 'package:flutter/material.dart';
-
-import 'package:views_weebi_example/d_material_app.dart';
-import 'package:views_weebi/providers.dart';
 
 void main() {
   runApp(
-    const ProvidersW(StoresLoader(ExampleApp())),
+    ProvidersW(StoresLoader(const ExampleApp(), ArticleLinesDummyJamsBM.jams)),
   );
 }

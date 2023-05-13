@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:models_weebi/base.dart';
+import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/stores.dart';
-import 'package:models_weebi/dummies.dart';
-import 'package:views_weebi_example/line_dummy.dart';
 
 class StoresLoader extends StatelessWidget {
   final Widget child;
-  const StoresLoader(this.child, {Key key}) : super(key: key);
+  final List<ArticleLine<ArticleAbstract>> articlesInitData;
+  const StoresLoader(this.child, this.articlesInitData, {Key key})
+      : super(key: key);
 
   Future<bool> loadIt(ArticlesStore articlesStore, TicketsStore ticketsStore,
       ClosingsStore closingsStore) async {
@@ -16,12 +18,7 @@ class StoresLoader extends StatelessWidget {
     // await asyncWhen((_) => appStore.initialLoading == false);
     await closingsStore.init();
     await ticketsStore.init();
-    final isStillLoading = await articlesStore.init(data: [
-      ...DummyArticleData.cola,
-      ...DummyArticleData.babibel,
-      lineDummySugar
-    ]);
-    // JamfBM.jams
+    final isStillLoading = await articlesStore.init(data: articlesInitData);
     return isStillLoading;
   }
 
@@ -30,7 +27,6 @@ class StoresLoader extends StatelessWidget {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
-    // print('closingsStore $closingsStore');
     return FutureBuilder<bool>(
         future: loadIt(articlesStore, ticketsStore, closingsStore),
         builder: (_, snap) {
@@ -61,6 +57,5 @@ class StoresLoader extends StatelessWidget {
             }
           }
         });
-    //await asyncWhen((_) => appStore.initialLoading == false);
   }
 }

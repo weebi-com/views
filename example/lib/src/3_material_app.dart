@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/views.dart';
-import 'package:views_weebi/views_tutos.dart';
+import 'package:views_weebi_example/src/chassis_articles_tuto_view.dart';
+import 'package:views_weebi_example/src/info_route.dart';
 
 class ExampleApp extends StatefulWidget {
   const ExampleApp({Key key}) : super(key: key);
@@ -31,17 +32,20 @@ class _ExampleAppState extends State<ExampleApp> {
         ChassisTutoProducts.buildChassisForArticles(
             mainNavigator, articlesStore),
       ),
-      // ArticleBasketCreateRoute(),
-      // ArticleLineCreateRoute(),
+
+      ArticleLineBasketCreateRoute(),
+      ArticleBasketUpdateRoute(),
+
+      ArticleLineRetailCreateRoute(),
       ArticleLineRetailDetailRoute(),
-      // LineOfArticleUpdateRoute(),
-      // ArticleCreateRoute(),
+      ArticleLineUpdateRoute(),
+
       ArticleDetailRoute(),
-      ArticleRetailUpdateRoute(), // unfinished here
-      ArticleLineRetailCreateRoute(), // unfinished here
-      // PrinterSettingsRoute(),
-      // PromoCreateRoute(),
-      ProxyADetailRoute(),
+
+      ArticleLineRetailCreateRoute(),
+      ArticleRetailCreateRoute(),
+      ArticleRetailUpdateRoute(),
+
       InfoRoute(mainNavigator),
     ]);
   }

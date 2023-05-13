@@ -1,6 +1,13 @@
 import 'package:models_weebi/common.dart';
+import 'package:models_weebi/dummies.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart' show ArticleLine, ArticleRetail;
+
+final articleLinesDummies = [
+  ...DummyArticleData.cola,
+  ...DummyArticleData.babibel,
+  lineDummySugar
+];
 
 final lineDummySugar = ArticleLine(
   id: 3,

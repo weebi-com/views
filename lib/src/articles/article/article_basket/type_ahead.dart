@@ -141,7 +141,7 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
           return Padding(
             padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
             child: ListTile(
-              leading: Text('#${_article.id}'),
+              leading: Text('#${_article.lineId}'),
               title: Text(suggestion),
               trailing: Text('prix : ${_article.price}'),
             ),

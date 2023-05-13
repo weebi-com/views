@@ -1,4 +1,4 @@
 library chassis;
 
-import 'src/chassis_abstract.dart';
-import 'src/chassis_all_views.dart'; // better hiding it ? 
+export 'src/chassis_abstract.dart';
+export 'src/chassis_all_views.dart'; // better hiding it ? 

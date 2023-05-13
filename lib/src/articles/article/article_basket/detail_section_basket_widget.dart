@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:flutter/material.dart';
 
@@ -40,21 +41,20 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        FieldValueWidget(
-          const Icon(Icons.local_offer, color: Colors.teal),
-          const Text("Prix de vente du panier"),
-          SelectableText(
-            numFormat?.format((article as ArticleBasket)
-                    .getProxiesListWithPriceAndCost(
-                        articlesStore.linesPalpableNoBasket)
-                    .totalPrice -
-                (article as ArticleBasket).discountAmountSalesOnly),
-            // * prefer above to have dynamic pricing as user might update or remove articleProxies in the basket
-            // below only provides static price
-            // widget.article.getProxiesListWithPriceAndCost(lines).totalPrice
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
+        Observer(builder: (context) {
+          return FieldValueWidget(
+            const Icon(Icons.local_offer, color: Colors.teal),
+            const Text("Prix de vente du panier :"),
+            SelectableText(
+              numFormat?.format((article as ArticleBasket)
+                      .getProxiesListWithPriceAndCost(
+                          articlesStore.linesPalpableNoBasket)
+                      .totalPrice -
+                  (article as ArticleBasket).discountAmountSalesOnly),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          );
+        }),
         if ((article as ArticleBasket).discountAmountSalesOnly > 0) ...[
           FieldValueWidget(
             const Icon(Icons.redeem),
@@ -65,19 +65,20 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          FieldValueWidget(
-            const Icon(Icons.info),
-            const Text("Prix de vente sans réduction"),
-            SelectableText(
-              numFormat?.format((article as ArticleBasket)
-                  .getProxiesListWithPriceAndCost(
-                      articlesStore.linesPalpableNoBasket)
-                  .totalPrice),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
+          Observer(builder: (context) {
+            return FieldValueWidget(
+              const Icon(Icons.info),
+              const Text("Prix de vente sans réduction"),
+              SelectableText(
+                numFormat?.format((article as ArticleBasket)
+                    .getProxiesListWithPriceAndCost(
+                        articlesStore.linesPalpableNoBasket)
+                    .totalPrice),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            );
+          }),
         ],
-
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: const Text('Articles contenus dans le panier : ',

@@ -75,6 +75,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('photoSource ${article.photoSource}');
     return getImage;
   }
 }

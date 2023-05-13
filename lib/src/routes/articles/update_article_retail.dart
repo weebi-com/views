@@ -31,10 +31,7 @@ class ArticleRetailUpdateRoute extends RcRoute {
         (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
       throw 'no line match $lineId';
     });
-    // final isBasket = line.isBasket ?? false;
-    // if (isBasket) {
-    //   articlesStore.clearAllArticleMinQtInSelected();
-    // }
+
     return Provider.value(
       value: article,
       // child: isBasket

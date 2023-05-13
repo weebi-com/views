@@ -46,9 +46,8 @@ class EditArticleLineButton extends StatelessWidget {
       icon: const Icon(Icons.edit, color: WeebiColors.orange),
       tooltip: "Editer toute la ligne d'articles",
       onPressed: () {
-        Navigator.of(context).pushNamed(ArticleLineUpdateRoute.generateRoute(
-          '${articleLineId}',
-        )); // route unnoying
+        Navigator.of(context).pushNamed(
+            ArticleLineUpdateRoute.generateRoute('${articleLineId}'));
       },
     );
   }

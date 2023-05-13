@@ -52,6 +52,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/articles_confitures.json
   
   # To add custom fonts to your package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

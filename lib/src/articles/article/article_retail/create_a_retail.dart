@@ -7,7 +7,6 @@ import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';

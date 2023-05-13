@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mixins_weebi/mobx_store_closing.dart';
+import 'package:mixins_weebi/mobx_store_ticket.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/src/articles/line/update_line.dart';
-import 'package:views_weebi/src/providers/providers.dart';
 import 'package:views_weebi/src/routes/articles/line_detail.dart';
 
 void main() {
   testWidgets('article line update widget test', (tester) async {
     final rcRoutes = RcRoutes(routes: [ArticleLineRetailDetailRoute()]);
 
-    await tester.pumpWidget(
-      ProvidersW(
-        MaterialApp(
-          onGenerateRoute: rcRoutes.onGeneratedRoute,
-          home: ArticleLineUpdateView(ArticleLine.dummy),
-        ),
+    await tester.pumpWidget(MultiProvider(
+      providers: [
+        Provider<TicketsStore>(
+            create: (_) => TicketsStoreInstantiater.noPersistence),
+        Provider<ClosingsStore>(
+            create: (_) => ClosingsStoreInstantiater.noPersistence),
+        Provider<ArticlesStore>(
+            create: (_) => ArticlesStoreInstantiater.noPersistence),
+      ],
+      child: MaterialApp(
+        onGenerateRoute: rcRoutes.onGeneratedRoute,
+        home: ArticleLineUpdateView(ArticleLine.dummy),
       ),
-    );
+    ));
     await tester.pump();
 
     final actionButton = find.byType(FloatingActionButton);

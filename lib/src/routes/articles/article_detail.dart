@@ -11,7 +11,7 @@ import 'package:views_weebi/views_article.dart';
 import 'package:mixins_weebi/stores.dart';
 
 class ArticleDetailRoute extends RcRoute {
-  static String routePath = '/lines/:lineId/:articleId';
+  static String routePath = '/articles/lines/:lineId/:articleId';
 
   static String generateRoute(String lineId, String articleId) =>
       RcRoute.generateRoute(routePath,

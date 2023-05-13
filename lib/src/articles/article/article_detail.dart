@@ -11,7 +11,7 @@ import 'package:models_weebi/weebi_models.dart'
     show ArticleRetail, ArticleBasket, ArticleLine;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/routes.dart';
-import 'package:views_weebi/src/articles/article/article_basket/section_widget_a_basket.dart';
+import 'package:views_weebi/src/articles/article/article_basket/detail_section_basket_widget.dart';
 import 'package:views_weebi/src/articles/article/buttons.dart';
 import 'package:views_weebi/src/articles/line/buttons_line.dart';
 import 'package:views_weebi/src/articles/photo.dart';

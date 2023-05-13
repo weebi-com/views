@@ -1,4 +1,6 @@
 // Project imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/stores.dart';
@@ -23,7 +25,7 @@ class ArticleLineUpdateView<A extends ArticleAbstract> extends StatefulWidget {
 }
 
 class _ArticleLineUpdateViewState<A extends ArticleAbstract>
-    extends State<ArticleLineUpdateView<A>> {
+    extends State<ArticleLineUpdateView<A>> with ToastWeebi {
   ArticleLineUpdateFormStore store;
   ScrollController controller;
 
@@ -56,7 +58,10 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
           }
           try {
             final lineC = await store.updateLineArticleFromForm<A>(widget.line);
-            toastSuccessArticle(context, message: 'ligne mise à jour');
+
+            toastSuccessArticle(context,
+                message: 'ligne d\'articles mise à jour');
+
             Navigator.of(context).popAndPushNamed(
                 ArticleLineRetailDetailRoute.generateRoute('${lineC.id}',
                     articleId: '1'));

@@ -1,4 +1,7 @@
 // Project imports:
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,7 +27,7 @@ class ArticleCreateView extends StatefulWidget {
   State<ArticleCreateView> createState() => _ArticleCreateViewState();
 }
 
-class _ArticleCreateViewState extends State<ArticleCreateView> {
+class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
   ArticleRetailCreateFormStore store;
   ScrollController controller;
 
@@ -59,7 +62,9 @@ class _ArticleCreateViewState extends State<ArticleCreateView> {
           try {
             final articleRetailCreated =
                 await store.createArticleRetailFromForm();
-            toastSuccessArticle(context, message: 'article créé');
+
+            toastSuccessArticle(context, message: 'sous-article créé');
+
             Navigator.of(context).popAndPushNamed(
                 ArticleLineRetailDetailRoute.generateRoute('${widget.line.id}',
                     articleId: '${articleRetailCreated.id}'));

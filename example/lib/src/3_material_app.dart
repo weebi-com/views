@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/views.dart';
-import 'package:views_weebi_example/src/chassis_articles_tuto_view.dart';
-import 'package:views_weebi_example/src/info_route.dart';
+import 'chassis_articles_tuto_view.dart';
+import 'info_route.dart';
 
 class ExampleApp extends StatefulWidget {
   const ExampleApp({Key key}) : super(key: key);

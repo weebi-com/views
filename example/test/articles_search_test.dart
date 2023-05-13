@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:views_weebi/views_line.dart';
-import 'package:views_weebi_example/example.dart';
-import 'package:views_weebi_example/src/line_dummy.dart';
+import '../lib/src/1_providers.dart';
+import '../lib/src/2_stores_loader.dart';
+import '../lib/src/3_material_app.dart';
+import '../lib/src/line_dummy.dart';
 
 void main() {
   testWidgets('check articles search by title', (tester) async {

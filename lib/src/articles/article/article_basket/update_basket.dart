@@ -1,4 +1,5 @@
 // Flutter imports:
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:models_weebi/extensions.dart';
@@ -27,7 +28,8 @@ class ArticleBasketUpdateView extends StatefulWidget {
       _ArticleBasketUpdateViewState();
 }
 
-class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView> {
+class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
+    with ToastWeebi {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKeyLine = GlobalKey<FormState>();
   ScrollController controller = ScrollController();

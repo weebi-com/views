@@ -14,7 +14,7 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/widgets.dart' show InformDialog;
 
 import 'package:views_weebi/widgets.dart' show AskDialog;
-import 'package:views_weebi_example/src/import/import_provider_json.dart';
+import 'import_provider_json.dart';
 
 class ImportArticleLineJsonView extends StatelessWidget {
   static const title = 'Imports';

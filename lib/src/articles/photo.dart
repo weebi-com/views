@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:models_weebi/base.dart';
@@ -32,13 +33,57 @@ abstract class Loader {
 
 class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
-  const PhotoWidget(
-    this.article,
-  );
+  PhotoWidget(this.article);
+  final Uint8List blankBytes = Uint8List.fromList([
+    71,
+    73,
+    70,
+    56,
+    57,
+    97,
+    1,
+    0,
+    1,
+    0,
+    128,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255,
+    255,
+    33,
+    249,
+    4,
+    1,
+    0,
+    0,
+    0,
+    0,
+    44,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    2,
+    1,
+    68,
+    0,
+    59
+  ]);
 
-  Widget get getImage {
-    if ((article.photo == null || article.photo.isEmpty)) {
-      return const SizedBox();
+  Image get getImage {
+    if ((article.photo == null ||
+        article.photo.isEmpty ||
+        article.photo == 'photo')) {
+      return Image.memory(blankBytes, height: 1);
     }
     //TODO remove below "as" once PhotoSource is embedded into ArticleAbstract
     switch ((article as ArticleRetail).photoSource) {
@@ -67,9 +112,9 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
             }),
             errorBuilder: (_, o, stack) => Loader.productIcon);
       case PhotoSource.unknown:
-        return const SizedBox();
+        return Image.memory(blankBytes, height: 1);
       default:
-        return const SizedBox();
+        return Image.memory(blankBytes, height: 1);
     }
   }
 

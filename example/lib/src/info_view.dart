@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:views_weebi_example/src/chassis_articles_tuto_view.dart';
-import 'package:views_weebi_example/src/import/import_articles_json.dart';
+import 'chassis_articles_tuto_view.dart';
+import 'import/import_articles_json.dart';
 
 class InfoView extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigator;

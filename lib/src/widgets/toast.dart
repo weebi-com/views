@@ -1,68 +1,84 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
-toastSuccessArticle(context,
-        {String message = '',
-        StyledToastPosition position = StyledToastPosition.bottom}) =>
-    showToastWidget(IconToastWidget.successProduct(msg: message),
-        context: context,
-        animation: StyledToastAnimation.size,
-        reverseAnimation: StyledToastAnimation.sizeFade,
-        position: position,
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 1),
-        curve: Curves.decelerate,
-        reverseCurve: Curves.decelerate);
-toastFailProduct(context,
-        {String message = '',
-        StyledToastPosition position = StyledToastPosition.bottom}) =>
-    showToastWidget(IconToastWidget.failProduct(msg: message),
-        context: context,
-        animation: StyledToastAnimation.size,
-        reverseAnimation: StyledToastAnimation.sizeFade,
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 1),
-        curve: Curves.decelerate,
-        position: position,
-        reverseCurve: Curves.linear);
-toastSuccessContact(context,
-        {String message = '',
-        StyledToastPosition position = StyledToastPosition.bottom}) =>
-    showToastWidget(IconToastWidget.successContact(msg: message),
-        context: context,
-        animation: StyledToastAnimation.size,
-        reverseAnimation: StyledToastAnimation.sizeFade,
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 1),
-        curve: Curves.decelerate,
-        position: position,
-        reverseCurve: Curves.linear);
-toastFailContact(context,
-        {String message = '',
-        StyledToastPosition position = StyledToastPosition.bottom}) =>
-    showToastWidget(IconToastWidget.failContact(msg: 'erreur ' + message),
-        context: context,
-        position: position,
-        animation: StyledToastAnimation.size,
-        reverseAnimation: StyledToastAnimation.sizeFade,
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 1),
-        curve: Curves.decelerate,
-        reverseCurve: Curves.linear);
+mixin ToastWeebi {
+  toastSuccessArticle(context,
+          {String message = '',
+          StyledToastPosition position = StyledToastPosition.bottom}) =>
+      kIsWeb == false && Platform.environment.containsKey('FLUTTER_TEST')
+          ? {}
+          : showToastWidget(IconToastWidget.successProduct(msg: message),
+              context: context,
+              animation: StyledToastAnimation.size,
+              reverseAnimation: StyledToastAnimation.sizeFade,
+              position: position,
+              duration: Duration(seconds: 4),
+              animDuration: Duration(seconds: 1),
+              curve: Curves.decelerate,
+              reverseCurve: Curves.decelerate);
+  toastFailProduct(context,
+          {String message = '',
+          StyledToastPosition position = StyledToastPosition.bottom}) =>
+      kIsWeb == false && Platform.environment.containsKey('FLUTTER_TEST')
+          ? {}
+          : showToastWidget(IconToastWidget.failProduct(msg: message),
+              context: context,
+              animation: StyledToastAnimation.size,
+              reverseAnimation: StyledToastAnimation.sizeFade,
+              duration: Duration(seconds: 4),
+              animDuration: Duration(seconds: 1),
+              curve: Curves.decelerate,
+              position: position,
+              reverseCurve: Curves.linear);
+  toastSuccessContact(context,
+          {String message = '',
+          StyledToastPosition position = StyledToastPosition.bottom}) =>
+      kIsWeb == false && Platform.environment.containsKey('FLUTTER_TEST')
+          ? {}
+          : showToastWidget(IconToastWidget.successContact(msg: message),
+              context: context,
+              animation: StyledToastAnimation.size,
+              reverseAnimation: StyledToastAnimation.sizeFade,
+              duration: Duration(seconds: 4),
+              animDuration: Duration(seconds: 1),
+              curve: Curves.decelerate,
+              position: position,
+              reverseCurve: Curves.linear);
+  toastFailContact(context,
+          {String message = '',
+          StyledToastPosition position = StyledToastPosition.bottom}) =>
+      kIsWeb == false && Platform.environment.containsKey('FLUTTER_TEST')
+          ? {}
+          : showToastWidget(IconToastWidget.successContact(msg: message),
+              context: context,
+              animation: StyledToastAnimation.size,
+              reverseAnimation: StyledToastAnimation.sizeFade,
+              duration: Duration(seconds: 4),
+              animDuration: Duration(seconds: 1),
+              curve: Curves.decelerate,
+              position: position,
+              reverseCurve: Curves.linear);
 
-toastWarningUser(context, {String message = ''}) => showToastWidget(
-    IconToastWidget.failContact(
-        msg: 'Attention ' +
-            message +
-            '\nEn cas de besoin n\'hésitez pas à contacter l\'assistance'),
-    context: context,
-    position: StyledToastPosition.center,
-    animation: StyledToastAnimation.size,
-    reverseAnimation: StyledToastAnimation.sizeFade,
-    duration: Duration(seconds: 10),
-    animDuration: Duration(seconds: 1),
-    curve: Curves.decelerate,
-    reverseCurve: Curves.linear);
+  toastWarningUser(context, {String message = ''}) => kIsWeb == false &&
+          Platform.environment.containsKey('FLUTTER_TEST')
+      ? {}
+      : showToastWidget(
+          IconToastWidget.failContact(
+              msg: 'Attention ' +
+                  message +
+                  '\nEn cas de besoin n\'hésitez pas à contacter l\'assistance'),
+          context: context,
+          position: StyledToastPosition.center,
+          animation: StyledToastAnimation.size,
+          reverseAnimation: StyledToastAnimation.sizeFade,
+          duration: Duration(seconds: 10),
+          animDuration: Duration(seconds: 1),
+          curve: Curves.decelerate,
+          reverseCurve: Curves.linear);
+}
 
 class IconToastWidget extends StatelessWidget {
   final Key key;

@@ -4,13 +4,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 // Package imports:
 import 'package:mixins_weebi/stores.dart';
 import 'package:views_weebi/routes.dart';
-
 // Project imports:
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views.dart';
 import 'package:views_weebi/widgets.dart';
-import 'package:views_weebi_example/src/info_route.dart';
 import 'package:views_weebi/chassis.dart' show ChassisAbstract;
+import 'info_route.dart';
 
 class ChassisTutoProducts extends ChassisAbstract {
   static const Key keyAppBarTitle = Key("AppBar");

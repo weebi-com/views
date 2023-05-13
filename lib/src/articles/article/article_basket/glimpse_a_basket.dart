@@ -13,6 +13,7 @@ import 'package:mixins_weebi/stock.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:mixins_weebi/stores.dart' show TicketsStore;
+import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article_basket.dart';
 
@@ -85,8 +86,8 @@ class _ArticleBasketGlimpseWidStateFulState
                 ? Hero(
                     tag: '${widget.article.lineId}.${widget.article.id}',
                     child: CircleAvatar(
-                        foregroundImage: AssetImage(
-                            'assets/photos/${widget.article.photo}')),
+                        foregroundImage: PhotoWidget(widget.article).getImage
+                            as ImageProvider),
                   )
                 : CircleAvatar(backgroundColor: Colors.transparent),
             Padding(

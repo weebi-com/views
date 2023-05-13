@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:models_base/common.dart' show StockUnit;
@@ -27,7 +29,7 @@ class ArticleLineBasketCreateView extends StatefulWidget {
 }
 
 class _ArticleLineBasketCreateViewState
-    extends State<ArticleLineBasketCreateView> {
+    extends State<ArticleLineBasketCreateView> with ToastWeebi {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKeyLine = GlobalKey<FormState>();
   String _thisCategory;
@@ -123,7 +125,9 @@ class _ArticleLineBasketCreateViewState
                 final lineCreated = await articlesStore
                     .createLineArticle<ArticleBasket>(_newLine);
                 // CustomSuccessToastWidget
-                toastSuccessArticle(context, message: 'article créé');
+
+                toastSuccessArticle(context, message: 'panier créé');
+
                 articlesStore.clearAllArticleMinQtInSelected();
                 if (lineCreated is ArticleLine<ArticleBasket>) {
                   Navigator.of(context).popAndPushNamed(

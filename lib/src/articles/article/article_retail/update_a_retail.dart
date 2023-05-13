@@ -1,4 +1,6 @@
 // Project imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,7 +26,7 @@ class ArticleUpdateView extends StatefulWidget {
   State<ArticleUpdateView> createState() => _ArticleUpdateViewState();
 }
 
-class _ArticleUpdateViewState extends State<ArticleUpdateView> {
+class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
   ArticleRetailUpdateFormStore store;
   ScrollController controller;
 

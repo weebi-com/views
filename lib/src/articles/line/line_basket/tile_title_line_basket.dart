@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show ArticleLine;
 import 'package:models_base/utils.dart';
+import 'package:views_weebi/src/articles/photo.dart';
 
 class LineSingleArticleBasketTileTitle extends StatelessWidget {
   final ArticleLine line;
@@ -24,8 +25,8 @@ class LineSingleArticleBasketTileTitle extends StatelessWidget {
             : Hero(
                 tag: line.id,
                 child: CircleAvatar(
-                  foregroundImage:
-                      AssetImage('assets/photos/' + line.articles.first.photo),
+                  foregroundImage: PhotoWidget(line.articles.first).getImage
+                      as ImageProvider,
                 ),
               ),
         Padding(

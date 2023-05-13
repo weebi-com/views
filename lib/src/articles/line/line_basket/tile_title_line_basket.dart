@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:models_weebi/utils.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart' show ArticleLine;
-import 'package:models_base/utils.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 
 class LineSingleArticleBasketTileTitle extends StatelessWidget {

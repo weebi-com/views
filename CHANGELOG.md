@@ -1,3 +1,8 @@
+## 0.0.5
+
+- fix photos from asset path
+- provide articles photos in example/assets
+
 ## 0.0.4
 
 articles basket included

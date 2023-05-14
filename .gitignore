@@ -33,11 +33,3 @@ example/pubspec.lock
 .flutter-plugins-dependencies
 example/pubspec.lock
 
-
-example/linux/flutter/generated_plugin_registrant.cc
-example/linux/flutter/generated_plugin_registrant.h
-example/linux/flutter/generated_plugins.cmake
-example/macos/Flutter/GeneratedPluginRegistrant.swift
-example/windows/flutter/generated_plugin_registrant.cc
-example/windows/flutter/generated_plugin_registrant.h
-example/windows/flutter/generated_plugins.cmake

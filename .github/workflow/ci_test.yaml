@@ -1,0 +1,29 @@
+name: CI/CD
+ 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+ 
+jobs:
+  if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  runs-on: ubuntu-latest
+  name: Build and Deploy Job
+  steps:
+    - uses: actions/checkout@v3
+      #with:
+      #  submodules: true
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.10.0' #'2.5.0' # 2.0.0 '1.17.x'
+        channel: 'stable'
+        cache: true
+    - name: Check up SDKs
+      run: |
+        dart --version
+        flutter --version
+    - run: flutter test

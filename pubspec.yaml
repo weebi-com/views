@@ -35,6 +35,6 @@ dependencies:
     #  name: mixins_weebi
     #version: ^0.0.7
 dev_dependencies: 
-  flutter_test: 
-    sdk: flutter
+  #flutter_test: 
+  #  sdk: flutter
 flutter: null

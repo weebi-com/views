@@ -1,8 +1,8 @@
 name: views_weebi
 version: 0.0.4
 homepage: http://weebi.com/
-publish_to: none #https://onepub.dev/api/xnxpsdavuh/
 description: views and widgets
+#publish_to: none #https://onepub.dev/api/xnxpsdavuh/
 
 environment: 
   sdk: '>=2.7.0 <3.0.0'
@@ -18,23 +18,14 @@ dependencies:
   rc_router2: ^1.0.0
   flutter_typeahead: 3.1.0 #4.0.0
   flutter_styled_toast: 1.5.2+3 #^2.1.3
-  models_weebi:
-    git:
-      url: https://github.com/weebi-com/models
+
+  models_weebi: ^1.0.13
     #path: ../models_weebi 
-    #hosted:
-    #  url: https://onepub.dev/api/xnxpsdavuh/
-    #  name: models_weebi
-    #version: ^1.0.11
-  mixins_weebi:
-    git:
-      url: https://github.com/weebi-com/mixins
+  mixins_weebi: ^0.0.9
     #path: ../mixins_weebi
-    #hosted:
-    #  url: https://onepub.dev/api/xnxpsdavuh/
-    #  name: mixins_weebi
-    #version: ^0.0.7
-dev_dependencies: 
-  #flutter_test: 
-  #  sdk: flutter
+
+dev_dependencies:
+  flutter_test: 
+    sdk: flutter
+    #  flutter_lints: ^1.0.4 #^2.0.0
 flutter: null

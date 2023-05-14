@@ -15,33 +15,20 @@ dependencies:
   font_awesome_flutter: ^10.1.0 #^9.0.0
   mobx: ^2.0.1
   provider: ^6.0.3
+  rc_router2: ^1.0.0
+
   views_weebi:
     path: ../../views
-  #  git:
-  #    url: https://github.com/weebi-com/views
-  models_weebi:
-    git:
-      url: https://github.com/weebi-com/models
+  models_weebi: ^1.0.13
     #path: ../models_weebi 
-    #hosted:
-    #  url: https://onepub.dev/api/xnxpsdavuh/
-    #  name: models_weebi
-    #version: ^1.0.11
-  mixins_weebi:
-    git:
-      url: https://github.com/weebi-com/mixins
+  mixins_weebi: ^0.0.9
     #path: ../mixins_weebi
-    #hosted:
-    #  url: https://onepub.dev/api/xnxpsdavuh/
-    #  name: mixins_weebi
-    #version: ^0.0.7
-  rc_router2: ^1.0.0
  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: 1.0.4 #^2.0.0
+  flutter_lints: ^1.0.4 #^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

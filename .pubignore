@@ -1,0 +1,15 @@
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+# Omit committing pubspec.lock for library packages; see
+# https://dart.dev/guides/libraries/private-files#pubspeclock.
+pubspec.lock
+
+example/linux/flutter/generated_plugin_registrant.cc
+example/linux/flutter/generated_plugin_registrant.h
+example/linux/flutter/generated_plugins.cmake
+example/macos/Flutter/GeneratedPluginRegistrant.swift
+example/windows/flutter/generated_plugin_registrant.cc
+example/windows/flutter/generated_plugin_registrant.h
+example/windows/flutter/generated_plugins.cmake

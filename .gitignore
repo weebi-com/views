@@ -32,6 +32,8 @@ example/pubspec.lock
 .flutter-plugins
 .flutter-plugins-dependencies
 example/pubspec.lock
+
+
 example/linux/flutter/generated_plugin_registrant.cc
 example/linux/flutter/generated_plugin_registrant.h
 example/linux/flutter/generated_plugins.cmake

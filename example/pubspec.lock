@@ -199,11 +199,9 @@ packages:
   mixins_weebi:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "9d9d43f8085029ae24b890c26564c3efc22c2790"
-      url: "https://github.com/weebi-com/mixins"
-    source: git
+      name: mixins_weebi
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.9"
   mobx:
     dependency: "direct main"
@@ -222,11 +220,9 @@ packages:
   models_weebi:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: db6ddb3cf7b4224f02ca4ae202cf201582a67eaa
-      url: "https://github.com/weebi-com/models"
-    source: git
+      name: models_weebi
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.13"
   nested:
     dependency: transitive
@@ -280,11 +276,9 @@ packages:
   services_weebi:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "5193ddb7968f30c83ded5d23c64f4ada985cdff7"
-      url: "https://github.com/weebi-com/services"
-    source: git
+      name: services_weebi
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.4"
   sky_engine:
     dependency: transitive

@@ -90,7 +90,7 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
     switch ((article as ArticleRetail).photoSource) {
       case PhotoSource.asset:
         return Image.asset(
-          'assets/photos/${article.photo}',
+          'photos/${article.photo}',
           fit: BoxFit.scaleDown,
           errorBuilder: (_, o, stack) => Loader.productIcon,
         );

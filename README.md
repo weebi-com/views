@@ -1,7 +1,9 @@
---no-sound-null-safety
+This lib provides out of the box UI to display [models](https://github.com/weebi-com/models) and use logic from [mixins](https://github.com/weebi-com/mixins).
 
-- TODO  bien distinguer le présentateur des vues
+It only includes support for articles at the moment.
 
-widget test out of jail for context 
-// final BuildContext context = tester.element(find.byType(Container));
+A web live demo of the example is available at : https://articles-demo-web.web.app/
+
+# run
+please use the --no-sound-null-safety flag when running/building until the migration is completed
 

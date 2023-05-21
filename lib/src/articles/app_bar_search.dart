@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/styles.dart';
 
 class TopBarSearchArticles extends StatefulWidget {
-  final void Function() onPressedCloseIconButton;
-  const TopBarSearchArticles({this.onPressedCloseIconButton, Key key})
+  final void Function()? onPressedCloseIconButton;
+  const TopBarSearchArticles({this.onPressedCloseIconButton, Key? key})
       : super(key: key);
 
   @override

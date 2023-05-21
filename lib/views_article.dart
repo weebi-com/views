@@ -8,7 +8,7 @@ export 'src/articles/article/article_retail/frame_a_retail.dart';
 export 'src/articles/article/article_retail/create_a_retail.dart';
 export 'src/articles/article/article_retail/update_a_retail.dart';
 
-export 'src/articles/article_card_slide.dart';
-export 'src/articles/article_cards_slidable.dart';
+export 'src/articles/article/article_retail/article_card_slide.dart';
+export 'src/articles/article/article_retail/article_cards_slidable.dart';
 export 'src/articles/article/article_detail.dart';
 export 'src/articles/article/article_detail_complement.dart';

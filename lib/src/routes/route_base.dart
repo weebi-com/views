@@ -4,7 +4,7 @@ import 'package:rc_router2/rc_router2.dart';
 class WeebiRouteBase extends RcRoute {
   final Widget child;
 
-  WeebiRouteBase({@required this.child, @required String routePath})
+  WeebiRouteBase({required this.child, required String routePath})
       : super(path: routePath);
 
   @override

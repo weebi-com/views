@@ -3,16 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/articles/line/line_retail/create_line_retail.dart';
+import 'package:views_weebi/src/articles/calibre/retail/calibrate_create_retail.dart';
 
 void main() {
-  testWidgets('article line create widget test', (tester) async {
+  testWidgets('article calibre create widget test', (tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       Provider<ArticlesStore>(
         create: (_) => ArticlesStoreInstantiater.noPersistence,
         child: MaterialApp(
-          home: const ArticleLineRetailCreateView(),
+          home: const ArticleRetailCalibrateAndCreateView(),
         ),
       ),
     );
@@ -25,29 +25,29 @@ void main() {
     expect(find.byIcon(Icons.style), findsOneWidget); // units per piece
     expect(find.byIcon(Icons.speaker_phone), findsOneWidget); // barcode
 
-    final name = find.byKey(ArticleLineRetailCreateView.nameKey);
-    await tester.enterText(name, ArticleLine.dummy.title);
+    final name = find.byKey(ArticleRetailCalibrateAndCreateView.nameKey);
+    await tester.enterText(name, ArticleCalibre.dummyRetail.title);
     await tester.pump();
 
-    final price = find.byKey(ArticleLineRetailCreateView.priceKey);
+    final price = find.byKey(ArticleRetailCalibrateAndCreateView.priceKey);
     await tester.enterText(
-        price, ArticleLine.dummy.articles.first.price.toString());
+        price, ArticleCalibre.dummyRetail.articles.first.price.toString());
     await tester.pump();
 
-    final cost = find.byKey(ArticleLineRetailCreateView.costKey);
+    final cost = find.byKey(ArticleRetailCalibrateAndCreateView.costKey);
     await tester.enterText(
-        cost, ArticleLine.dummy.articles.first.cost.toString());
+        cost, ArticleCalibre.dummyRetail.articles.first.cost.toString());
     await tester.pump();
 
     final actionButton = find.byType(FloatingActionButton);
     final BuildContext context = tester.element(actionButton);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
-    expect(articlesStore.lines.length, 0);
+    expect(articlesStore.calibres.length, 0);
     await tester.tap(actionButton);
     await tester.pump();
     await tester.pump();
     await tester.pump();
-    expect(articlesStore.lines.length, 1);
+    expect(articlesStore.calibres.length, 1);
   });
 }

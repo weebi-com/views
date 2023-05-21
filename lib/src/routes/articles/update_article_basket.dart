@@ -10,41 +10,42 @@ import 'package:views_weebi/src/articles/article/article_basket/update_basket.da
 import 'package:views_weebi/src/extensions/proxy_article.dart';
 
 class ArticleBasketUpdateRoute extends RcRoute {
-  static String routePath = '/article_basket_update/:lineId/:articleId';
+  static String routePath = '/article_basket_update/:calibreId/:articleId';
 
-  static String generateRoute(String lineId, String articleId) =>
+  static String generateRoute(String calibreId, String articleId) =>
       RcRoute.generateRoute(routePath,
-          pathParams: {'lineId': lineId, 'articleId': articleId});
+          pathParams: {'calibreId': calibreId, 'articleId': articleId});
 
   ArticleBasketUpdateRoute() : super(path: ArticleBasketUpdateRoute.routePath);
 
   @override
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
-    final lineId = routeParams.pathParameters['lineId'] ?? '';
+    final calibreId = routeParams.pathParameters['calibreId'] ?? '';
     final articleId = routeParams.pathParameters['articleId'] ?? '';
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final line = articlesStore.lines
-        .firstWhere((p) => p.id.toString() == lineId, orElse: () {
-      throw 'no line match $lineId';
+    final calibre = articlesStore.calibres
+        .firstWhere((p) => p.id.toString() == calibreId, orElse: () {
+      throw 'no calibre match $calibreId';
     });
-    final article = line.articles.firstWhere(
-        (a) => '${a.lineId}' == lineId && '${a.id}' == articleId, orElse: () {
-      throw 'no line match $lineId';
+    final article = calibre.articles.firstWhere(
+        (a) => '${a.calibreId}' == calibreId && '${a.id}' == articleId,
+        orElse: () {
+      throw 'no calibre match $calibreId';
     });
 
     final articlesMinQtWeebi = <ArticleWMinQt>[];
 
-    final lines =
-        articlesStore.lines.where((element) => element.isBasket == false);
+    final calibres =
+        articlesStore.calibres.where((element) => element.isBasket == false);
     articlesMinQtWeebi
-        .addAll((article as ArticleBasket).proxies.getProxiesMinQt(lines));
+        .addAll((article as ArticleBasket).proxies.getProxiesMinQt(calibres));
     for (final a in articlesMinQtWeebi) {
       articlesStore.addArticleWInSelected(a);
     }
     return Provider.value(
       value: article,
-      child: ArticleBasketUpdateView(article as ArticleBasket),
+      child: ArticleBasketUpdateView(article),
     );
   }
 }

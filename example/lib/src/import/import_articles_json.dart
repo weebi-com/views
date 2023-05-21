@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:models_weebi/extensions.dart';
-import 'package:models_weebi/weebi_models.dart' show ArticleLine;
+import 'package:models_weebi/weebi_models.dart' show ArticleCalibre;
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:views_weebi/styles.dart';
@@ -16,28 +16,28 @@ import 'package:views_weebi/widgets.dart' show InformDialog;
 import 'package:views_weebi/widgets.dart' show AskDialog;
 import 'import_provider_json.dart';
 
-class ImportArticleLineJsonView extends StatelessWidget {
+class ImportArticleCalibreJsonView extends StatelessWidget {
   static const title = 'Imports';
-  const ImportArticleLineJsonView({Key key}) : super(key: key);
+  const ImportArticleCalibreJsonView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => ImportProviderJson(),
-        child: const ImportArticleLineJsonWidget());
+        child: const ImportArticleCalibreJsonWidget());
   }
 }
 
-class ImportArticleLineJsonWidget extends StatefulWidget {
-  const ImportArticleLineJsonWidget({Key key}) : super(key: key);
+class ImportArticleCalibreJsonWidget extends StatefulWidget {
+  const ImportArticleCalibreJsonWidget({Key? key}) : super(key: key);
 
   @override
-  State<ImportArticleLineJsonWidget> createState() =>
-      _ImportArticleLineJsonWidgetState();
+  State<ImportArticleCalibreJsonWidget> createState() =>
+      _ImportArticleCalibreJsonWidgetState();
 }
 
-class _ImportArticleLineJsonWidgetState
-    extends State<ImportArticleLineJsonWidget> {
+class _ImportArticleCalibreJsonWidgetState
+    extends State<ImportArticleCalibreJsonWidget> {
   @override
   Widget build(BuildContext context) {
     // final importProviderJson =
@@ -50,7 +50,7 @@ class _ImportArticleLineJsonWidgetState
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            ImportArticleLineJsonView.title,
+            ImportArticleCalibreJsonView.title,
             style: WeebiTextStyles.supportBig,
           ),
         ),
@@ -75,16 +75,16 @@ class _ImportArticleLineJsonWidgetState
                 final jsonText = await rootBundle
                     .loadString('assets/articles_confitures.json');
                 final decoded = jsonDecode(jsonText);
-                final deserialisedJson = <ArticleLine>[];
-                deserialisedJson.addAll(List<ArticleLine>.from(decoded
+                final deserialisedJson = <ArticleCalibre>[];
+                deserialisedJson.addAll(List<ArticleCalibre>.from(decoded
                     .cast<Map>()
                     .cast<Map<String, dynamic>>()
-                    .map((e) => ArticleLine.fromMap(e))));
-                final twoLists =
-                    articlesStore.lines.findDupsById(newList: deserialisedJson);
+                    .map((e) => ArticleCalibre.fromMap(e))));
+                final twoLists = articlesStore.calibres
+                    .findDupsById(newList: deserialisedJson);
                 if (twoLists.noDups.isNotEmpty) {
                   final count =
-                      await articlesStore.addAllArticleLine(twoLists.noDups);
+                      await articlesStore.addAllArticleCalibre(twoLists.noDups);
                   if (count == 0) {
                     return InformDialog.showDialogWeebiNotOk(
                         "L'import des articles a échoué", context);
@@ -114,7 +114,8 @@ class _ImportArticleLineJsonWidgetState
                 if (isOk == false) {
                   return;
                 }
-                if (await articlesStore.deleteAllArticlesAndLines() == false) {
+                if (await articlesStore.deleteAllArticlesAndCalibres() ==
+                    false) {
                   return InformDialog.showDialogWeebiNotOk(
                       "La suppression des articles a échoué", context);
                 } else {

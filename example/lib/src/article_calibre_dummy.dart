@@ -1,15 +1,16 @@
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/dummies.dart';
 import 'package:models_weebi/utils.dart';
-import 'package:models_weebi/weebi_models.dart' show ArticleLine, ArticleRetail;
+import 'package:models_weebi/weebi_models.dart'
+    show ArticleCalibre, ArticleRetail;
 
-final articleLinesDummies = [
+final articleCalibresDummies = [
   ...DummyArticleData.cola,
   ...DummyArticleData.babibel,
-  lineDummySugar
+  articleCalibreDummySugar
 ];
 
-final lineDummySugar = ArticleLine(
+final articleCalibreDummySugar = ArticleCalibre(
   id: 3,
   title: 'Sucre',
   stockUnit: StockUnit.gram,
@@ -19,7 +20,7 @@ final lineDummySugar = ArticleLine(
   updateDate: WeebiDates.defaultDate,
   articles: [
     ArticleRetail(
-      lineId: 3,
+      calibreId: 3,
       id: 1,
       fullName: 'Sucre g',
       photo: '',

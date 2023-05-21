@@ -21,12 +21,13 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
     return ListTile(
       onTap: () {
         Navigator.of(context).pushNamed(
-            ArticleLineRetailDetailRoute.generateRoute('${article.lineId}',
+            ArticleCalibreRetailDetailRoute.generateRoute(
+                '${article.calibreId}',
                 articleId: '${article.id}')); // TODO isShopLocked
       },
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-            '${article.lineId}', '${article.id}'));
+            '${article.calibreId}', '${article.id}'));
       },
       leading: const CircleAvatar(backgroundColor: Colors.transparent),
       title: Row(
@@ -41,14 +42,14 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Text(
-              '#${article.lineId}.${article.id}',
+              '#${article.calibreId}.${article.id}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
           Expanded(
             child: Text(
               article.fullName,
-              style: (article.status ?? true) == false
+              style: (article.status) == false
                   ? const TextStyle(decoration: TextDecoration.lineThrough)
                   : const TextStyle(),
             ),

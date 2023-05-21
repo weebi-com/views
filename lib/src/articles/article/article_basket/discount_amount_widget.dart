@@ -10,7 +10,7 @@ class DiscountAmountWidget extends StatefulWidget {
   final int totalPrice;
   final int oldDiscountAmount;
   const DiscountAmountWidget(this.totalPrice,
-      {this.oldDiscountAmount = 0, Key key})
+      {this.oldDiscountAmount = 0, Key? key})
       : super(key: key);
 
   @override
@@ -18,8 +18,8 @@ class DiscountAmountWidget extends StatefulWidget {
 }
 
 class _DiscountAmountWidgetState extends State<DiscountAmountWidget> {
-  String discountAmountValidator(String val) {
-    if (val.isEmpty) {
+  String? discountAmountValidator(String? val) {
+    if (val == null || val.isEmpty) {
       return null;
     } else {
       if (int.tryParse(val) == null) {
@@ -41,7 +41,7 @@ class _DiscountAmountWidgetState extends State<DiscountAmountWidget> {
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         Expanded(
           child: TextFormField(
-            initialValue: '${widget.oldDiscountAmount}' ?? '',
+            initialValue: '${widget.oldDiscountAmount}',
             decoration: InputDecoration(
               labelText: 'Réduction',
               icon: const Icon(Icons.redeem),

@@ -3,8 +3,8 @@ import 'package:views_weebi/src/widgets/ask_dialog.dart';
 import 'package:views_weebi/widgets.dart' show AskDialog;
 
 PreferredSizeWidget appBarWeebiUpdateNotSaved(String title,
-    {Color backgroundColor,
-    List<Widget> actions,
+    {Color? backgroundColor,
+    List<Widget>? actions,
     String pushThatRouteInstead = ''}) {
   return AppBar(
     backgroundColor: backgroundColor,
@@ -16,13 +16,11 @@ PreferredSizeWidget appBarWeebiUpdateNotSaved(String title,
           onPressed: () async {
             final isSureAboutQuitting =
                 await AskDialog.areYouSureUpdateNotSaved(context);
-
-            if (isSureAboutQuitting ?? false) {
+            if (isSureAboutQuitting) {
               if (pushThatRouteInstead.isNotEmpty) {
-                return Navigator.of(context)
-                    .popAndPushNamed(pushThatRouteInstead);
+                Navigator.of(context).popAndPushNamed(pushThatRouteInstead);
               } else {
-                return Navigator.of(context).pop();
+                Navigator.of(context).pop();
               }
             }
           },

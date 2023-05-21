@@ -1,13 +1,18 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/invokers.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 
 // Package imports:
 
-import 'package:models_weebi/weebi_models.dart' show ArticleBasket, ArticleLine;
+import 'package:models_weebi/weebi_models.dart'
+    show ArticleBasket, ArticleCalibre, ArticleRetail;
+import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/article/article_basket/glimpse_a_basket.dart';
-import 'package:views_weebi/src/articles/line/buttons_line.dart';
+import 'package:views_weebi/src/articles/calibre/buttons_calibre.dart';
+import 'package:views_weebi/src/articles/article/article_retail/article_cards_slidable.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/views_article.dart';
@@ -16,8 +21,8 @@ import 'package:mixins_weebi/stock.dart';
 
 import 'package:views_weebi/widgets.dart';
 
-Gradient getLineGradient(ArticleLine line) {
-  if (line.status) {
+Gradient getLineGradient(ArticleCalibre calibre) {
+  if (calibre.status) {
     return const LinearGradient(
       begin: Alignment.bottomCenter,
       end: Alignment(0.0, 0.9),
@@ -33,23 +38,27 @@ Gradient getLineGradient(ArticleLine line) {
   }
 }
 
-class LineArticlesDetailWidget extends LineArticleStockAbstract
-    with LineArticleStockNowMixin {
+class CalibreArticlesDetailWidget extends StatelessWidget {
   final int initArticle;
   final bool isShopLocked;
+  final ArticleCalibre calibre;
+  final TicketsInvoker ticketsInvoker;
+  final ClosingStockShopsInvoker closingStockShopsInvoker;
 
-  LineArticlesDetailWidget(
-    ArticleLine line,
-    TicketsInvoker ticketsInvoker,
-    ClosingStockShopsInvoker closingStockShopsInvoker, {
+  CalibreArticlesDetailWidget(
+    this.calibre,
+    this.ticketsInvoker,
+    this.closingStockShopsInvoker, {
     this.isShopLocked = false,
     this.initArticle = 1,
     key,
-  }) : super(line, ticketsInvoker, closingStockShopsInvoker);
+  });
 
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
+
+    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
     return Scaffold(
       floatingActionButton: Stack(
@@ -58,9 +67,9 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
             padding: const EdgeInsets.only(right: 31),
             child: Align(
                 alignment: Alignment.bottomRight,
-                child: isShopLocked || (line.isBasket ?? false)
+                child: isShopLocked || (calibre.isBasket)
                     ? const SizedBox()
-                    : CreateArticleWithinLineButton(line.id)),
+                    : CreateArticleWithinExistingCaliberButton(calibre.id)),
           )
         ],
       ),
@@ -70,24 +79,31 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: WeebiColors.grey),
           onPressed: () => Navigator.of(context)
-              .pushNamed(ArticlesLinesAllFrameRoute.routePath),
+              .pushNamed(ArticlesCalibresAllFrameRoute.routePath),
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         ),
         title: Row(
           children: [
-            Text('#${line.id}',
+            Text('#${calibre.id}',
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black),
                 overflow: TextOverflow.ellipsis),
-            if (line.isBasket == false)
+            if (calibre.isBasket == false)
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Tooltip(
                     message: 'stock disponible',
-                    child: Text(numFormat.format(lineStockNow),
+                    child: Text(
+                        numFormat.format(ArticleCalibreRetailStock(
+                                articleCalibreRetail:
+                                    calibre as ArticleCalibre<ArticleRetail>,
+                                ticketsInvoker: ticketsInvoker,
+                                closingStockShopsInvoker:
+                                    closingStockShopsInvoker)
+                            .stockNow),
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold)),
@@ -99,7 +115,10 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
         ),
         actions: isShopLocked
             ? []
-            : [EditArticleLineButton(line.id), DeleteArticleLineButton(line)],
+            : [
+                EditArticleCalibreButton(calibre.id),
+                DeleteArticleCalibreButton(calibre)
+              ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -113,8 +132,8 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
           controller: controller,
           child: Column(
             children: [
-              if (!(line.isBasket ?? false)) ...[
-                if (line.stockUnit != StockUnit.unit)
+              if (!(calibre.isBasket)) ...[
+                if (calibre.stockUnit != StockUnit.unit)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Row(
@@ -128,31 +147,38 @@ class LineArticlesDetailWidget extends LineArticleStockAbstract
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SelectableText(
-                            line.stockUnit.stockUnitText,
+                            calibre.stockUnit.stockUnitText,
                             style: WeebiTextStyles.blackAndBold,
                           ),
                         ),
                       ],
                     ),
                   ),
-                if (line.status == false)
+                if (calibre.status == false)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: FieldValueWidget(
                       const Icon(Icons.pause),
                       const Text("Articles désactivés le "),
                       SelectableText(
-                        "${line.statusUpdateDate}",
+                        "${calibre.statusUpdateDate}",
                         style: WeebiTextStyles.blackAndBold,
                       ),
                     ),
                   ),
                 const SizedBox(height: 12),
-                SlidableCardsV2(line, ticketsInvoker, closingStockShopsInvoker,
+                SlidableCardsV2(
+                    calibre, ticketsInvoker, closingStockShopsInvoker,
                     articleId: initArticle)
               ] else ...[
-                for (final article in line.articles)
-                  ArticleBasketGlimpseWidget(line, article as ArticleBasket)
+                for (final article in calibre.articles)
+                  ArticleBasketGlimpseWidStateFul(
+                    StockNowArticleBasket(
+                        article as ArticleBasket,
+                        ticketsInvoker,
+                        closingStockShopsInvoker,
+                        articlesStore.calibres.notQuickSpend),
+                  )
               ],
             ],
           ),

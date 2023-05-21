@@ -1,6 +1,3 @@
-// Project imports:
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,33 +7,33 @@ import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
+import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
 import 'package:views_weebi/src/widgets/toast.dart';
 
-class ArticleLineRetailCreateView extends StatefulWidget {
+class ArticleRetailCalibrateAndCreateView extends StatefulWidget {
   static const nameKey = Key('nom');
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
-  const ArticleLineRetailCreateView({Key key}) : super(key: key);
+  const ArticleRetailCalibrateAndCreateView({Key? key}) : super(key: key);
 
   @override
-  State<ArticleLineRetailCreateView> createState() =>
-      _ArticleLineRetailCreateViewState();
+  State<ArticleRetailCalibrateAndCreateView> createState() =>
+      _ArticleRetailCalibrateAndCreateViewState();
 }
 
-class _ArticleLineRetailCreateViewState
-    extends State<ArticleLineRetailCreateView> with ToastWeebi {
-  ArticleLineCreateFormStore store;
-  ScrollController controller;
+class _ArticleRetailCalibrateAndCreateViewState
+    extends State<ArticleRetailCalibrateAndCreateView> with ToastWeebi {
+  late ArticleCalibreCreateFormStore store;
+  final controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    store = ArticleLineCreateFormStore(articlesStore);
+    store = ArticleCalibreCreateFormStore(articlesStore);
     store.setupValidations();
   }
 
@@ -51,7 +48,7 @@ class _ArticleLineRetailCreateViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWeebiUpdateNotSaved('Créer un article',
-          backgroundColor: Colors.orange[800]),
+          backgroundColor: WeebiColors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           store.validateAll();
@@ -71,7 +68,7 @@ class _ArticleLineRetailCreateViewState
                 "Erreur lors de la mise à jour de la ligne $e", context);
           }
         },
-        backgroundColor: Colors.orange[800],
+        backgroundColor: WeebiColors.orange,
         child: const Text('OK', style: TextStyle(color: Colors.white)),
       ),
       body: Padding(
@@ -86,7 +83,7 @@ class _ArticleLineRetailCreateViewState
             Observer(
               name: 'nom',
               builder: (_) => TextField(
-                key: ArticleLineRetailCreateView.nameKey,
+                key: ArticleRetailCalibrateAndCreateView.nameKey,
                 onChanged: (value) => store.name = value,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -99,7 +96,7 @@ class _ArticleLineRetailCreateViewState
             Observer(
               name: 'prix',
               builder: (_) => TextField(
-                key: ArticleLineRetailCreateView.priceKey,
+                key: ArticleRetailCalibrateAndCreateView.priceKey,
                 onChanged: (value) => store.price = value,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -115,7 +112,7 @@ class _ArticleLineRetailCreateViewState
             Observer(
               name: 'coût',
               builder: (_) => TextFormField(
-                key: ArticleLineRetailCreateView.costKey,
+                key: ArticleRetailCalibrateAndCreateView.costKey,
                 initialValue: '0',
                 onChanged: (value) => store.cost = value,
                 keyboardType: TextInputType.number,
@@ -145,7 +142,7 @@ class _ArticleLineRetailCreateViewState
                 value: store.stockUnit,
                 onChanged: (value) {
                   setState(() {
-                    store.stockUnit = value;
+                    store.stockUnit = value ?? StockUnit.unit;
                   });
                 },
               ),

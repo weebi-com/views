@@ -8,8 +8,8 @@ import 'package:mixins_weebi/stores.dart';
 
 class StoresLoader extends StatelessWidget {
   final Widget child;
-  final List<ArticleLine<ArticleAbstract>> articlesInitData;
-  const StoresLoader(this.child, this.articlesInitData, {Key key})
+  final List<ArticleCalibre<ArticleAbstract>> articlesInitData;
+  const StoresLoader(this.child, this.articlesInitData, {Key? key})
       : super(key: key);
 
   Future<bool> loadIt(ArticlesStore articlesStore, TicketsStore ticketsStore,

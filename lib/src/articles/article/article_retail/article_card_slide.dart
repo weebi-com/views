@@ -1,9 +1,12 @@
 //credits to Flutter Animation Gallery
 
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/invokers.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
+import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 
@@ -11,12 +14,12 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
 
 class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
-  final ArticleLine line;
+  final ArticleCalibre calibre;
   final A article;
   final TicketsInvoker ticketsInvoker;
   final ClosingStockShopsInvoker closingStockShopsInvoker;
   const ArticleACardSlide(
-    this.line,
+    this.calibre,
     this.article,
     this.ticketsInvoker,
     this.closingStockShopsInvoker,
@@ -24,12 +27,13 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return SizedBox(
       width: 300,
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-              '${article.lineId}', '${article.id}'));
+              '${article.calibreId}', '${article.id}'));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -48,7 +52,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('#${line.id}.${article.id}',
+                  Text('#${calibre.id}.${article.id}',
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -56,7 +60,7 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                       overflow: TextOverflow.ellipsis),
                   Text(article.fullName,
                       style: TextStyle(
-                          decoration: (article.status ?? true) == false
+                          decoration: (article.status) == false
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                           fontWeight: FontWeight.normal,
@@ -67,15 +71,17 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                     width: 160,
                     height: 160,
                     child: Hero(
-                      tag: '${article.lineId}.${article.id}',
+                      tag: '${article.calibreId}.${article.id}',
                       child: PhotoWidget(article),
                     ),
                   ),
                   ArticleRetailFrameView(
-                    article as ArticleRetail,
+                    StockNowArticleRetail(
+                        article as ArticleRetail,
+                        ticketsInvoker,
+                        closingStockShopsInvoker,
+                        articlesStore.calibres.notQuickSpend),
                     false,
-                    ticketsInvoker,
-                    closingStockShopsInvoker,
                   ),
                 ],
               ),

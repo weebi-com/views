@@ -4,21 +4,21 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 
 // Package imports:
 
-import 'package:models_weebi/weebi_models.dart' show ArticleLine;
+import 'package:models_weebi/weebi_models.dart' show ArticleCalibre;
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/create_article_retail.dart';
 
 import 'package:views_weebi/src/routes/articles/frame.dart';
-import 'package:views_weebi/src/routes/articles/update_line.dart';
+import 'package:views_weebi/src/routes/articles/update_calibre.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 import 'package:views_weebi/widgets.dart';
 
-class CreateArticleWithinLineButton extends StatelessWidget {
+class CreateArticleWithinExistingCaliberButton extends StatelessWidget {
   final bool isShopLocked;
   final int articleLineId;
-  const CreateArticleWithinLineButton(this.articleLineId,
-      {this.isShopLocked, Key key})
+  const CreateArticleWithinExistingCaliberButton(this.articleLineId,
+      {this.isShopLocked = false, Key? key})
       : super(key: key);
 
   @override
@@ -34,10 +34,11 @@ class CreateArticleWithinLineButton extends StatelessWidget {
   }
 }
 
-class EditArticleLineButton extends StatelessWidget {
+class EditArticleCalibreButton extends StatelessWidget {
   final bool isShopLocked;
   final int articleLineId;
-  const EditArticleLineButton(this.articleLineId, {this.isShopLocked, Key key})
+  const EditArticleCalibreButton(this.articleLineId,
+      {this.isShopLocked = false, Key? key})
       : super(key: key);
 
   @override
@@ -47,16 +48,17 @@ class EditArticleLineButton extends StatelessWidget {
       tooltip: "Editer toute la ligne d'articles",
       onPressed: () {
         Navigator.of(context).pushNamed(
-            ArticleLineUpdateRoute.generateRoute('${articleLineId}'));
+            ArticleCalibreUpdateRoute.generateRoute('${articleLineId}'));
       },
     );
   }
 }
 
-class DeleteArticleLineButton extends StatelessWidget {
+class DeleteArticleCalibreButton extends StatelessWidget {
   final bool isShopLocked;
-  final ArticleLine articleLine;
-  const DeleteArticleLineButton(this.articleLine, {this.isShopLocked, Key key})
+  final ArticleCalibre articleLine;
+  const DeleteArticleCalibreButton(this.articleLine,
+      {this.isShopLocked = false, Key? key})
       : super(key: key);
 
   @override
@@ -80,7 +82,8 @@ class DeleteArticleLineButton extends StatelessWidget {
               Provider.of<ArticlesStore>(context, listen: false);
           await articlesStore.deleteForeverLineArticle(articleLine);
 
-          Navigator.of(context).pushNamed(ArticlesLinesAllFrameRoute.routePath);
+          Navigator.of(context)
+              .pushNamed(ArticlesCalibresAllFrameRoute.routePath);
         });
   }
 }

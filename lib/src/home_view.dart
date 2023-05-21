@@ -7,7 +7,7 @@ class HomeViewChassisBuilder<T extends ChassisAbstract>
     extends StatelessWidget {
   final T child;
   const HomeViewChassisBuilder(this.child,
-      {Key key, @required GlobalKey<NavigatorState> mainNavigator})
+      {Key? key, required GlobalKey<NavigatorState> mainNavigator})
       : super(key: key);
 
   @override

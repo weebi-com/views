@@ -10,19 +10,18 @@ import 'package:provider/provider.dart';
 // Project imports:
 
 class AskMinimumQuantity extends StatefulWidget {
-  const AskMinimumQuantity({Key key}) : super(key: key);
+  const AskMinimumQuantity({Key? key}) : super(key: key);
   @override
   _AskMinimumQuantityState createState() => _AskMinimumQuantityState();
 }
 
 class _AskMinimumQuantityState extends State<AskMinimumQuantity> {
   final _bigQtCtrler = TextEditingController(text: '');
-  FocusNode focusNode;
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
     focusNode.addListener(() {});
     _bigQtCtrler.addListener(() {
       final String text = _bigQtCtrler.text;

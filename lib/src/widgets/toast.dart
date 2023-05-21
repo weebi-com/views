@@ -81,43 +81,43 @@ mixin ToastWeebi {
 }
 
 class IconToastWidget extends StatelessWidget {
-  final Key key;
-  final Color backgroundColor;
+  final Key? key;
+  final Color? backgroundColor;
   final String message;
-  final Widget textWidget;
-  final double height;
-  final double width;
+  final Widget? textWidget;
+  final double? height;
+  final double? width;
   final String assetName;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final Icon icon;
 
   IconToastWidget({
     this.key,
     this.backgroundColor,
     this.textWidget,
-    this.message,
+    this.message = '',
     this.height,
     this.width,
-    this.icon,
-    @required this.assetName,
+    required this.icon,
+    required this.assetName,
     this.padding,
   }) : super(key: key);
 
-  factory IconToastWidget.successProduct({String msg}) => IconToastWidget(
+  factory IconToastWidget.successProduct({String msg = ''}) => IconToastWidget(
       message: msg,
       assetName: 'assets/icons/product_detail.png',
       icon: const Icon(Icons.done, color: Colors.green));
 
-  factory IconToastWidget.failProduct({String msg}) => IconToastWidget(
+  factory IconToastWidget.failProduct({String msg = ''}) => IconToastWidget(
       message: msg,
       assetName: 'assets/icons/product_detail.png',
       icon: const Icon(Icons.error, color: Colors.red));
 
-  factory IconToastWidget.successContact({String msg}) => IconToastWidget(
+  factory IconToastWidget.successContact({String msg = ''}) => IconToastWidget(
       message: msg,
       assetName: 'assets/icons/contact_detail.png',
       icon: const Icon(Icons.done, color: Colors.green));
-  factory IconToastWidget.failContact({String msg}) => IconToastWidget(
+  factory IconToastWidget.failContact({String msg = ''}) => IconToastWidget(
       message: msg,
       assetName: 'assets/icons/contact_detail.png',
       icon: const Icon(Icons.error, color: Colors.red));
@@ -178,27 +178,27 @@ class IconToastWidget extends StatelessWidget {
 ///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]
 ///
 class BannerToastWidget extends StatelessWidget {
-  final Key key;
-  final Color backgroundColor;
+  final Key? key;
+  final Color? backgroundColor;
   final String message;
   final Widget textWidget;
-  final double offset;
-  final double height;
-  final double width;
+
+  final double? height;
+  final double? width;
 
   BannerToastWidget(
       {this.key,
       this.backgroundColor,
-      this.textWidget,
-      this.message,
+      required this.textWidget,
+      this.message = '',
       this.height,
-      this.width,
-      Offset offset})
-      : this.offset = offset == null ? 10.0 : offset,
-        super(key: key);
+      this.width})
+      : super(key: key);
 
   factory BannerToastWidget.success(
-          {String msg, Widget text, BuildContext context}) =>
+          {String msg = '',
+          required Widget text,
+          required BuildContext context}) =>
       BannerToastWidget(
         backgroundColor: context != null
             ? Theme.of(context).toggleableActiveColor
@@ -208,10 +208,12 @@ class BannerToastWidget extends StatelessWidget {
       );
 
   factory BannerToastWidget.fail(
-          {String msg, Widget text, BuildContext context}) =>
+          {String msg = '',
+          required Widget text,
+          required BuildContext context}) =>
       BannerToastWidget(
         backgroundColor: context != null
-            ? Theme.of(context).errorColor
+            ? Theme.of(context).colorScheme.error
             : const Color(0xEFCC2E2E),
         message: msg,
         textWidget: text,
@@ -224,7 +226,7 @@ class BannerToastWidget extends StatelessWidget {
       padding: EdgeInsets.all(17.0),
       height: 60.0,
       alignment: Alignment.center,
-      color: backgroundColor ?? Theme.of(context).backgroundColor,
+      color: backgroundColor ?? Theme.of(context).colorScheme.background,
       child: textWidget ??
           Text(
             message ?? '',
@@ -250,9 +252,9 @@ class ActionToastWidget extends StatelessWidget {
   final Widget actionWidget;
 
   ActionToastWidget({
-    this.text,
-    this.textWidget,
-    this.actionWidget,
+    required this.text,
+    required this.textWidget,
+    required this.actionWidget,
   });
 
   @override

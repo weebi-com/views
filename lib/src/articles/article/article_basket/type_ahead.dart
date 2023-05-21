@@ -11,7 +11,7 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ArticlesInBasketTypeAhead extends StatefulWidget {
-  const ArticlesInBasketTypeAhead({Key key}) : super(key: key);
+  const ArticlesInBasketTypeAhead({Key? key}) : super(key: key);
 
   @override
   State<ArticlesInBasketTypeAhead> createState() =>
@@ -19,15 +19,13 @@ class ArticlesInBasketTypeAhead extends StatefulWidget {
 }
 
 class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
-  FocusNode _focus;
-  TextEditingController _articleNameCtr;
-  TriState _areArticlesSelected;
+  FocusNode _focus = FocusNode();
+  TextEditingController _articleNameCtr = TextEditingController();
+  TriState _areArticlesSelected = TriState.unknown;
   @override
   void initState() {
     super.initState();
-    _focus = FocusNode();
     _focus.addListener(() {});
-    _areArticlesSelected = TriState.unknown;
     _articleNameCtr = TextEditingController(text: '');
     _articleNameCtr.addListener(() {
       final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
@@ -111,16 +109,16 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
         return articlesStore.getSuggestions;
       },
       itemBuilder: (context, String suggestion) {
-        if (suggestion == null || suggestion.isEmpty) {
+        if (suggestion.isEmpty) {
           return const SizedBox();
         }
         final articlesStore =
             Provider.of<ArticlesStore>(context, listen: false);
-        ArticleRetail _article;
-        for (final line in articlesStore.lines) {
-          for (final article in line.articles) {
+        ArticleRetail? _article;
+        for (final calibre in articlesStore.calibres) {
+          for (final article in calibre.articles) {
             if (article.fullName == suggestion) {
-              _article = article;
+              _article = article as ArticleRetail;
             }
           }
         }
@@ -132,18 +130,18 @@ class _ArticlesInBasketTypeAheadState extends State<ArticlesInBasketTypeAhead> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(22, 2, 0, 2),
                 child: ListTile(
-                  leading: Text('#${_article.id}'),
+                  leading: Text('#${_article?.id}'),
                   title: Text(suggestion),
-                  trailing: Text('prix : ${_article.price}'),
+                  trailing: Text('prix : ${_article?.price}'),
                 ),
               ));
         } else {
           return Padding(
             padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
             child: ListTile(
-              leading: Text('#${_article.lineId}'),
+              leading: Text('#${_article?.calibreId}'),
               title: Text(suggestion),
-              trailing: Text('prix : ${_article.price}'),
+              trailing: Text('prix : ${_article?.price}'),
             ),
           );
         }

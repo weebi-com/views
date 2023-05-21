@@ -4,15 +4,15 @@ class WeebiButtonRect extends StatelessWidget {
   final void Function() onPressed;
   final String string;
   final String tooltip;
-  final MaterialStateProperty<Color> backColor;
+  final MaterialStateProperty<Color>? backColor;
   final Color fontColor;
   const WeebiButtonRect(
-      {@required this.onPressed,
-      @required this.string,
-      @required this.tooltip,
+      {required this.onPressed,
+      required this.string,
+      required this.tooltip,
       this.backColor,
       this.fontColor = Colors.black,
-      Key key})
+      Key? key})
       : super(key: key);
 
   @override

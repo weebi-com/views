@@ -1,5 +1,4 @@
 // Project imports:
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
+import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
@@ -20,20 +20,19 @@ class ArticleUpdateView extends StatefulWidget {
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
   final ArticleRetail articleRetail;
-  const ArticleUpdateView(this.articleRetail, {Key key}) : super(key: key);
+  const ArticleUpdateView(this.articleRetail, {Key? key}) : super(key: key);
 
   @override
   State<ArticleUpdateView> createState() => _ArticleUpdateViewState();
 }
 
 class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
-  ArticleRetailUpdateFormStore store;
-  ScrollController controller;
+  late ArticleRetailUpdateFormStore store;
+  final controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     store = ArticleRetailUpdateFormStore(articlesStore, widget.articleRetail);
     store.setupValidations();
@@ -50,7 +49,7 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWeebiUpdateNotSaved(
-          'Editer l\'article ${widget.articleRetail.lineId}.${widget.articleRetail.id}',
+          'Editer l\'article ${widget.articleRetail.calibreId}.${widget.articleRetail.id}',
           backgroundColor: Colors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -62,17 +61,17 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
             final articleRetailUpdated =
                 await store.updateArticleRetailFromForm();
             toastSuccessArticle(context, message: 'article mis à jour');
-            await Navigator.of(context).pop(); // remove the past detail view
+            Navigator.of(context).pop(); // remove the past detail view
             Navigator.of(context).popAndPushNamed(
                 ArticleDetailRoute.generateRoute(
-                    '${widget.articleRetail.lineId}',
+                    '${widget.articleRetail.calibreId}',
                     '${articleRetailUpdated.id}'));
           } catch (e) {
             return InformDialog.showDialogWeebiNotOk(
                 "Erreur lors de la mise à jour de l'article $e", context);
           }
         },
-        backgroundColor: Colors.orange[800],
+        backgroundColor: WeebiColors.orange,
         child: const Text('OK', style: TextStyle(color: Colors.white)),
       ),
       body: Padding(

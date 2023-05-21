@@ -42,9 +42,9 @@ abstract class ImportProviderAbstract extends ChangeNotifier {
       T objectDummy, File file);
   // nextId and uniqueId not needed for json
   Future<int> addAllOnlyIfNoDup<T>(T store,
-      {@required int nextId, @required String uniqueId});
+      {required int nextId, required String uniqueId});
   // nextId and uniqueId not needed for json
-  Future<int> updateAllOnly<T>(T store, {@required String uniqueId});
+  Future<int> updateAllOnly<T>(T store, {required String uniqueId});
 }
 
 class ImportProviderJson extends ImportProviderAbstract {
@@ -63,12 +63,12 @@ class ImportProviderJson extends ImportProviderAbstract {
     }
 
     if (objectDummy.runtimeType.hashCode ==
-        ArticleLine.dummy.runtimeType.hashCode) {
-      final deserialisedJson = <ArticleLine>[];
-      deserialisedJson.addAll(List<ArticleLine>.from(decoded
+        ArticleCalibre.dummyRetail.runtimeType.hashCode) {
+      final deserialisedJson = <ArticleCalibre>[];
+      deserialisedJson.addAll(List<ArticleCalibre>.from(decoded
           .cast<Map>()
           .cast<Map<String, dynamic>>()
-          .map((e) => ArticleLine.fromMap(e))));
+          .map((e) => ArticleCalibre.fromMap(e))));
       _setDataToBeImported(deserialisedJson);
     } else if (objectDummy.runtimeType.hashCode ==
         Herder.dummy.runtimeType.hashCode) {
@@ -93,20 +93,19 @@ class ImportProviderJson extends ImportProviderAbstract {
 
   @override
   Future<int> addAllOnlyIfNoDup<T>(T store,
-      {@required int nextId, @required String uniqueId}) async {
+      {required int nextId, required String uniqueId}) async {
     if (isImportReady) {
       var count = 0;
       switch (store.runtimeType) {
         case ArticlesStore:
-          final twoLists =
-              (store as ArticlesStore).lines.findDupsById(newList: _data);
+          final twoLists = (store as ArticlesStore)
+              .calibres
+              .findDupsById(newList: _data as List<ArticleCalibre>);
           if (twoLists.noDups.isNotEmpty) {
-            count = await (store as ArticlesStore)
-                .addAllArticleLine(twoLists.noDups);
+            count = await (store).addAllArticleCalibre(twoLists.noDups);
           }
           _clearSbAndData();
           return count;
-          break;
         // case HerdersStore:
         //   final twoLists =
         //       (store as HerdersStore).herders.findDupsById(newList: _data);
@@ -118,16 +117,15 @@ class ImportProviderJson extends ImportProviderAbstract {
         //   return count;
         //   break;
         case TicketsStore:
-          final twoLists =
-              (store as TicketsStore).tickets.filterById(newList: _data);
+          final twoLists = (store as TicketsStore)
+              .tickets
+              .filterById(newList: _data as List<TicketWeebi>);
           var setTickets = <TicketWeebi>{};
           if (twoLists.noDups.isNotEmpty) {
-            setTickets = await (store as TicketsStore)
-                .addAllTickets(twoLists.noDups.toSet());
+            setTickets = await (store).addAllTickets(twoLists.noDups.toSet());
           }
           _clearSbAndData();
           return setTickets.length;
-          break;
         default:
           print('no match');
       }
@@ -136,7 +134,7 @@ class ImportProviderJson extends ImportProviderAbstract {
     return 0;
   }
 
-  Future<int> upsertAll<T>(T store, {int nextId, String uniqueId}) async {
+  Future<int> upsertAll<T>(T store, {int? nextId, String? uniqueId}) async {
     if (isImportReady == false) {
       return 0;
     }
@@ -144,11 +142,11 @@ class ImportProviderJson extends ImportProviderAbstract {
     switch (store.runtimeType) {
       case ArticlesStore:
         if (_data.isNotEmpty) {
-          count = await (store as ArticlesStore).upsertAllBasedOnId(_data);
+          count = await (store as ArticlesStore)
+              .upsertAllBasedOnId(_data as List<ArticleCalibre>);
         }
         _clearSbAndData();
         return count;
-        break;
       // case HerdersStore:
       //   if (_data.isNotEmpty) {
       //     count = await (store as HerdersStore).upsertAllBasedOnId(_data);
@@ -158,7 +156,6 @@ class ImportProviderJson extends ImportProviderAbstract {
       //   break;
       case TicketsStore:
         throw 'never update a ticket';
-        break;
       default:
         print('no match');
         _clearSbAndData();
@@ -167,24 +164,24 @@ class ImportProviderJson extends ImportProviderAbstract {
   }
 
   @override
-  Future<int> updateAllOnly<T>(T store, {@required String uniqueId}) async {
+  Future<int> updateAllOnly<T>(T store, {required String uniqueId}) async {
     if (isImportReady == false) {
       return 0;
     }
     var count = 0;
     switch (store.runtimeType) {
       case ArticlesStore:
-        final twoLists =
-            (store as ArticlesStore).lines.findDupsById(newList: _data);
+        final twoLists = (store as ArticlesStore)
+            .calibres
+            .findDupsById(newList: _data as List<ArticleCalibre>);
         if (twoLists.dups.isNotEmpty) {
           for (var i = 0; i < twoLists.dups.length; i++) {
-            await (store as ArticlesStore).updateLineArticle(twoLists.dups[i]);
+            await (store).updateLineArticle(twoLists.dups[i]);
             count += 1;
           }
         }
         _clearSbAndData();
         return count;
-        break;
       // case HerdersStore:
       //   final twoLists =
       //       (store as HerdersStore).herders.findDupsById(newList: _data);
@@ -199,7 +196,6 @@ class ImportProviderJson extends ImportProviderAbstract {
       //   break;
       case TicketsStore:
         throw 'never update a ticket';
-        break;
       default:
         print('no match');
         _clearSbAndData();

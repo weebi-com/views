@@ -5,13 +5,14 @@ import 'package:models_weebi/common.dart';
 import 'package:models_weebi/extensions.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart'
-    show AggregateProxies, ArticleBasket, ArticleLine, ProxyArticle;
+    show AggregateProxies, ArticleBasket, ArticleCalibre, ProxyArticle;
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:views_weebi/routes.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
+import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/widgets.dart'
     show appBarWeebiUpdateNotSaved, InformDialog;
@@ -19,34 +20,34 @@ import 'package:views_weebi/views_article_basket.dart';
 
 import 'package:views_weebi/src/widgets/toast.dart';
 
-class ArticleLineBasketCreateView extends StatefulWidget {
-  const ArticleLineBasketCreateView({Key key}) : super(key: key);
+class ArticleBasketCalibrateAndCreateView extends StatefulWidget {
+  const ArticleBasketCalibrateAndCreateView({Key? key}) : super(key: key);
   @override
-  _ArticleLineBasketCreateViewState createState() =>
-      _ArticleLineBasketCreateViewState();
+  _ArticleBasketCalibrateAndCreateViewState createState() =>
+      _ArticleBasketCalibrateAndCreateViewState();
 }
 
-class _ArticleLineBasketCreateViewState
-    extends State<ArticleLineBasketCreateView> with ToastWeebi {
+class _ArticleBasketCalibrateAndCreateViewState
+    extends State<ArticleBasketCalibrateAndCreateView> with ToastWeebi {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKeyLine = GlobalKey<FormState>();
-  String _thisCategory;
   ScrollController controller = ScrollController();
 
   // creating 1st article and product in the same time
-  ArticleBasket _newArticleBasket;
-  ArticleLine<ArticleBasket> _newLine;
+  ArticleBasket? _newArticleBasket;
+  ArticleCalibre<ArticleBasket>? _newLine;
+  String _thisCategory = '';
   final titleTextController = TextEditingController();
 
-  TextEditingController _newLineBarcode;
+  TextEditingController _newLineBarcode = TextEditingController();
   int discountAmount = 0;
   @override
   void initState() {
     super.initState();
 
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    _newLineBarcode =
-        TextEditingController(text: '${articlesStore.lines.nextId * 10 + 1}');
+    _newLineBarcode = TextEditingController(
+        text: '${articlesStore.calibres.nextId * 10 + 1}');
   }
 
   @override
@@ -72,18 +73,18 @@ class _ArticleLineBasketCreateViewState
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            if (_formKeyLine.currentState.validate() &&
+            if (_formKeyLine.currentState!.validate() &&
                 articlesStore.articlesSelectedForBasketMinQt.isNotEmpty) {
               final now = DateTime.now();
               _newArticleBasket = ArticleBasket(
                   creationDate: now,
                   updateDate: now,
                   discountAmountSalesOnly: discountAmount,
-                  lineId: articlesStore.lines.nextId,
+                  calibreId: articlesStore.calibres.nextId,
                   id: 1,
-                  fullName: titleTextController?.text ?? '',
+                  fullName: titleTextController.text,
                   weight: 1.0,
-                  articleCode: articlesStore.lines.nextId * 10 + 1,
+                  articleCode: articlesStore.calibres.nextId * 10 + 1,
                   photo: '',
                   status: true,
                   statusUpdateDate: now,
@@ -92,11 +93,11 @@ class _ArticleLineBasketCreateViewState
                         i < articlesStore.articlesSelectedForBasketMinQt.length;
                         i++)
                       ProxyArticle(
-                          lineId: articlesStore.lines.nextId,
+                          calibreId: articlesStore.calibres.nextId,
                           articleId: 1,
                           id: i + 1,
-                          proxyLineId: articlesStore
-                              .articlesSelectedForBasketMinQt[i].lineId,
+                          proxyCalibreId: articlesStore
+                              .articlesSelectedForBasketMinQt[i].calibreId,
                           proxyArticleId: articlesStore
                               .articlesSelectedForBasketMinQt[i].id,
                           status: true,
@@ -106,32 +107,30 @@ class _ArticleLineBasketCreateViewState
                               .articlesSelectedForBasketMinQt[i].weight),
                   ]);
 
-              _newLine = ArticleLine<ArticleBasket>(
+              _newLine = ArticleCalibre<ArticleBasket>(
                   creationDate: now,
                   isPalpable: true,
                   updateDate: now,
-                  id: articlesStore.lines.nextId,
+                  id: articlesStore.calibres.nextId,
                   title: '', // fake reassigned when form is saved
                   stockUnit: StockUnit.unit,
                   categories: [''],
                   status: true,
                   statusUpdateDate: null,
-                  articles: [_newArticleBasket]);
-              _formKeyLine.currentState.save();
+                  articles: [_newArticleBasket!]);
+              _formKeyLine.currentState!.save();
               // * better not create lot at all
               try {
-                final lineCreated = await articlesStore
-                    .createLineArticle<ArticleBasket>(_newLine);
+                final temp = await articlesStore
+                    .createCalibrateArticle<ArticleBasket>(_newLine!);
                 // CustomSuccessToastWidget
 
                 toastSuccessArticle(context, message: 'panier créé');
 
                 articlesStore.clearAllArticleMinQtInSelected();
-                if (lineCreated is ArticleLine<ArticleBasket>) {
-                  Navigator.of(context).popAndPushNamed(
-                      ArticleDetailRoute.generateRoute(
-                          '${lineCreated.id}', '1'));
-                }
+
+                Navigator.of(context).popAndPushNamed(
+                    ArticleDetailRoute.generateRoute('${temp.id}', '1'));
               } catch (e) {
                 return InformDialog.showDialogWeebiNotOk(
                     'Erreur lors de la création du produit $e', context);
@@ -142,11 +141,11 @@ class _ArticleLineBasketCreateViewState
               return;
             }
           },
-          backgroundColor: Colors.orange[800],
+          backgroundColor: WeebiColors.orange,
           child: const Text('OK', style: TextStyle(color: Colors.white)),
         ),
         appBar: appBarWeebiUpdateNotSaved('Créer un panier d\'articles',
-            backgroundColor: Colors.orange[800]),
+            backgroundColor: WeebiColors.orange),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
@@ -158,11 +157,11 @@ class _ArticleLineBasketCreateViewState
                   i++) {
                 // only interested in pure proxies fields to compute price and cost below
                 final proxyRaw = ProxyArticle(
-                    lineId: articlesStore.lines.nextId,
+                    calibreId: articlesStore.calibres.nextId,
                     articleId: 1,
                     id: i + 1,
-                    proxyLineId:
-                        articlesStore.articlesSelectedForBasketMinQt[i].lineId,
+                    proxyCalibreId: articlesStore
+                        .articlesSelectedForBasketMinQt[i].calibreId,
                     proxyArticleId:
                         articlesStore.articlesSelectedForBasketMinQt[i].id,
                     status: true,
@@ -175,9 +174,9 @@ class _ArticleLineBasketCreateViewState
               // now i can use the top notch function below to get the worth
               final proxiesWorth = ArticleBasket
                   .getProxiesListWithPriceAndCostArticleNotCreatedYetOnly(
-                      articlesStore.linesPalpableNoBasket, proxiesRaw);
+                      articlesStore.calibresNotQuikspendNotBasket, proxiesRaw);
               final temp = proxiesWorth.totalPrice - discountAmount;
-              final totalPrice = numFormat?.format(temp);
+              final totalPrice = numFormat.format(temp);
               return Form(
                 key: _formKeyLine,
                 child: Padding(
@@ -198,15 +197,15 @@ class _ArticleLineBasketCreateViewState
                             return 'Saisir le nom du panir d\'articles';
                           }
                           articlesStore.setQueryString(value);
-                          if (articlesStore.getLinesNames
+                          if (articlesStore.getCalibresNames
                               .contains(value.trim().toLowerCase())) {
                             return 'Un article avec ce nom existe déjà';
                           }
                           // _formKey.currentState.save();  will be useful to save title here so we can then preload article fullName
                           return null;
                         },
-                        onSaved: (String value) {
-                          _newLine = _newLine.copyWith(title: value.trim());
+                        onSaved: (String? value) {
+                          _newLine = _newLine?.copyWith(title: value?.trim());
                         },
                       ),
                       if (categories.isNotEmpty)
@@ -221,12 +220,12 @@ class _ArticleLineBasketCreateViewState
                           value: _thisCategory,
                           onChanged: (value) {
                             setState(() {
-                              _thisCategory = value;
+                              _thisCategory = value ?? '';
                             });
                           },
-                          onSaved: (String value) {
+                          onSaved: (String? value) {
                             if (value != null) {
-                              _newLine.categories.add(value);
+                              _newLine?.categories?.add(value);
                             }
                           },
                         ),

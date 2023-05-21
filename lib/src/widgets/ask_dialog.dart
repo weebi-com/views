@@ -7,10 +7,10 @@ import 'package:views_weebi/src/widgets/ask_big_quantity.dart';
 abstract class AskDialog {
   static Future<double> askBigQuantityDialog<A extends ArticleAbstract>(
       bool isStockOutput, A thisArticle, BuildContext context,
-      {double articleStockNow,
-      double articleQtInCart,
+      {required double articleStockNow,
+      double? articleQtInCart,
       bool isBasket = false}) async {
-    double lotBigQuantity = 0.0;
+    double? lotBigQuantity = 0.0;
     lotBigQuantity = await showDialog(
       context: context,
       barrierDismissible: true,
@@ -28,7 +28,7 @@ abstract class AskDialog {
   }
 
   static Future<double> askMinimumQuantityDialog(BuildContext context) async {
-    double minimumQuantity = 0.0;
+    double? minimumQuantity = 0.0;
     minimumQuantity = await showDialog(
         context: context,
         barrierDismissible: true,
@@ -41,7 +41,7 @@ abstract class AskDialog {
 
   static Future<bool> areYouSure(
       String title, String message, BuildContext context,
-      {@required bool barrierDismissible}) async {
+      {required bool? barrierDismissible}) async {
     return await showDialog(
       context: context,
       barrierDismissible: barrierDismissible ?? true,

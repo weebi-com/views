@@ -50,9 +50,8 @@ class ArticleRetailDetailSection extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        if (article.barcodeEAN != null &&
-            article.barcodeEAN.isNotEmpty &&
-            '${article.barcodeEAN}' != '${article.lineId}${article.id}')
+        if (article.barcodeEAN.isNotEmpty &&
+            '${article.barcodeEAN}' != '${article.calibreId}${article.id}')
           FieldValueWidget(
             const Icon(Icons.speaker_phone),
             const Text("Code barre"),

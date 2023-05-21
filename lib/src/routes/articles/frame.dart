@@ -5,13 +5,14 @@ import 'package:views_weebi/src/chassis_abstract.dart';
 import 'package:views_weebi/src/routes/route_base.dart';
 import 'package:views_weebi/views.dart';
 
-class ArticlesLinesAllFrameRoute<T extends ChassisAbstract>
+class ArticlesCalibresAllFrameRoute<T extends ChassisAbstract>
     extends WeebiRouteBase {
-  static String routePath = '/lines';
+  static String routePath = '/article_calibres';
 
-  ArticlesLinesAllFrameRoute(GlobalKey<NavigatorState> mainNavigator, T child)
+  ArticlesCalibresAllFrameRoute(
+      GlobalKey<NavigatorState> mainNavigator, T child)
       : super(
             child:
                 HomeViewChassisBuilder<T>(child, mainNavigator: mainNavigator),
-            routePath: ArticlesLinesAllFrameRoute.routePath);
+            routePath: ArticlesCalibresAllFrameRoute.routePath);
 }

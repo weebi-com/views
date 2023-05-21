@@ -5,10 +5,10 @@ class RoundButton extends StatelessWidget {
   final String string;
   final String tooltip;
   const RoundButton(
-      {@required this.onPressed,
-      @required this.string,
+      {required this.onPressed,
+      required this.string,
       this.tooltip = '',
-      Key key})
+      Key? key})
       : super(key: key);
   @override
   Widget build(BuildContext context) => Padding(

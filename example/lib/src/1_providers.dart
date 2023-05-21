@@ -7,7 +7,7 @@ import 'package:mixins_weebi/stores.dart';
 
 class ProvidersW extends StatelessWidget {
   final Widget child;
-  const ProvidersW(this.child, {Key key}) : super(key: key);
+  const ProvidersW(this.child, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

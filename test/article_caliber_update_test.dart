@@ -6,12 +6,12 @@ import 'package:mixins_weebi/stores.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:rc_router2/rc_router2.dart';
-import 'package:views_weebi/src/articles/line/update_line.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
+import 'package:views_weebi/src/articles/calibre/update_calibre.dart';
+import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
 
 void main() {
-  testWidgets('article line update widget test', (tester) async {
-    final rcRoutes = RcRoutes(routes: [ArticleLineRetailDetailRoute()]);
+  testWidgets('article calibre update widget test', (tester) async {
+    final rcRoutes = RcRoutes(routes: [ArticleCalibreRetailDetailRoute()]);
 
     await tester.pumpWidget(MultiProvider(
       providers: [
@@ -24,7 +24,7 @@ void main() {
       ],
       child: MaterialApp(
         onGenerateRoute: rcRoutes.onGeneratedRoute,
-        home: ArticleLineUpdateView(ArticleLine.dummy),
+        home: ArticleCalibreUpdateView(ArticleCalibre.dummyRetail),
       ),
     ));
     await tester.pump();
@@ -32,10 +32,10 @@ void main() {
     final actionButton = find.byType(FloatingActionButton);
     final BuildContext context = tester.element(actionButton);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final lineCreated =
-        await articlesStore.createLineArticle(ArticleLine.dummy);
-    expect(lineCreated, ArticleLine.dummy);
-    final name = find.byKey(ArticleLineUpdateView.nameKey);
+    final calibreCreated =
+        await articlesStore.createCalibrateArticle(ArticleCalibre.dummyRetail);
+    expect(calibreCreated, ArticleCalibre.dummyRetail);
+    final name = find.byKey(ArticleCalibreUpdateView.nameKey);
 
     expect(find.byIcon(Icons.short_text), findsOneWidget);
     expect(find.byIcon(Icons.filter_frames), findsOneWidget); // stockUnit
@@ -43,6 +43,6 @@ void main() {
     await tester.pump();
     await tester.tap(actionButton);
     await tester.pump();
-    expect(articlesStore.lines.first.nameLine, 'jet prive');
+    expect(articlesStore.calibres.first.nameLine, 'jet prive');
   });
 }

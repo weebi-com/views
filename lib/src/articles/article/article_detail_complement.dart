@@ -40,10 +40,9 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
             const Icon(Icons.settings_outlined),
             const Text('statut'),
             SelectableText(((article is ArticleRetail
-                            ? article as ArticleRetail
-                            : article as ArticleBasket)
-                        .status ??
-                    true)
+                        ? article as ArticleRetail
+                        : article as ArticleBasket)
+                    .status)
                 ? 'activé'
                 : 'désactivé')),
       ],

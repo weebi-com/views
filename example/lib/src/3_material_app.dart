@@ -9,7 +9,7 @@ import 'chassis_articles_tuto_view.dart';
 import 'info_route.dart';
 
 class ExampleApp extends StatefulWidget {
-  const ExampleApp({Key key}) : super(key: key);
+  const ExampleApp({Key? key}) : super(key: key);
 
   @override
   State<ExampleApp> createState() => _ExampleAppState();
@@ -27,22 +27,22 @@ class _ExampleAppState extends State<ExampleApp> {
     rcRoutes.routes.addAll([
       // this allows us to use different types of chassis in home while maintaining lower views untouched
       // I can reduce bottombar to x2 activities in my tutorial without changing anything else
-      ArticlesLinesAllFrameRoute(
+      ArticlesCalibresAllFrameRoute(
         mainNavigator,
         ChassisTutoProducts.buildChassisForArticles(
             mainNavigator, articlesStore),
       ),
 
-      ArticleLineBasketCreateRoute(),
+      ArticleCalibreBasketCreateRoute(),
       ArticleBasketUpdateRoute(),
 
-      ArticleLineRetailCreateRoute(),
-      ArticleLineRetailDetailRoute(),
-      ArticleLineUpdateRoute(),
+      ArticleRetailCalibrationAndCreationRoute(),
+      ArticleCalibreRetailDetailRoute(),
+      ArticleCalibreUpdateRoute(),
 
       ArticleDetailRoute(),
 
-      ArticleLineRetailCreateRoute(),
+      ArticleRetailCalibrationAndCreationRoute(),
       ArticleRetailCreateRoute(),
       ArticleRetailUpdateRoute(),
 
@@ -59,7 +59,6 @@ class _ExampleAppState extends State<ExampleApp> {
       navigatorKey: mainNavigator,
       onGenerateRoute: rcRoutes.onGeneratedRoute,
       scrollBehavior: MyCustomScrollBehavior(),
-      theme: ThemeData(backgroundColor: Colors.white70),
       home: HomeViewChassisBuilder<ChassisTutoProducts>(
         ChassisTutoProducts.buildChassisForArticles(
             mainNavigator, articlesStore),

@@ -10,7 +10,7 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/src/widgets/ask_dialog.dart';
 
 class PreviewArticlesProxiesSelectedWidget extends StatelessWidget {
-  const PreviewArticlesProxiesSelectedWidget({Key key}) : super(key: key);
+  const PreviewArticlesProxiesSelectedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -10,26 +10,26 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/src/articles/article/article_retail/create_a_retail.dart';
 
 class ArticleRetailCreateRoute extends RcRoute {
-  static String routePath = '/lines/:lineId/article_retail_create';
+  static String routePath = '/calibres/:calibreId/article_retail_create';
 
-  static String generateRoute(String lineId) =>
-      RcRoute.generateRoute(routePath, pathParams: {'lineId': lineId});
+  static String generateRoute(String calibreId) =>
+      RcRoute.generateRoute(routePath, pathParams: {'calibreId': calibreId});
 
   ArticleRetailCreateRoute() : super(path: ArticleRetailCreateRoute.routePath);
 
   @override
   Widget build(BuildContext context) {
     final routeParams = Provider.of<RcRouteParameters>(context);
-    final lineId = routeParams.pathParameters['lineId'];
-    // print('lineId $lineId');
+    final calibreId = routeParams.pathParameters['calibreId'];
+    // print('calibreId $calibreId');
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final line = articlesStore.lines
-        .firstWhere((line) => line.id.toString() == lineId, orElse: () {
-      throw 'no LineArticle matching line.id $lineId';
+    final calibre = articlesStore.calibres.firstWhere(
+        (calibre) => calibre.id.toString() == calibreId, orElse: () {
+      throw 'no calibreArticle matching calibre.id $calibreId';
     });
     return Provider.value(
-      value: line,
-      child: ArticleCreateView(line: line),
+      value: calibre,
+      child: ArticleCreateView(calibre: calibre),
     );
   }
 }

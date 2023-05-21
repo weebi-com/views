@@ -81,7 +81,6 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
 
   Image get getImage {
     if ((article.photoSource == PhotoSource.unknown ||
-        article.photo == null ||
         article.photo.isEmpty ||
         article.photo == 'photo')) {
       return Image.memory(blankBytes, height: 1);

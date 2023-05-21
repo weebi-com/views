@@ -1,43 +1,25 @@
 // Flutter imports:
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
 import 'package:mixins_weebi/stock.dart';
 
 // Project imports:
-import 'package:models_weebi/weebi_models.dart'
-    show AggregateProxies, ArticleBasket;
+import 'package:models_weebi/weebi_models.dart' show AggregateProxies;
 
-import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:mixins_weebi/stores.dart' show TicketsStore;
 import 'package:models_weebi/utils.dart';
 import 'package:views_weebi/src/articles/article/article_basket/proxy_article_glimpse_frame.dart';
 import 'package:views_weebi/styles.dart';
 import 'package:views_weebi/widgets.dart';
 
-// same widget for article and article basket
-class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
-    with ArticleBasketRealizableNow {
-  const ArticleBasketDetailSectionWidget(ArticleBasket article)
-      : super(article);
+class ArticleBasketDetailSectionWidget extends StatelessWidget {
+  final StockNowArticleBasket articleStock;
+  const ArticleBasketDetailSectionWidget(this.articleStock, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
-    final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
-
-    final doTheGroove = articleBasketWrapThem(
-        closingsStore.closingStockShops ?? [],
-        ticketsStore.tickets,
-        articlesStore.lines,
-        WeebiDates.defaultFirstDate,
-        DateTime.now());
-    int realizableBaskets = basketsRealizableNow(doTheGroove);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -46,22 +28,21 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
             const Icon(Icons.local_offer, color: Colors.teal),
             const Text("Prix de vente du panier :"),
             SelectableText(
-              numFormat?.format((article as ArticleBasket)
+              numFormat.format((articleStock.article)
                       .getProxiesListWithPriceAndCost(
-                          articlesStore.linesPalpableNoBasket)
+                          articleStock.calibresNoQuickspend)
                       .totalPrice -
-                  (article as ArticleBasket).discountAmountSalesOnly),
+                  (articleStock.article).discountAmountSalesOnly),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
         }),
-        if ((article as ArticleBasket).discountAmountSalesOnly > 0) ...[
+        if ((articleStock.article).discountAmountSalesOnly > 0) ...[
           FieldValueWidget(
             const Icon(Icons.redeem),
             const Text("Réduction sur le total"),
             SelectableText(
-              numFormat
-                  .format((article as ArticleBasket).discountAmountSalesOnly),
+              numFormat.format((articleStock.article).discountAmountSalesOnly),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -70,9 +51,9 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
               const Icon(Icons.info),
               const Text("Prix de vente sans réduction"),
               SelectableText(
-                numFormat?.format((article as ArticleBasket)
+                numFormat.format((articleStock.article)
                     .getProxiesListWithPriceAndCost(
-                        articlesStore.linesPalpableNoBasket)
+                        articleStock.calibresNoQuickspend)
                     .totalPrice),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -84,17 +65,17 @@ class ArticleBasketDetailSectionWidget extends ArticleStockStatelessAbstract
           child: const Text('Articles contenus dans le panier : ',
               style: WeebiTextStyles.supportSmall),
         ),
-        if (realizableBaskets > 0)
+        if (articleStock.stockRealizablesBasketsNow > 0)
           FieldValueWidget(
             const Icon(Icons.shopping_basket),
             const Text("Nombre de paniers réalisables : "),
             SelectableText(
-              '${numFormat?.format(realizableBaskets)}',
+              '${numFormat.format(articleStock.stockRealizablesBasketsNow)}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
           ),
         // * display this is in better looking fashion
-        for (final proxy in (article as ArticleBasket).proxies)
+        for (final proxy in (articleStock.article).proxies)
           ProxyArticleGlimpseFrameWidget(proxy),
         Divider(),
       ],

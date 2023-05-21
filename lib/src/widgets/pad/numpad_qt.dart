@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 class QtFromNumPad extends StatelessWidget {
   final FocusNode focusNode;
-  const QtFromNumPad(this.focusNode, {Key key}) : super(key: key);
+  const QtFromNumPad(this.focusNode, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

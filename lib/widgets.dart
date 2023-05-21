@@ -8,4 +8,3 @@ export 'src/widgets/toast.dart';
 
 export 'src/widgets/app_bar_weebi.dart';
 export 'src/widgets/ask_big_quantity.dart';
-export 'src/widgets/ask_dialog.dart';

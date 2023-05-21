@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:flutter/material.dart';
 import 'package:models_weebi/utils.dart';
@@ -14,26 +15,27 @@ import 'package:views_weebi/routes.dart';
 import 'package:mixins_weebi/stores.dart' show TicketsStore;
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
-class ProxyAGlimpseWidget extends ArticleStockStatelessAbstract
-    with ArticleStockNowMixin {
+class ProxyAGlimpseWidget extends StatelessWidget {
   final ArticleRetail article;
   final ProxyArticle proxy;
 
-  ProxyAGlimpseWidget({@required this.article, @required this.proxy})
-      : super(article);
+  ProxyAGlimpseWidget({required this.article, required this.proxy});
 
   @override
   Widget build(BuildContext context) {
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
+    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
-    double articleLiveQt = articleStockNow(
-        closingsStore.closingStockShops ?? [], ticketsStore.tickets);
-
+    final articleStock = StockNowArticleRetail(
+        article,
+        () => ticketsStore.tickets,
+        () => closingsStore.closingStockShops,
+        articlesStore.calibres.notQuickSpend);
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(
-            '${proxy.proxyLineId}', '${proxy.proxyArticleId}'));
+            '${proxy.proxyCalibreId}', '${proxy.proxyArticleId}'));
       },
       child: ListTile(
         leading: SizedBox(
@@ -48,11 +50,11 @@ class ProxyAGlimpseWidget extends ArticleStockStatelessAbstract
                   style: const TextStyle(color: Colors.black),
                   children: <InlineSpan>[
                     TextSpan(
-                      text: '${proxy.lineId}.${proxy.articleId}.${proxy.id}',
+                      text: '${proxy.calibreId}.${proxy.articleId}.${proxy.id}',
                       style: const TextStyle(fontSize: 8, color: Colors.grey),
                     ),
                     TextSpan(
-                      text: '\n${proxy.proxyLineId}.${proxy.proxyArticleId}',
+                      text: '\n${proxy.proxyCalibreId}.${proxy.proxyArticleId}',
                       style: const TextStyle(fontSize: 14),
                     ),
                   ]),
@@ -64,8 +66,8 @@ class ProxyAGlimpseWidget extends ArticleStockStatelessAbstract
             Expanded(
               child: Text('${article.fullName}'),
             ),
-            if (articleLiveQt != 0.0) ...[
-              Text('${numFormat?.format(articleLiveQt)}'),
+            if (articleStock.stockNow != 0.0) ...[
+              Text('${numFormat.format(articleStock.stockNow)}'),
               const Icon(Icons.warehouse, color: WeebiColors.grey)
             ],
           ],

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/invokers.dart';
 import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 
@@ -8,15 +9,15 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleRetail, ArticleBasket, ArticleLine;
+    show ArticleRetail, ArticleBasket, ArticleCalibre;
 import 'package:views_weebi/extensions.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/article/article_basket/detail_section_basket_widget.dart';
 import 'package:views_weebi/src/articles/article/buttons.dart';
-import 'package:views_weebi/src/articles/line/buttons_line.dart';
+import 'package:views_weebi/src/articles/calibre/buttons_calibre.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 import 'package:views_weebi/views_article.dart';
-import 'package:mixins_weebi/stores.dart' show ArticlesStore;
+import 'package:mixins_weebi/stores.dart' show ArticlesStore, CoolExtension;
 import 'package:views_weebi/styles.dart' show WeebiColors, weebiTheme;
 
 import 'package:views_weebi/widgets.dart';
@@ -62,20 +63,20 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    ArticleLine line = articlesStore.lines
-        .firstWhere((element) => element.id == article.lineId);
+    ArticleCalibre calibre = articlesStore.calibres
+        .firstWhere((element) => element.id == article.calibreId);
 
     return Scaffold(
       floatingActionButton: isShopLocked ||
-              // ! only one basket per line
-              (line.isBasket ?? false)
+              // ! only one basket per calibre
+              (calibre.isBasket)
           ? const SizedBox()
           : MultipleFABs(
-              line.isSingleArticle == false
+              calibre.isSingleArticle == false
                   ? const SizedBox()
-                  : CreateArticleWithinLineButton(line.id,
+                  : CreateArticleWithinExistingCaliberButton(calibre.id,
                       isShopLocked: isShopLocked),
-              (article.status ?? true)
+              (article.status)
                   ? FloatingActionButton(
                       heroTag: 'deactivate',
                       tooltip: 'Désactiver l\'article',
@@ -86,7 +87,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                             : await deactivateArticleB(articlesStore);
                         Navigator.of(context).popAndPushNamed(
                             ArticleDetailRoute.generateRoute(
-                                '${d.lineId}', '${d.id}'));
+                                '${d.calibreId}', '${d.id}'));
                       },
                       child: const Icon(Icons.pause, color: Colors.white))
                   : FloatingActionButton(
@@ -100,7 +101,7 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                             : await reactivateArticleB(articlesStore);
                         Navigator.of(context).popAndPushNamed(
                             ArticleDetailRoute.generateRoute(
-                                '${d.lineId}', '${d.id}'));
+                                '${d.calibreId}', '${d.id}'));
                       }),
             ),
       body: CustomScrollView(
@@ -125,17 +126,17 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                 centerTitle: false,
                 collapseMode: CollapseMode.parallax,
                 // TODO update with photo widget here
-                background: article.photo == null || article.photo.isEmpty
-                    ? (line.isBasket ?? false)
+                background: article.photo.isEmpty
+                    ? (calibre.isBasket)
                         ? const Icon(Icons.shopping_basket,
                             color: WeebiColors.grey)
                         : const Icon(Icons.article)
                     : Hero(
-                        tag: '${article.lineId}.${article.id}',
+                        tag: '${article.calibreId}.${article.id}',
                         child: PhotoWidget(article),
                       ),
                 title: Text(
-                    '#${line.id}.${article.id} ${(article.status ?? true) ? '' : ' \ndésactivé'}',
+                    '#${calibre.id}.${article.id} ${(article.status) ? '' : ' \ndésactivé'}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -173,10 +174,21 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: line.isBasket
-                  ? ArticleBasketDetailSectionWidget(article as ArticleBasket)
-                  : ArticleRetailFrameView(article as ArticleRetail, false,
-                      ticketsInvoker, closingStockShopsInvoker),
+              child: (calibre.isBasket)
+                  ? ArticleBasketDetailSectionWidget(
+                      StockNowArticleBasket(
+                          article as ArticleBasket,
+                          ticketsInvoker,
+                          closingStockShopsInvoker,
+                          articlesStore.calibres.notQuickSpend),
+                    )
+                  : ArticleRetailFrameView(
+                      StockNowArticleRetail(
+                          article as ArticleRetail,
+                          ticketsInvoker,
+                          closingStockShopsInvoker,
+                          articlesStore.calibres.notQuickSpend),
+                      false),
             ),
           ),
 
@@ -196,12 +208,12 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
           //   sliver: SliverList(
           //     delegate: SliverChildBuilderDelegate(
           //       (BuildContext context, int index) =>
-          //           //for (final article in line.articles)
-          //           line.articles[index] is ArticleBasket
+          //           //for (final article in calibre.articles)
+          //           calibre.articles[index] is ArticleBasket
           //               ? ArticleBasketGlimpseWidget(
-          //                   line, line.articles[index])
-          //               : ArticleGlimpseWidget(line, line.articles[index]),
-          //       childCount: line.articles.length,
+          //                   calibre, calibre.articles[index])
+          //               : ArticleGlimpseWidget(calibre, calibre.articles[index]),
+          //       childCount: calibre.articles.length,
           //     ),
           //   ),
           // ),

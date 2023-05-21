@@ -15,6 +15,7 @@ import 'package:mixins_weebi/stores.dart' show ArticlesStore;
 import 'package:views_weebi/src/articles/article/article_basket/discount_amount_widget.dart';
 import 'package:views_weebi/src/articles/article/article_basket/preview_proxies_selected_widget.dart';
 import 'package:views_weebi/src/articles/article/article_basket/type_ahead.dart';
+import 'package:views_weebi/src/styles/colors.dart';
 import 'package:views_weebi/src/widgets/toast.dart';
 import 'package:views_weebi/widgets.dart' show appBarWeebiUpdateNotSaved;
 import 'package:views_weebi/widgets.dart' show FieldValueWidget, InformDialog;
@@ -22,7 +23,7 @@ import 'package:views_weebi/widgets.dart' show FieldValueWidget, InformDialog;
 
 class ArticleBasketUpdateView extends StatefulWidget {
   final ArticleBasket article;
-  const ArticleBasketUpdateView(this.article, {Key key}) : super(key: key);
+  const ArticleBasketUpdateView(this.article, {Key? key}) : super(key: key);
   @override
   _ArticleBasketUpdateViewState createState() =>
       _ArticleBasketUpdateViewState();
@@ -35,10 +36,10 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
   ScrollController controller = ScrollController();
 
   // creating 1st article and product in the same time
-  ArticleBasket _articleBasketToBeUpdated;
+  ArticleBasket? _articleBasketToBeUpdated;
 
-  TextEditingController _newArticleFullName;
-  TextEditingController _newArticleCode;
+  TextEditingController _newArticleFullName = TextEditingController();
+  TextEditingController _newArticleCode = TextEditingController();
   final discountAmountController = TextEditingController();
   final scrollControllerVert = ScrollController();
   final articlesMinQtWeebi = <ArticleWMinQt>[];
@@ -72,7 +73,7 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            if (_formKeyLine.currentState.validate() == false ||
+            if (_formKeyLine.currentState?.validate() == false ||
                 articlesStore.articlesSelectedForBasketMinQt.isEmpty) {
               // toastFailProduct(context,
               //     message: 'panier d\'articles incomplet');
@@ -85,22 +86,22 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                 creationDate: now,
                 updateDate: now,
                 discountAmountSalesOnly: discountAmount,
-                lineId: widget.article.lineId,
+                calibreId: widget.article.calibreId,
                 id: widget.article.id,
                 fullName: _newArticleFullName.text,
                 weight: 1.0,
-                articleCode: articlesStore.lines.nextId * 10 + 1,
+                articleCode: articlesStore.calibres.nextId * 10 + 1,
                 photo: '',
                 proxies: [
                   for (var i = 0;
                       i < articlesStore.articlesSelectedForBasketMinQt.length;
                       i++)
                     ProxyArticle(
-                        lineId: widget.article.lineId,
+                        calibreId: widget.article.calibreId,
                         articleId: widget.article.id,
                         id: i + 1,
-                        proxyLineId: articlesStore
-                            .articlesSelectedForBasketMinQt[i].lineId,
+                        proxyCalibreId: articlesStore
+                            .articlesSelectedForBasketMinQt[i].calibreId,
                         proxyArticleId:
                             articlesStore.articlesSelectedForBasketMinQt[i].id,
                         status: true,
@@ -109,28 +110,29 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                         minimumUnitPerBasket: articlesStore
                             .articlesSelectedForBasketMinQt[i].minQt),
                 ]);
-            _formKeyLine.currentState.save();
+            _formKeyLine.currentState?.save();
             try {
-              final articleBasket = await articlesStore
-                  .updateArticleRetail(_articleBasketToBeUpdated);
+              final articleBasket =
+                  await articlesStore.updateArticleRetail<ArticleBasket>(
+                      _articleBasketToBeUpdated!);
               toastSuccessArticle(context,
                   message: 'panier d\'article mis à jour');
               articlesStore.clearAllArticleMinQtInSelected();
               await Navigator.of(context).popAndPushNamed(
                   ArticleDetailRoute.generateRoute(
-                      '${articleBasket.lineId}', '${articleBasket.id}'));
+                      '${articleBasket.calibreId}', '${articleBasket.id}'));
             } catch (e) {
               return InformDialog.showDialogWeebiNotOk(
                   'Erreur lors de la mise à jour $e', context);
             }
           },
-          backgroundColor: Colors.orange[800],
+          backgroundColor: WeebiColors.orange,
           child: const Text('OK', style: TextStyle(color: Colors.white)),
         ),
         appBar: appBarWeebiUpdateNotSaved('Modifier un panier d\'articles',
-            backgroundColor: Colors.orange[800],
+            backgroundColor: WeebiColors.orange,
             pushThatRouteInstead: ArticleDetailRoute.generateRoute(
-                '${widget.article.lineId}', '${widget.article.id}')),
+                '${widget.article.calibreId}', '${widget.article.id}')),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
@@ -144,11 +146,11 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                     i++) {
                   // only interested in pure proxies fields to compute price and cost below
                   final proxyRaw = ProxyArticle(
-                      lineId: widget.article.lineId,
+                      calibreId: widget.article.calibreId,
                       articleId: widget.article.id,
                       id: i + 1,
-                      proxyLineId: articlesStore
-                          .articlesSelectedForBasketMinQt[i].lineId,
+                      proxyCalibreId: articlesStore
+                          .articlesSelectedForBasketMinQt[i].calibreId,
                       proxyArticleId:
                           articlesStore.articlesSelectedForBasketMinQt[i].id,
                       status: true,
@@ -161,7 +163,8 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                 // now i can use the top notch function below to get the worth
                 final proxiesWorth = ArticleBasket
                     .getProxiesListWithPriceAndCostArticleNotCreatedYetOnly(
-                        articlesStore.linesPalpableNoBasket, proxiesRaw);
+                        articlesStore.calibresNotQuikspendNotBasket,
+                        proxiesRaw);
                 return Column(
                   children: <Widget>[
                     TextFormField(
@@ -177,9 +180,9 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                         // _formKey.currentState.save();  will be useful to save title here so we can then preload article fullName, like they do for passwords
                         return null;
                       },
-                      onSaved: (String value) {
+                      onSaved: (String? value) {
                         _articleBasketToBeUpdated = _articleBasketToBeUpdated
-                            .copyWith(fullName: value.trim());
+                            ?.copyWith(fullName: value?.trim());
                       },
                     ),
                     // TODO pub barcodeEAN here ?
@@ -213,8 +216,8 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                         const Icon(Icons.local_offer, color: Colors.teal),
                         const Text("Prix de vente total"),
                         SelectableText(
-                          numFormat?.format(
-                              proxiesWorth.totalPrice - discountAmount),
+                          numFormat
+                              .format(proxiesWorth.totalPrice - discountAmount),
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),

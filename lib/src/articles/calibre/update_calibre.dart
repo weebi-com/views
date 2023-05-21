@@ -1,6 +1,3 @@
-// Project imports:
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/stores.dart';
@@ -9,32 +6,34 @@ import 'package:models_weebi/base.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
+import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
+import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
 import 'package:views_weebi/src/widgets/toast.dart';
 
-class ArticleLineUpdateView<A extends ArticleAbstract> extends StatefulWidget {
+class ArticleCalibreUpdateView<A extends ArticleAbstract>
+    extends StatefulWidget {
   static const nameKey = Key('nom');
-  final ArticleLine<A> line;
-  const ArticleLineUpdateView(this.line, {Key key}) : super(key: key);
+  final ArticleCalibre<A> calibre;
+  const ArticleCalibreUpdateView(this.calibre, {Key? key}) : super(key: key);
 
   @override
-  State<ArticleLineUpdateView> createState() => _ArticleLineUpdateViewState();
+  State<ArticleCalibreUpdateView> createState() =>
+      _ArticleCalibreUpdateViewState();
 }
 
-class _ArticleLineUpdateViewState<A extends ArticleAbstract>
-    extends State<ArticleLineUpdateView<A>> with ToastWeebi {
-  ArticleLineUpdateFormStore store;
-  ScrollController controller;
+class _ArticleCalibreUpdateViewState<A extends ArticleAbstract>
+    extends State<ArticleCalibreUpdateView<A>> with ToastWeebi {
+  late ArticleCalibreUpdateFormStore store;
+  final controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    store = ArticleLineUpdateFormStore(articlesStore, widget.line);
+    store = ArticleCalibreUpdateFormStore(articlesStore, widget.calibre);
     store.setupValidations();
   }
 
@@ -49,7 +48,7 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWeebiUpdateNotSaved('Editer la ligne d\'articles',
-          backgroundColor: Colors.orange[800]),
+          backgroundColor: WeebiColors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           store.validateAll();
@@ -57,13 +56,14 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
             return;
           }
           try {
-            final lineC = await store.updateLineArticleFromForm<A>(widget.line);
+            final temp =
+                await store.updateLineArticleFromForm<A>(widget.calibre);
 
             toastSuccessArticle(context,
                 message: 'ligne d\'articles mise à jour');
 
             Navigator.of(context).popAndPushNamed(
-                ArticleLineRetailDetailRoute.generateRoute('${lineC.id}',
+                ArticleCalibreRetailDetailRoute.generateRoute('${temp.id}',
                     articleId: '1'));
           } on Exception catch (e) {
             return InformDialog.showDialogWeebiNotOk(
@@ -71,7 +71,7 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
                 context);
           }
         },
-        backgroundColor: Colors.orange[800],
+        backgroundColor: WeebiColors.orange,
         child: const Text('OK', style: TextStyle(color: Colors.white)),
       ),
       body: Padding(
@@ -80,7 +80,7 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
           children: <Widget>[
             Observer(
               builder: (_) => TextFormField(
-                key: ArticleLineUpdateView.nameKey,
+                key: ArticleCalibreUpdateView.nameKey,
                 initialValue: store.name,
                 onChanged: (value) => store.name = value,
                 keyboardType: TextInputType.text,
@@ -106,7 +106,7 @@ class _ArticleLineUpdateViewState<A extends ArticleAbstract>
                 value: store.stockUnit,
                 onChanged: (value) {
                   setState(() {
-                    store.stockUnit = value;
+                    store.stockUnit = value ?? StockUnit.unit;
                   });
                 },
               );

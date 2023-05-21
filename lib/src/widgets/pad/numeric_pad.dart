@@ -5,7 +5,7 @@ import 'package:views_weebi/buttons.dart';
 
 class WeebiNumericPad extends StatelessWidget {
   final bool isDecimal;
-  const WeebiNumericPad({this.isDecimal = false, Key key}) : super(key: key);
+  const WeebiNumericPad({this.isDecimal = false, Key? key}) : super(key: key);
 
   void onPressed(AmountProvider amountProvider, String numString) {
     String text = amountProvider.textEditVal.text;

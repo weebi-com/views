@@ -14,13 +14,13 @@ import 'package:views_weebi/src/widgets/pad/ok_padd_qt_double.dart.dart';
 class AskBigQuantity extends StatefulWidget {
   final bool isStockOutput;
   final double articleStockNow;
-  final double articleQtInCart;
+  final double? articleQtInCart;
   final bool isBasket;
   const AskBigQuantity(this.isStockOutput,
-      {this.articleStockNow,
+      {required this.articleStockNow,
       this.articleQtInCart,
       this.isBasket = false,
-      Key key})
+      Key? key})
       : super(key: key);
   @override
   _AskBigQuantityState createState() => _AskBigQuantityState();
@@ -28,12 +28,11 @@ class AskBigQuantity extends StatefulWidget {
 
 class _AskBigQuantityState extends State<AskBigQuantity> {
   final _bigQtCtrler = TextEditingController(text: '');
-  FocusNode focusNode;
+  final focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
     focusNode.addListener(() {});
     _bigQtCtrler.addListener(() {
       final String text = _bigQtCtrler.text;
@@ -64,12 +63,12 @@ class _AskBigQuantityState extends State<AskBigQuantity> {
               widget
                       .isBasket // basket has no stock, only a potential based on all articles in backet stocklevels
                   ? const SizedBox()
-                  : widget?.articleQtInCart == null
+                  : widget.articleQtInCart == null
                       ? Text(
                           'qt stock : ${widget.articleStockNow.roundTwoDecimals}')
                       : Text(widget.isStockOutput
-                          ? 'qt stock : ${widget.articleStockNow.roundTwoDecimals} - qt panier : ${widget.articleQtInCart.roundTwoDecimals}'
-                          : 'qt stock : ${widget.articleStockNow.roundTwoDecimals} + qt panier : ${widget.articleQtInCart.roundTwoDecimals}'),
+                          ? 'qt stock : ${widget.articleStockNow.roundTwoDecimals} - qt panier : ${widget.articleQtInCart?.roundTwoDecimals}'
+                          : 'qt stock : ${widget.articleStockNow.roundTwoDecimals} + qt panier : ${widget.articleQtInCart?.roundTwoDecimals}'),
               QtFromNumPad(focusNode),
               const WeebiNumericPad(isDecimal: true),
               const WeebiOkPaddedQtDouble(),

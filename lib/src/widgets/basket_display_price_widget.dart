@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PriceTotalBasketWidget extends StatelessWidget {
   final String totalPrice;
-  const PriceTotalBasketWidget(this.totalPrice, {Key key}) : super(key: key);
+  const PriceTotalBasketWidget(this.totalPrice, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

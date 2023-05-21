@@ -1,15 +1,15 @@
 import 'package:models_weebi/weebi_models.dart';
 
 extension GetProxiesMinQt on Iterable<ProxyArticle> {
-  Iterable<ArticleWMinQt> getProxiesMinQt(Iterable<ArticleLine> lines) {
+  Iterable<ArticleWMinQt> getProxiesMinQt(Iterable<ArticleCalibre> calibres) {
     final articlesW = <ArticleWMinQt>[];
-    for (final line in lines) {
+    for (final calibre in calibres) {
       for (final proxy in this) {
-        if (line.id == proxy.proxyLineId) {
-          for (final article in line.articles) {
+        if (calibre.id == proxy.proxyCalibreId) {
+          for (final article in calibre.articles) {
             if (article.id == proxy.proxyArticleId) {
               final aWMinQt = ArticleWMinQt(proxy.minimumUnitPerBasket,
-                  lineId: article.lineId,
+                  calibreId: article.calibreId,
                   id: article.id,
                   weight: article.weight,
                   fullName: article.fullName,

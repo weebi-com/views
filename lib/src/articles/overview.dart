@@ -5,27 +5,25 @@ import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:mixins_weebi/mobx_store_ticket.dart';
 import 'package:mobx/mobx.dart';
-import 'package:models_weebi/dummies.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/app_bar_search.dart';
 
 // Project imports:
-import 'package:views_weebi/src/articles/line/frame_line.dart';
+import 'package:views_weebi/src/articles/calibre/frame_calibre.dart';
 import 'package:views_weebi/src/icons/add_basket.dart';
-import 'package:views_weebi/src/routes/articles/create_line_basket.dart';
-import 'package:views_weebi/src/routes/articles/create_line_retail.dart';
+import 'package:views_weebi/src/routes/articles/create_calibre_basket.dart';
+import 'package:views_weebi/src/routes/articles/create_calibrate_retail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
-import 'package:views_weebi/views_article_basket.dart';
 
 // * This is for web only now
 // articleBaskets are not included here yet
 // so in weebi_app we stick to the traditionnal one in lines_of_articles.dart
 
-class ArticlesLinesOverviewWebOnly extends StatelessWidget {
+class ArticlesCalibresOverviewWebOnly extends StatelessWidget {
   final GlobalKey<NavigatorState> mainNavigator;
-  const ArticlesLinesOverviewWebOnly({@required this.mainNavigator});
+  const ArticlesCalibresOverviewWebOnly({required this.mainNavigator});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +47,11 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                       builder: (context) => ListView.builder(
                         shrinkWrap: true,
                         controller: scrollControllerVertical,
-                        itemCount: articlesStore.lines.palpables.length,
+                        itemCount: articlesStore.calibres.notQuickSpend.length,
                         itemBuilder: (BuildContext context, int index) =>
-                            ArticleLineFrame(
+                            ArticleCalibreFrame(
                           contextMain: context,
-                          line: articlesStore.lines.palpables[index],
+                          calibre: articlesStore.calibres.notQuickSpend[index],
                           ticketsInvoker: ticketsInvoker,
                           closingStockShopsInvoker: closingStockShopsInvoker,
                         ),
@@ -72,11 +70,13 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                         builder: (context) => ListView.builder(
                           shrinkWrap: true,
                           controller: scrollControllerVertical,
-                          itemCount: articlesStore.linesPalpableFiltered.length,
+                          itemCount:
+                              articlesStore.calibresPalpableFiltered.length,
                           itemBuilder: (BuildContext context, int index) =>
-                              ArticleLineFrame(
+                              ArticleCalibreFrame(
                             contextMain: context,
-                            line: articlesStore.linesPalpableFiltered[index],
+                            calibre:
+                                articlesStore.calibresPalpableFiltered[index],
                             ticketsInvoker: ticketsInvoker,
                             closingStockShopsInvoker: closingStockShopsInvoker,
                           ),
@@ -97,7 +97,7 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
               ),
               child: Observer(
                 builder: (context) => FloatingActionButton(
-                  heroTag: 'ArticleLinesFAB',
+                  heroTag: 'ArticleCalibresFAB',
                   tooltip: 'Chercher un article',
                   backgroundColor: Colors.white,
                   child: articlesStore.searchedBy != SearchedBy.titleOrId
@@ -117,7 +117,7 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
           ),
           Builder(builder: (context) {
             return articlesStore.searchedBy != SearchedBy.titleOrId &&
-                    articlesStore.lines.isNotEmpty
+                    articlesStore.calibres.isNotEmpty
                 ? Padding(
                     padding: EdgeInsets.symmetric(horizontal: 80),
                     child: Align(
@@ -126,11 +126,10 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                           heroTag: 'Créer un panier',
                           tooltip: 'Créer un panier d\'articles',
                           backgroundColor: WeebiColors.orange,
-                          onPressed: () async {
-                            await articlesStore
-                                .clearAllArticleMinQtInSelected();
+                          onPressed: () {
+                            articlesStore.clearAllArticleMinQtInSelected();
                             Navigator.of(context).pushNamed(
-                                ArticleLineBasketCreateRoute.routePath);
+                                ArticleCalibreBasketCreateRoute.routePath);
                           },
                           child: const IconAddArticleBasket(),
                         )),
@@ -146,8 +145,8 @@ class ArticlesLinesOverviewWebOnly extends StatelessWidget {
                       tooltip: 'Créer un article',
                       heroTag: "btn1Add",
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(ArticleLineRetailCreateRoute.routePath);
+                        Navigator.of(context).pushNamed(
+                            ArticleRetailCalibrationAndCreationRoute.routePath);
                       },
                       child: const Icon(Icons.add, color: Colors.white),
                     ),

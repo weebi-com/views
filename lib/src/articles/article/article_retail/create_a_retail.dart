@@ -1,7 +1,4 @@
 // Project imports:
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,7 +7,8 @@ import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
+import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
+import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
@@ -20,23 +18,22 @@ class ArticleCreateView extends StatefulWidget {
   static const fullNameKey = Key('nom');
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
-  final ArticleLine line;
-  const ArticleCreateView({@required this.line, Key key}) : super(key: key);
+  final ArticleCalibre calibre;
+  const ArticleCreateView({required this.calibre, Key? key}) : super(key: key);
 
   @override
   State<ArticleCreateView> createState() => _ArticleCreateViewState();
 }
 
 class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
-  ArticleRetailCreateFormStore store;
-  ScrollController controller;
+  late ArticleRetailCreateFormStore store;
+  final ScrollController controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController();
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    store = ArticleRetailCreateFormStore(articlesStore, widget.line);
+    store = ArticleRetailCreateFormStore(articlesStore, widget.calibre);
     store.setupValidations();
   }
 
@@ -51,7 +48,7 @@ class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWeebiUpdateNotSaved(
-          'Créer un sous-article dans la ligne #${widget.line.id}',
+          'Créer un sous-article #${widget.calibre.id}',
           backgroundColor: Colors.orange),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -66,14 +63,15 @@ class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
             toastSuccessArticle(context, message: 'sous-article créé');
 
             Navigator.of(context).popAndPushNamed(
-                ArticleLineRetailDetailRoute.generateRoute('${widget.line.id}',
+                ArticleCalibreRetailDetailRoute.generateRoute(
+                    '${widget.calibre.id}',
                     articleId: '${articleRetailCreated.id}'));
           } catch (e) {
             return InformDialog.showDialogWeebiNotOk(
                 "Erreur lors de la création de l'article $e", context);
           }
         },
-        backgroundColor: Colors.orange[800],
+        backgroundColor: WeebiColors.orange,
         child: const Text('OK', style: TextStyle(color: Colors.white)),
       ),
       body: Padding(

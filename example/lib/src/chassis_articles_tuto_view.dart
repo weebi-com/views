@@ -12,7 +12,7 @@ import 'package:views_weebi/chassis.dart' show ChassisAbstract;
 import 'info_route.dart';
 
 class ChassisTutoProducts extends ChassisAbstract {
-  static const Key keyAppBarTitle = Key("AppBar");
+  static const Key? keyAppBarTitle = Key("AppBar");
 
   static ChassisTutoProducts buildChassisForArticles(
           GlobalKey<NavigatorState> mainNavigator,
@@ -52,14 +52,14 @@ class ChassisTutoProducts extends ChassisAbstract {
           ),
         ],
         mainNavigatorKey: mainNavigator,
-        body: ArticlesLinesOverviewWebOnly(mainNavigator: mainNavigator),
+        body: ArticlesCalibresOverviewWebOnly(mainNavigator: mainNavigator),
       );
 
   const ChassisTutoProducts({
     key,
-    @required Widget body,
-    @required int selectedIndex,
-    @required GlobalKey<NavigatorState> mainNavigatorKey,
+    required Widget body,
+    required int selectedIndex,
+    required GlobalKey<NavigatorState> mainNavigatorKey,
     Widget floatingButton = const SizedBox(),
     List<Widget> actions = const [],
   }) : super(
@@ -78,7 +78,7 @@ class ChassisTutoProducts extends ChassisAbstract {
 // should give more flexibility
 class _ViewsFrameState extends State<ChassisTutoProducts> {
   List<String> paths = [
-    ArticlesLinesAllFrameRoute.routePath,
+    ArticlesCalibresAllFrameRoute.routePath,
     InfoRoute.routePath,
   ];
 

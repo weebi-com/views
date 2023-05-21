@@ -10,13 +10,13 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/src/chassis_abstract.dart';
 
 class ChassisAllView extends ChassisAbstract {
-  static const Key keyAppBarTitle = Key("AppBar");
+  static const Key? keyAppBarTitle = Key("AppBar");
 
   const ChassisAllView({
     key,
-    @required Widget body,
-    @required int selectedIndex,
-    @required GlobalKey<NavigatorState> mainNavigatorKey,
+    required Widget body,
+    required int selectedIndex,
+    required GlobalKey<NavigatorState> mainNavigatorKey,
     Widget floatingButton = const SizedBox(),
     List<Widget> actions = const [],
   }) : super(
@@ -32,7 +32,7 @@ class ChassisAllView extends ChassisAbstract {
 
 class _ViewsFrameState extends State<ChassisAllView> {
   List<String> paths = [
-    ArticlesLinesAllFrameRoute.routePath,
+    ArticlesCalibresAllFrameRoute.routePath,
     '', '', '', ''
     // not available here yet
     //HerdersRoute.routePath,

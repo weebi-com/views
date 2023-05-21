@@ -7,12 +7,12 @@ import 'package:views_weebi/src/routes/articles/update_article_basket.dart';
 import 'package:views_weebi/src/routes/articles/update_article_retail.dart';
 import 'package:views_weebi/src/widgets/ask_dialog.dart';
 import 'package:views_weebi/src/routes/articles/frame.dart';
-import 'package:views_weebi/src/routes/articles/line_detail.dart';
+import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
 class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
-  const EditArticleButton(this.article, {Key key}) : super(key: key);
+  const EditArticleButton(this.article, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,14 @@ class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         if (article is ArticleRetail) {
           Navigator.of(context).pushNamed(
               ArticleRetailUpdateRoute.generateRoute(
-                  '${this.article.lineId}', '${this.article.id}'));
+                  '${this.article.calibreId}', '${this.article.id}'));
         } else {
           final articlesStore =
               Provider.of<ArticlesStore>(context, listen: false);
-          await articlesStore.clearAllArticleMinQtInSelected();
+          articlesStore.clearAllArticleMinQtInSelected();
           Navigator.of(context).popAndPushNamed(
               ArticleBasketUpdateRoute.generateRoute(
-                  '${this.article.lineId}', '${this.article.id}'));
+                  '${this.article.calibreId}', '${this.article.id}'));
         }
       },
     );
@@ -40,7 +40,7 @@ class EditArticleButton<A extends ArticleAbstract> extends StatelessWidget {
 
 class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
   final A article;
-  const DeleteArticleButton(this.article, {Key key}) : super(key: key);
+  const DeleteArticleButton(this.article, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +60,16 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         if (!isOkToDelete) {
           return;
         }
-        final p = articlesStore.lines
+        final p = articlesStore.calibres
             .firstWhere((element) => element.id == article.productId);
         if (p.articles.length <= 1) {
           await articlesStore.deleteForeverLineArticle(p);
           Navigator.of(context)
-              .popAndPushNamed(ArticlesLinesAllFrameRoute.routePath);
+              .popAndPushNamed(ArticlesCalibresAllFrameRoute.routePath);
         } else {
           await articlesStore.deleteForeverArticle(article);
           Navigator.of(context).popAndPushNamed(
-              ArticleLineRetailDetailRoute.generateRoute('${p.id}',
+              ArticleCalibreRetailDetailRoute.generateRoute('${p.id}',
                   articleId: '1')); // TODO isShopLocked
         }
       },

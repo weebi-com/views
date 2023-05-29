@@ -8,7 +8,7 @@ import 'package:models_weebi/utils.dart';
 // Package imports:
 
 import 'package:models_weebi/weebi_models.dart'
-    show ArticleBasket, ArticleCalibre, ArticleRetail;
+    show ArticleBasket, ArticleCalibre;
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/article/article_basket/glimpse_a_basket.dart';
 import 'package:views_weebi/src/articles/calibre/buttons_calibre.dart';
@@ -97,9 +97,10 @@ class CalibreArticlesDetailWidget extends StatelessWidget {
                   child: Tooltip(
                     message: 'stock disponible',
                     child: Text(
-                        numFormat.format(ArticleCalibreRetailStock(
-                                articleCalibreRetail:
-                                    calibre as ArticleCalibre<ArticleRetail>,
+                        numFormat.format(CalibreRetailStockNow(
+                                calibreRetail:
+                                    ArticleCalibre.fromMapArticleRetail(
+                                        calibre.toMap()),
                                 ticketsInvoker: ticketsInvoker,
                                 closingStockShopsInvoker:
                                     closingStockShopsInvoker)
@@ -117,7 +118,10 @@ class CalibreArticlesDetailWidget extends StatelessWidget {
             ? []
             : [
                 EditArticleCalibreButton(calibre.id),
-                DeleteArticleCalibreButton(calibre)
+                DeleteArticleCalibreButton(
+                  calibre,
+                  ArticlesCalibresAllFrameRoute.routePath,
+                )
               ],
       ),
       body: Container(
@@ -132,54 +136,52 @@ class CalibreArticlesDetailWidget extends StatelessWidget {
           controller: controller,
           child: Column(
             children: [
-              if (!(calibre.isBasket)) ...[
-                if (calibre.stockUnit != StockUnit.unit)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Icon(Icons.filter_frames),
-                        ),
-                        const Text("Unité"),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SelectableText(
-                            calibre.stockUnit.stockUnitText,
-                            style: WeebiTextStyles.blackAndBold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (calibre.status == false)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: FieldValueWidget(
-                      const Icon(Icons.pause),
-                      const Text("Articles désactivés le "),
-                      SelectableText(
-                        "${calibre.statusUpdateDate}",
-                        style: WeebiTextStyles.blackAndBold,
-                      ),
-                    ),
-                  ),
-                const SizedBox(height: 12),
-                SlidableCardsV2(
-                    calibre, ticketsInvoker, closingStockShopsInvoker,
-                    articleId: initArticle)
-              ] else ...[
+              if (calibre.isBasket) ...[
                 for (final article in calibre.articles)
                   ArticleBasketGlimpseWidStateFul(
-                    StockNowArticleBasket(
-                        article as ArticleBasket,
-                        ticketsInvoker,
-                        closingStockShopsInvoker,
-                        articlesStore.calibres.notQuickSpend),
-                  )
-              ],
+                    ArticleBasketRealizablekNow(
+                        article: article as ArticleBasket,
+                        ticketsInvoker: ticketsInvoker,
+                        closingStockShopsInvoker: closingStockShopsInvoker,
+                        calibresNoQuickspend:
+                            articlesStore.calibres.notQuickSpend),
+                  ),
+              ] else if (calibre.stockUnit != StockUnit.unit)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Icon(Icons.filter_frames),
+                      ),
+                      const Text("Unité"),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SelectableText(
+                          calibre.stockUnit.stockUnitText,
+                          style: WeebiTextStyles.blackAndBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (calibre.status == false)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: FieldValueWidget(
+                    const Icon(Icons.pause),
+                    const Text("Articles désactivés le "),
+                    SelectableText(
+                      "${calibre.statusUpdateDate}",
+                      style: WeebiTextStyles.blackAndBold,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 12),
+              SlidableCardsV2(calibre, ticketsInvoker, closingStockShopsInvoker,
+                  articleId: initArticle)
             ],
           ),
         ),

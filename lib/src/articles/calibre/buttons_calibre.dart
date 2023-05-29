@@ -8,7 +8,6 @@ import 'package:models_weebi/weebi_models.dart' show ArticleCalibre;
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/create_article_retail.dart';
 
-import 'package:views_weebi/src/routes/articles/frame.dart';
 import 'package:views_weebi/src/routes/articles/update_calibre.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
@@ -57,7 +56,9 @@ class EditArticleCalibreButton extends StatelessWidget {
 class DeleteArticleCalibreButton extends StatelessWidget {
   final bool isShopLocked;
   final ArticleCalibre articleLine;
-  const DeleteArticleCalibreButton(this.articleLine,
+  final String articlesRouteToDisplayAfterDeletion;
+  const DeleteArticleCalibreButton(
+      this.articleLine, this.articlesRouteToDisplayAfterDeletion,
       {this.isShopLocked = false, Key? key})
       : super(key: key);
 
@@ -73,7 +74,7 @@ class DeleteArticleCalibreButton extends StatelessWidget {
                 ? 'Attention effacer un article est irréversible. Êtes vous sur de vouloir continuer ?'
                 : 'Attention effacer une ligne d\'articles est irréversible. Êtes vous sur de vouloir continuer ?',
             context,
-            barrierDismissible: false,
+            isDismissible: false,
           );
           if (!isOkToDelete) {
             return;
@@ -81,9 +82,7 @@ class DeleteArticleCalibreButton extends StatelessWidget {
           final articlesStore =
               Provider.of<ArticlesStore>(context, listen: false);
           await articlesStore.deleteForeverLineArticle(articleLine);
-
-          Navigator.of(context)
-              .pushNamed(ArticlesCalibresAllFrameRoute.routePath);
+          Navigator.of(context).pushNamed(articlesRouteToDisplayAfterDeletion);
         });
   }
 }

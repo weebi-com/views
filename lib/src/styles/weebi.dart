@@ -6,6 +6,13 @@ const paddingVerticalLine = EdgeInsets.symmetric(vertical: 8);
 
 final weebiTheme = ThemeData(
   fontFamily: 'PT_Sans-Narrow',
+  inputDecorationTheme: InputDecorationTheme(
+    errorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: WeebiColors.red),
+    ),
+    focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: WeebiColors.buttonColor)),
+  ),
   appBarTheme: const AppBarTheme(color: WeebiColors.blackAppBar),
   primaryColor: WeebiColors.blackAppBar,
   buttonTheme: const ButtonThemeData(

@@ -26,25 +26,30 @@ class ArticleCalibreFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //calibre.articles.first is ArticleBasket
     if (calibre.isBasket) {
       final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
-      final calibreBasketStockAbstract = StockNowArticleBasket(
-        calibre.articles.first as ArticleBasket,
-        ticketsInvoker,
-        closingStockShopsInvoker,
-        articlesStore.calibres.notQuickSpend,
+      final calibreBasketStockAbstract = ArticleBasketRealizablekNow(
+        article: calibre.articles.first as ArticleBasket,
+        ticketsInvoker: ticketsInvoker,
+        closingStockShopsInvoker: closingStockShopsInvoker,
+        calibresNoQuickspend: articlesStore.calibres.notQuickSpend,
       );
-      return LineBasketGlimpseWidget(calibreBasketStockAbstract);
+      return CalibreBasketGlimpseWidget(calibreBasketStockAbstract);
     } else {
-      final calibreRetailStock = ArticleCalibreRetailStock(
-          articleCalibreRetail: calibre as ArticleCalibre<ArticleRetail>,
+      // *
+      // might need to cast
+      // final ArticleCalibre<ArticleRetail> calibreRetail =
+      //     ArticleCalibre.fromMapArticleRetail(calibre.toMap());
+      final calibreRetailStock = CalibreRetailStockNow(
+          calibreRetail: calibre as ArticleCalibre<ArticleRetail>,
           ticketsInvoker: ticketsInvoker,
           closingStockShopsInvoker: closingStockShopsInvoker);
       if (calibre.isSingleArticle) {
-        return ArticleRetailSingleCalibreGlimpseWidget(calibreRetailStock);
+        return CalibreSingleRetailGlimpseWidget(calibreRetailStock);
       } else {
-        return ArticlesRetailCalibreGlimpseWidgetSateful(calibreRetailStock);
+        return CalibreMultiRetailsGlimpseWidget(calibreRetailStock);
       }
     }
   }

@@ -14,7 +14,7 @@ import 'package:views_weebi/styles.dart';
 import 'package:views_weebi/widgets.dart';
 
 class ArticleBasketDetailSectionWidget extends StatelessWidget {
-  final StockNowArticleBasket articleStock;
+  final ArticleBasketRealizablekNow articleStock;
   const ArticleBasketDetailSectionWidget(this.articleStock, {Key? key})
       : super(key: key);
 

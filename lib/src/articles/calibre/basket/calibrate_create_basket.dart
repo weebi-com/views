@@ -230,8 +230,6 @@ class _ArticleBasketCalibrateAndCreateViewState
                             }
                           },
                         ),
-                      DiscountAmountWidget(proxiesWorth.totalPrice),
-                      PriceTotalBasketWidget(totalPrice),
                       const ArticlesInBasketTypeAhead(),
                       const SizedBox(height: 16),
                       if (articlesStore
@@ -239,6 +237,11 @@ class _ArticleBasketCalibrateAndCreateViewState
                         const Text('Articles sélectionnés : '),
                         const SizedBox(height: 16),
                         const PreviewArticlesProxiesSelectedWidget(),
+                      ],
+                      if (articlesStore
+                          .articlesSelectedForBasketMinQt.isNotEmpty) ...[
+                        PriceTotalBasketWidget(totalPrice),
+                        DiscountAmountWidget(proxiesWorth.totalPrice),
                       ],
                     ],
                   ),

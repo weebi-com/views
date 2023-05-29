@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_store_article.dart';
@@ -67,8 +69,8 @@ class _ExampleAppState extends State<ExampleApp> {
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute<void>(
           settings: settings,
-          builder: (BuildContext context) =>
-              const Scaffold(body: Center(child: Text('Not Found'))),
+          builder: (BuildContext context) => const Scaffold(
+              body: Center(child: Text('Not Found example views'))),
         );
       },
       // routes: {

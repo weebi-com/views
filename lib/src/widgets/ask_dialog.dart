@@ -41,10 +41,10 @@ abstract class AskDialog {
 
   static Future<bool> areYouSure(
       String title, String message, BuildContext context,
-      {required bool? barrierDismissible}) async {
+      {required bool? isDismissible}) async {
     return await showDialog(
       context: context,
-      barrierDismissible: barrierDismissible ?? true,
+      barrierDismissible: isDismissible ?? true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),

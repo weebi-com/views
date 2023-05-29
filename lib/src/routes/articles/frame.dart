@@ -7,7 +7,7 @@ import 'package:views_weebi/views.dart';
 
 class ArticlesCalibresAllFrameRoute<T extends ChassisAbstract>
     extends WeebiRouteBase {
-  static String routePath = '/article_calibres';
+  static String routePath = '/articles';
 
   ArticlesCalibresAllFrameRoute(
       GlobalKey<NavigatorState> mainNavigator, T child)

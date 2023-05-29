@@ -1,8 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/stock.dart';
-import 'package:provider/provider.dart';
+import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 
@@ -12,28 +11,27 @@ import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article.dart';
 
-class ArticlesRetailCalibreGlimpseWidgetSateful extends StatefulWidget {
-  final ArticleCalibreRetailStock calibreRetailStock;
-  const ArticlesRetailCalibreGlimpseWidgetSateful(this.calibreRetailStock);
+class CalibreMultiRetailsGlimpseWidget extends StatefulWidget {
+  final CalibreRetailStockNow calibreRetailStock;
+  const CalibreMultiRetailsGlimpseWidget(this.calibreRetailStock);
 
   @override
-  ArticlesRetailCalibreGlimpseWidgetSatefulState createState() =>
-      ArticlesRetailCalibreGlimpseWidgetSatefulState();
+  CalibreMultiRetailsGlimpseWidgetState createState() =>
+      CalibreMultiRetailsGlimpseWidgetState();
 }
 
-class ArticlesRetailCalibreGlimpseWidgetSatefulState
-    extends State<ArticlesRetailCalibreGlimpseWidgetSateful> {
+class CalibreMultiRetailsGlimpseWidgetState
+    extends State<CalibreMultiRetailsGlimpseWidget> {
   Color iconColor = WeebiColors.grey;
 
   @override
   Widget build(BuildContext context) {
-    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return InkWell(
       onLongPress: () {
-        if (widget.calibreRetailStock.articleCalibreRetail.isBasket == false) {
+        if (widget.calibreRetailStock.calibreRetail.isBasket == false) {
           Navigator.of(context).pushNamed(
               ArticleCalibreRetailDetailRoute.generateRoute(
-                  '${widget.calibreRetailStock.articleCalibreRetail.id}', // TODO get isShopLocked for real
+                  '${widget.calibreRetailStock.calibreRetail.id}', // TODO get isShopLocked for real
                   articleId:
                       '1')); // this.ticketsInvoker, this.closingStockShopsInvoker,
         }
@@ -46,18 +44,19 @@ class ArticlesRetailCalibreGlimpseWidgetSatefulState
           );
         },
         title: ArticleRetailCalibreTileTitle(
-            widget.calibreRetailStock.articleCalibreRetail,
+            widget.calibreRetailStock.calibreRetail,
             widget.calibreRetailStock.stockNow,
             iconColor),
         children: <Widget>[
           for (final article
-              in widget.calibreRetailStock.articleCalibreRetail.articles)
+              in widget.calibreRetailStock.calibreRetail.articles)
             ArticleRetailFrameView(
-                StockNowArticleRetail(
-                    article,
-                    widget.calibreRetailStock.ticketsInvoker,
-                    widget.calibreRetailStock.closingStockShopsInvoker,
-                    articlesStore.calibres.notQuickSpend),
+                ArticleRetailStockNow(
+                  article: article as ArticleRetail,
+                  ticketsInvoker: widget.calibreRetailStock.ticketsInvoker,
+                  closingStockShopsInvoker:
+                      widget.calibreRetailStock.closingStockShopsInvoker,
+                ),
                 true)
         ],
       ),

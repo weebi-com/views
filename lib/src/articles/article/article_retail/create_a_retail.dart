@@ -76,88 +76,91 @@ class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Column(
-          children: <Widget>[
-            Observer(
-                builder: (_) => AnimatedOpacity(
-                    child: const LinearProgressIndicator(),
-                    duration: const Duration(milliseconds: 300),
-                    opacity: store.isArticleCreationPending ? 1 : 0)),
-            Observer(
-              name: 'fullName',
-              builder: (_) => TextFormField(
-                key: ArticleCreateView.fullNameKey,
-                initialValue: store.fullName,
-                onChanged: (value) => store.fullName = value,
+        child: SingleChildScrollView(
+          controller: controller,
+          child: Column(
+            children: <Widget>[
+              Observer(
+                  builder: (_) => AnimatedOpacity(
+                      child: const LinearProgressIndicator(),
+                      duration: const Duration(milliseconds: 300),
+                      opacity: store.isArticleCreationPending ? 1 : 0)),
+              Observer(
+                name: 'fullName',
+                builder: (_) => TextFormField(
+                  key: ArticleCreateView.fullNameKey,
+                  initialValue: store.fullName,
+                  onChanged: (value) => store.fullName = value,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      labelText: 'Nom de l\'article*',
+                      icon: const Icon(Icons.short_text),
+                      errorText: store.errorStore.fullNameError),
+                  autofocus: true,
+                ),
+              ),
+              Observer(
+                name: 'prix',
+                builder: (_) => TextField(
+                  key: ArticleCreateView.priceKey,
+                  onChanged: (value) => store.price = value,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Prix de vente*',
+                    icon: const Icon(Icons.local_offer, color: Colors.teal),
+                    errorText: store.errorStore.priceError,
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                  ],
+                ),
+              ),
+              Observer(
+                name: 'coût',
+                builder: (_) => TextFormField(
+                  key: ArticleCreateView.costKey,
+                  initialValue: '0',
+                  onChanged: (value) => store.cost = value,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Coût d\'achat',
+                    icon: const Icon(Icons.local_offer, color: Colors.red),
+                    errorText: store.errorStore.costError,
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                  ],
+                ),
+              ),
+              Observer(
+                name: 'unités par pièce',
+                builder: (_) => TextFormField(
+                  initialValue: '1',
+                  onChanged: (value) => store.unitsPerPiece = value,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExpWeebi.regExpDecimal)
+                  ],
+                  decoration: InputDecoration(
+                      labelText: 'Unité(s) par pièce',
+                      icon: const Icon(Icons.style),
+                      errorText: store.errorStore.unitsPerPieceError),
+                ),
+              ),
+              TextField(
+                onChanged: (value) => store.barcodeEAN = value,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                    labelText: 'Nom de l\'article*',
-                    icon: const Icon(Icons.short_text),
-                    errorText: store.errorStore.fullNameError),
-                autofocus: true,
-              ),
-            ),
-            Observer(
-              name: 'prix',
-              builder: (_) => TextField(
-                key: ArticleCreateView.priceKey,
-                onChanged: (value) => store.price = value,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Prix de vente*',
-                  icon: const Icon(Icons.local_offer, color: Colors.teal),
-                  errorText: store.errorStore.priceError,
+                  labelText: 'Code barre',
+                  icon: const Icon(Icons.speaker_phone),
                 ),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                ],
+                // inputFormatters: <TextInputFormatter>[
+                //   FilteringTextInputFormatter.allow(
+                //       RegExp(r'^[0-9A-Da-d\$\+\-\.\/\:]$'))
+                // ],
               ),
-            ),
-            Observer(
-              name: 'coût',
-              builder: (_) => TextFormField(
-                key: ArticleCreateView.costKey,
-                initialValue: '0',
-                onChanged: (value) => store.cost = value,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Coût d\'achat',
-                  icon: const Icon(Icons.local_offer, color: Colors.red),
-                  errorText: store.errorStore.costError,
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                ],
-              ),
-            ),
-            Observer(
-              name: 'unités par pièce',
-              builder: (_) => TextFormField(
-                initialValue: '1',
-                onChanged: (value) => store.unitsPerPiece = value,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExpWeebi.regExpDecimal)
-                ],
-                decoration: InputDecoration(
-                    labelText: 'Unité(s) par pièce',
-                    icon: const Icon(Icons.style),
-                    errorText: store.errorStore.unitsPerPieceError),
-              ),
-            ),
-            TextField(
-              onChanged: (value) => store.barcodeEAN = value,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Code barre',
-                icon: const Icon(Icons.speaker_phone),
-              ),
-              // inputFormatters: <TextInputFormatter>[
-              //   FilteringTextInputFormatter.allow(
-              //       RegExp(r'^[0-9A-Da-d\$\+\-\.\/\:]$'))
-              // ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

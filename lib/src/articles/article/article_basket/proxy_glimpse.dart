@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:mixins_weebi/mobx_store_closing.dart';
 import 'package:flutter/material.dart';
 import 'package:models_weebi/utils.dart';
@@ -25,13 +24,11 @@ class ProxyAGlimpseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ticketsStore = Provider.of<TicketsStore>(context, listen: false);
     final closingsStore = Provider.of<ClosingsStore>(context, listen: false);
-    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
 
-    final articleStock = StockNowArticleRetail(
-        article,
-        () => ticketsStore.tickets,
-        () => closingsStore.closingStockShops,
-        articlesStore.calibres.notQuickSpend);
+    final articleStock = ArticleRetailStockNow(
+        article: article,
+        ticketsInvoker: () => ticketsStore.tickets,
+        closingStockShopsInvoker: () => closingsStore.closingStockShops);
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(

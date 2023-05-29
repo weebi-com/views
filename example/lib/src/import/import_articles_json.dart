@@ -68,7 +68,7 @@ class _ImportArticleCalibreJsonWidgetState
                     'Ajouter',
                     'Sans modifier les anciens articles, weebi va ajouter ceux qui ont un id unique',
                     context,
-                    barrierDismissible: false);
+                    isDismissible: false);
                 if (isOk == false) {
                   return;
                 }
@@ -110,7 +110,7 @@ class _ImportArticleCalibreJsonWidgetState
                     'Attention',
                     'Cette opération va effacer tous les articles.\nÊtes-vous sur de vouloir continuer ?',
                     context,
-                    barrierDismissible: false);
+                    isDismissible: false);
                 if (isOk == false) {
                   return;
                 }

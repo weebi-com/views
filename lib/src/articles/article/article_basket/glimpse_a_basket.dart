@@ -13,7 +13,7 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views_article_basket.dart';
 
 class ArticleBasketGlimpseWidStateFul extends StatefulWidget {
-  final StockNowArticleBasket articleStock;
+  final ArticleBasketRealizablekNow articleStock;
   const ArticleBasketGlimpseWidStateFul(this.articleStock, {Key? key})
       : super(key: key);
 

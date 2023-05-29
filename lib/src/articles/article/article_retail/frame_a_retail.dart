@@ -11,7 +11,7 @@ import 'glimpse_a_retail.dart';
 
 class ArticleRetailFrameView extends StatelessWidget {
   final bool isGlimpse;
-  final StockNowArticleRetail articleStock;
+  final ArticleRetailStockNow articleStock;
   const ArticleRetailFrameView(this.articleStock, this.isGlimpse);
 
   @override

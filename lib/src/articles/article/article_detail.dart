@@ -176,18 +176,20 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
               child: (calibre.isBasket)
                   ? ArticleBasketDetailSectionWidget(
-                      StockNowArticleBasket(
-                          article as ArticleBasket,
-                          ticketsInvoker,
-                          closingStockShopsInvoker,
-                          articlesStore.calibres.notQuickSpend),
+                      ArticleBasketRealizablekNow(
+                        article: article as ArticleBasket,
+                        ticketsInvoker: ticketsInvoker,
+                        closingStockShopsInvoker: closingStockShopsInvoker,
+                        calibresNoQuickspend:
+                            articlesStore.calibres.notQuickSpend,
+                      ),
                     )
                   : ArticleRetailFrameView(
-                      StockNowArticleRetail(
-                          article as ArticleRetail,
-                          ticketsInvoker,
-                          closingStockShopsInvoker,
-                          articlesStore.calibres.notQuickSpend),
+                      ArticleRetailStockNow(
+                        article: article as ArticleRetail,
+                        ticketsInvoker: ticketsInvoker,
+                        closingStockShopsInvoker: closingStockShopsInvoker,
+                      ),
                       false),
             ),
           ),

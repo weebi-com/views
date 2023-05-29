@@ -140,10 +140,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_typeahead
-      sha256: "3209cdc5ee528e52edb6d0cf28040139d81d2a73ab66e0d7717bdf19aef3860e"
+      sha256: f31211a8536f87908c3dcbdb88666e2f4d77f5f06c2b3a48eaad5599969ff32d
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.6.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

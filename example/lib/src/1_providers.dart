@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/mobx_store_ticket.dart';
 import 'package:provider/provider.dart';

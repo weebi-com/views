@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/invokers.dart';
-import 'package:mixins_weebi/mobx_store_article.dart';
+
 import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/weebi_models.dart';
-import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/photo.dart';
 
@@ -27,7 +26,6 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
     return SizedBox(
       width: 300,
       child: GestureDetector(
@@ -76,11 +74,11 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                     ),
                   ),
                   ArticleRetailFrameView(
-                    StockNowArticleRetail(
-                        article as ArticleRetail,
-                        ticketsInvoker,
-                        closingStockShopsInvoker,
-                        articlesStore.calibres.notQuickSpend),
+                    ArticleRetailStockNow(
+                      article: article as ArticleRetail,
+                      ticketsInvoker: ticketsInvoker,
+                      closingStockShopsInvoker: closingStockShopsInvoker,
+                    ),
                     false,
                   ),
                 ],

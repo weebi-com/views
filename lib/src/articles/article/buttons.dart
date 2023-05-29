@@ -56,7 +56,7 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
             'Attention',
             'effacer l\'article est irréversible. Êtes vous sur de vouloir continuer ?',
             context,
-            barrierDismissible: false);
+            isDismissible: false);
         if (!isOkToDelete) {
           return;
         }

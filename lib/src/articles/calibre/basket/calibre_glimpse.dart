@@ -10,9 +10,9 @@ import 'package:views_weebi/routes.dart';
 import 'package:views_weebi/src/articles/calibre/basket/calibre_tile_title.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors;
 
-class LineBasketGlimpseWidget extends StatelessWidget {
-  final StockNowArticleBasket calibreBasketStock;
-  const LineBasketGlimpseWidget(this.calibreBasketStock);
+class CalibreBasketGlimpseWidget extends StatelessWidget {
+  final ArticleBasketRealizablekNow calibreBasketStock;
+  const CalibreBasketGlimpseWidget(this.calibreBasketStock);
 
   @override
   Widget build(BuildContext context) {

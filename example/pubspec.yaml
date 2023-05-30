@@ -21,7 +21,7 @@ dependencies:
     path: ../../views
   models_weebi: ^1.0.14
     #path: ../../models 
-  mixins_weebi: ^0.1.1
+  mixins_weebi: ^0.1.02
     #path: ../../mixins
  
 

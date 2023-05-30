@@ -1,5 +1,5 @@
 name: views_weebi
-version: 0.0.51
+version: 0.0.52
 homepage: http://weebi.com/
 description: views and widgets
 #publish_to: none #https://onepub.dev/api/xnxpsdavuh/
@@ -21,7 +21,7 @@ dependencies:
 
   models_weebi: ^1.0.14
     #path: ../models
-  mixins_weebi: ^0.1.1
+  mixins_weebi: ^0.1.02
     #path: ../mixins
 
 dev_dependencies:

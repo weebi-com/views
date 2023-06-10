@@ -23,7 +23,7 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
         Navigator.of(context).pushNamed(
             ArticleCalibreRetailDetailRoute.generateRoute(
                 '${article.calibreId}',
-                articleId: '${article.id}')); // TODO isShopLocked
+                articleId: '${article.id}'));
       },
       onLongPress: () {
         Navigator.of(context).pushNamed(ArticleDetailRoute.generateRoute(

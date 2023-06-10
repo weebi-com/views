@@ -224,10 +224,11 @@ packages:
   mixins_weebi:
     dependency: "direct main"
     description:
-      path: "../../mixins"
-      relative: true
-    source: path
-    version: "0.1.0"
+      name: mixins_weebi
+      sha256: "0e6fbc6d9044af05cc9a79a62f4681cef71c404fe7ba29f74f2c50c751b9dcd4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   mobx:
     dependency: "direct main"
     description:
@@ -239,17 +240,19 @@ packages:
   models_base:
     dependency: transitive
     description:
-      path: "../../models_base"
-      relative: true
-    source: path
-    version: "1.4.2"
+      name: models_base
+      sha256: "1fd5c0b052081c95417e212c4d3cd12d017b2fdd007035317ebf2accb037781a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.3"
   models_weebi:
     dependency: "direct main"
     description:
-      path: "../../models"
-      relative: true
-    source: path
-    version: "1.0.13"
+      name: models_weebi
+      sha256: "7bf19b80354bb35a34eeaa2fdca558c9e0e734bcbb58bdaf6a755cfe7ebe5f8d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.14"
   nested:
     dependency: transitive
     description:
@@ -294,10 +297,10 @@ packages:
     dependency: "direct main"
     description:
       name: rc_router2
-      sha256: "05b15ee69b219c62b851f48e10de260047f7c9d420482e02b09c6db1b553a122"
+      sha256: d67a957f8c0ba37d941c40fba37b4f7fe8f367a98d5e68b6ece2d0f66c01c6cb
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.3"
   sembast:
     dependency: transitive
     description:
@@ -309,10 +312,11 @@ packages:
   services_weebi:
     dependency: transitive
     description:
-      path: "../../services"
-      relative: true
-    source: path
-    version: "1.0.4"
+      name: services_weebi
+      sha256: "7ae5184192a07c4361cfc177754be1f71c4d3db6e7f00d7d605af71738516418"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -396,7 +400,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.5"
+    version: "0.0.52"
 sdks:
   dart: ">=2.19.6 <3.0.0"
   flutter: ">=1.20.0"

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:models_weebi/base.dart';
 import 'package:models_weebi/common.dart';
@@ -85,14 +86,21 @@ class PhotoWidget<A extends ArticleAbstract> extends StatelessWidget {
         article.photo == 'photo')) {
       return Image.memory(blankBytes, height: 1);
     }
-    //TODO remove below "as" once PhotoSource is embedded into ArticleAbstract
     switch ((article as ArticleRetail).photoSource) {
       case PhotoSource.asset:
-        return Image.asset(
-          'photos/${article.photo}',
-          fit: BoxFit.scaleDown,
-          errorBuilder: (_, o, stack) => Loader.productIcon,
-        );
+        if (kIsWeb) {
+          return Image.asset(
+            'photos/${article.photo}',
+            fit: BoxFit.scaleDown,
+            errorBuilder: (_, o, stack) => Loader.productIcon,
+          );
+        } else {
+          return Image.asset(
+            'assets/photos/${article.photo}',
+            fit: BoxFit.scaleDown,
+            errorBuilder: (_, o, stack) => Loader.productIcon,
+          );
+        }
       case PhotoSource.file:
         return Image.memory(
           base64Decode(article.photo),

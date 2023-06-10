@@ -113,9 +113,9 @@ class _ArticleRetailCalibrateAndCreateViewState
               ),
               Observer(
                 name: 'coût',
-                builder: (_) => TextField(
+                builder: (_) => TextFormField(
                   key: ArticleRetailCalibrateAndCreateView.costKey,
-                  // initialValue: '0',
+                  initialValue: '0',
                   onChanged: (value) => store.cost = value,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -152,8 +152,8 @@ class _ArticleRetailCalibrateAndCreateViewState
               const SizedBox(height: 8),
               Observer(
                 name: 'unités par pièce',
-                builder: (_) => TextField(
-                  // initialValue: '1',
+                builder: (_) => TextFormField(
+                  initialValue: '1',
                   onChanged: (value) => store.unitsPerPiece = value,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[

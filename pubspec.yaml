@@ -6,7 +6,7 @@ description: views and widgets
 
 environment: 
   sdk: '>=2.19.6 <3.0.0' #'>=2.7.0 <3.0.0'
-  flutter: '>=1.17.0'
+  flutter: '>=1.17.0' #TODO put this to 3.7.9
 dependencies: 
   flutter: 
     sdk: flutter
@@ -21,7 +21,7 @@ dependencies:
 
   models_weebi: ^1.0.14
     #path: ../models
-  mixins_weebi: ^0.1.02
+  mixins_weebi: ^0.1.2
     #path: ../mixins
 
 dev_dependencies:

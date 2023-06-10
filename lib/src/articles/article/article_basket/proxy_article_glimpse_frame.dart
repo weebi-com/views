@@ -17,17 +17,18 @@ class ProxyArticleGlimpseFrameWidget extends StatelessWidget {
     final _calibre = articlesStore.calibres
         .firstWhereOrNull((l) => l.id == proxy.proxyCalibreId);
     if (_calibre == null) {
-      print('_calibre not found for proxy.proxyLineId ${proxy.proxyCalibreId}');
+      print(
+          '_calibre not found for proxy.proxyCalibreId ${proxy.proxyCalibreId}');
     }
     if (_calibre?.articles == null) {
       print(
-          '_calibre?.articles empty for proxy.proxyLineId ${proxy.proxyCalibreId}');
+          '_calibre?.articles empty for proxy.proxyCalibreId ${proxy.proxyCalibreId}');
     }
     final _article = _calibre?.articles.firstWhere((a) =>
         a.calibreId == proxy.proxyCalibreId && a.id == proxy.proxyArticleId);
     if (_article == null) {
       print(
-          '_article not found for proxy.proxyLineId ${proxy.proxyCalibreId} && proxy.proxyArticleId ${proxy.proxyArticleId}');
+          '_article not found for proxy.proxyCalibreId ${proxy.proxyCalibreId} && proxy.proxyArticleId ${proxy.proxyArticleId}');
     }
     return ProxyAGlimpseWidget(
         article: _article as ArticleRetail, proxy: proxy);

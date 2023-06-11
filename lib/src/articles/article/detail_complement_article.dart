@@ -1,7 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:models_weebi/base.dart';
-
+import 'package:models_weebi/utils.dart';
+import 'package:intl/intl.dart' as intl;
 // Package imports:
 
 // Project imports:
@@ -22,20 +23,29 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
       children: [
         FieldValueWidget(const Icon(Icons.code), const Text('code'),
             SelectableText(article.articleCode.toString())),
-        FieldValueWidget(const Icon(Icons.event), const Text('date création'),
-            SelectableText(article.creationDate.toIso8601String())),
         FieldValueWidget(
             const Icon(Icons.event),
-            const Text('date modification'),
-            SelectableText(article.updateDate.toIso8601String())),
+            const Text('date création'),
+            SelectableText(intl.DateFormat('dd/MM/yyyy HH:mm:ss', 'fr')
+                .format(article.creationDate))),
+        if (article.creationDate.isAtSameMomentAs(article.updateDate) == false)
+          FieldValueWidget(
+              const Icon(Icons.event),
+              const Text('date modification'),
+              SelectableText(intl.DateFormat('dd/MM/yyyy HH:mm:ss', 'fr')
+                  .format(article.updateDate))),
+        //if (article.updateDate.isAtSameMomentAs(article.updateDate) == false)
         FieldValueWidget(
-            const Icon(Icons.event),
-            const Text('date modification du statut'),
-            SelectableText((article is ArticleRetail
-                    ? article as ArticleRetail
-                    : article as ArticleBasket)
-                .updateDate
-                .toIso8601String())),
+          const Icon(Icons.event),
+          const Text('date modification du statut'),
+          SelectableText(
+            intl.DateFormat('dd/MM/yyyy HH:mm:ss', 'fr').format(
+                (article is ArticleRetail
+                        ? article as ArticleRetail
+                        : article as ArticleBasket)
+                    .updateDate),
+          ),
+        ),
         FieldValueWidget(
             const Icon(Icons.settings_outlined),
             const Text('statut'),

@@ -25,13 +25,8 @@ abstract class InformDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          icon: const Icon(Icons.sentiment_very_satisfied),
           title: Text(message),
-          content: TextButton(
-            child: const Icon(Icons.sentiment_very_satisfied),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           actions: <Widget>[
             TextButton(
               child: const Text("ok"),
@@ -50,16 +45,9 @@ abstract class InformDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          icon:
+              const Icon(Icons.sentiment_very_dissatisfied, color: Colors.red),
           title: Text(message),
-          content: TextButton(
-            child: const Icon(
-              Icons.sentiment_very_dissatisfied,
-              color: Colors.red,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           actions: <Widget>[
             TextButton(
               child: const Text("Fermer"),

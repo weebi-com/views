@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mixins_weebi/stores.dart';
+import 'package:mixins_weebi/mobx_store_article.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
 import 'package:views_weebi/src/articles/calibre/retail/calibrate_create_retail.dart';
 
 void main() {
   testWidgets('article calibre create widget test', (tester) async {
-    // Build our app and trigger a frame.
     await tester.pumpWidget(
       Provider<ArticlesStore>(
         create: (_) => ArticlesStoreInstantiater.noPersistence,
@@ -19,11 +18,12 @@ void main() {
 
     await tester.pump();
 
-    expect(find.byIcon(Icons.short_text), findsOneWidget); // lineName
+    expect(find.byIcon(Icons.short_text), findsOneWidget); // calibreName
     expect(find.byIcon(Icons.local_offer), findsWidgets); // price & cost
     expect(find.byIcon(Icons.filter_frames), findsOneWidget); // stockUnit
     expect(find.byIcon(Icons.style), findsOneWidget); // units per piece
     expect(find.byIcon(Icons.speaker_phone), findsOneWidget); // barcode
+    expect(find.byIcon(Icons.folder_open), findsOneWidget); // photo
 
     final name = find.byKey(ArticleRetailCalibrateAndCreateView.nameKey);
     await tester.enterText(name, ArticleCalibre.dummyRetail.title);

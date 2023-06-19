@@ -38,25 +38,25 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
   Future<ArticleRetail> deactivateArticleW(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: false);
-    return await articlesStore.updateArticleRetail<ArticleRetail>(deactivated);
+    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
   }
 
   Future<ArticleBasket> deactivateArticleB(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleBasket)
         .copyWith(statusUpdateDate: DateTime.now(), status: false);
-    return await articlesStore.updateArticleRetail<ArticleBasket>(deactivated);
+    return await articlesStore.updateArticle<ArticleBasket>(deactivated);
   }
 
   Future<dynamic> reactivateArticleW(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleRetail)
         .copyWith(statusUpdateDate: DateTime.now(), status: true);
-    return await articlesStore.updateArticleRetail<ArticleRetail>(deactivated);
+    return await articlesStore.updateArticle<ArticleRetail>(deactivated);
   }
 
   Future<dynamic> reactivateArticleB(ArticlesStore articlesStore) async {
     final deactivated = (article as ArticleBasket)
         .copyWith(statusUpdateDate: DateTime.now(), status: true);
-    return await articlesStore.updateArticleRetail<ArticleBasket>(deactivated);
+    return await articlesStore.updateArticle<ArticleBasket>(deactivated);
   }
 
   @override
@@ -125,18 +125,13 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: false,
                 collapseMode: CollapseMode.parallax,
-                // TODO update with photo widget here
-                background: article.photo.isEmpty
-                    ? (calibre.isBasket)
-                        ? const Icon(Icons.shopping_basket,
-                            color: WeebiColors.grey)
-                        : const Icon(Icons.article)
-                    : Hero(
-                        tag: '${article.calibreId}.${article.id}',
-                        child: PhotoWidget(article),
-                      ),
+                background: Hero(
+                  tag: '${article.calibreId}.${article.id}',
+                  child: ArticlePhotoWidget(article),
+                ),
                 title: Text(
-                    '#${calibre.id}.${article.id} ${(article.status) ? '' : ' \ndésactivé'}',
+                    '#${calibre.id}.${article.id}' +
+                        '${(article.status) ? '' : ' \ndésactivé'}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -184,13 +179,14 @@ class ArticleDetailWidget<A extends ArticleAbstract> extends StatelessWidget {
                             articlesStore.calibres.notQuickSpend,
                       ),
                     )
-                  : ArticleRetailFrameView(
+                  : ArticleRetailDetailSection(
+                      article as ArticleRetail,
                       ArticleRetailStockNow(
                         article: article as ArticleRetail,
                         ticketsInvoker: ticketsInvoker,
                         closingStockShopsInvoker: closingStockShopsInvoker,
                       ),
-                      false),
+                    ),
             ),
           ),
 

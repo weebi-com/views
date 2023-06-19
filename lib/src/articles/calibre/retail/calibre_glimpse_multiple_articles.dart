@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:mixins_weebi/stock.dart';
-import 'package:models_weebi/weebi_models.dart';
 
 // Package imports:
 
@@ -50,14 +49,15 @@ class CalibreMultiRetailsGlimpseWidgetState
         children: <Widget>[
           for (final article
               in widget.calibreRetailStock.calibreRetail.articles)
-            ArticleRetailFrameView(
-                ArticleRetailStockNow(
-                  article: article as ArticleRetail,
-                  ticketsInvoker: widget.calibreRetailStock.ticketsInvoker,
-                  closingStockShopsInvoker:
-                      widget.calibreRetailStock.closingStockShopsInvoker,
-                ),
-                true)
+            ArticleRetailGlimpseWidget(
+              article,
+              ArticleRetailStockNow(
+                article: article,
+                ticketsInvoker: widget.calibreRetailStock.ticketsInvoker,
+                closingStockShopsInvoker:
+                    widget.calibreRetailStock.closingStockShopsInvoker,
+              ),
+            )
         ],
       ),
     );

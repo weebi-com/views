@@ -24,7 +24,8 @@ class ArticleRetailCalibreTileTitle extends StatelessWidget {
           width: 42,
           child: Hero(
             tag: '${articleCalibre.id}.${articleCalibre.articles.first.id}',
-            child: ClipOval(child: PhotoWidget(articleCalibre.articles.first)),
+            child: ClipOval(
+                child: ArticlePhotoWidget(articleCalibre.articles.first)),
           ),
         ),
         Padding(

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:models_weebi/dummies.dart';
 import 'package:views_weebi/views_calibre.dart';
-import 'package:views_weebi_example/src/1_providers.dart';
-import 'package:views_weebi_example/src/2_stores_loader.dart';
-import 'package:views_weebi_example/src/3_material_app.dart';
-import 'package:views_weebi_example/src/article_calibre_dummy.dart';
+import 'package:views_weebi/src/demo/1_providers.dart';
+import 'package:views_weebi/src/demo/2_stores_loader.dart';
+import 'package:views_weebi/src/demo/3_material_app.dart';
 
 void main() {
   testWidgets('check articles search by title', (tester) async {
     // pumps ChassisTutoProducts and also ArticlesCalibresViewWIP
-    await tester.pumpWidget(
-        ProvidersW(StoresLoader(const ExampleApp(), articleCalibresDummies)));
+    await tester.pumpWidget(ProvidersW(StoresLoader(const ArticlesDemoApp(),
+        articlesInitData: DummyArticleData.articleCalibresDummies,
+        articlesPhotoInitData: const [])));
     await tester.pump();
     expect(find.text('Articles'), findsWidgets);
 
@@ -24,12 +25,12 @@ void main() {
     await tester.enterText(searchBar, 'ba');
     await tester.pump();
     int itemsLength = tester
-        .widgetList<ArticleCalibreFrame>(find.byType(ArticleCalibreFrame))
+        .widgetList<ArticleCalibreGlimpse>(find.byType(ArticleCalibreGlimpse))
         .length;
     expect(itemsLength, 1);
 
-    ArticleCalibreFrame articleCalibreFrameViewBabibel = tester
-        .widgetList<ArticleCalibreFrame>(find.byType(ArticleCalibreFrame))
+    ArticleCalibreGlimpse articleCalibreFrameViewBabibel = tester
+        .widgetList<ArticleCalibreGlimpse>(find.byType(ArticleCalibreGlimpse))
         .elementAt(0);
     expect(articleCalibreFrameViewBabibel.calibre.title, 'Babibel');
     expect(articleCalibreFrameViewBabibel.calibre.id, 2);
@@ -42,10 +43,10 @@ void main() {
     expect(searchBar, findsNothing);
 
     final linesSearchClose = tester
-        .widgetList<ArticleCalibreFrame>(find.byType(ArticleCalibreFrame));
+        .widgetList<ArticleCalibreGlimpse>(find.byType(ArticleCalibreGlimpse));
     expect(linesSearchClose.isNotEmpty, isTrue);
 
-    final ArticleCalibreFrame lineFrameView2 = linesSearchClose.elementAt(0);
+    final ArticleCalibreGlimpse lineFrameView2 = linesSearchClose.elementAt(0);
     expect(lineFrameView2.calibre.articles.length, 3);
     expect(lineFrameView2.calibre.title, 'Noix de cola');
     expect(lineFrameView2.calibre.id, 1);

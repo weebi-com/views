@@ -102,7 +102,7 @@ class ImportProviderJson extends ImportProviderAbstract {
               .calibres
               .findDupsById(newList: _data as List<ArticleCalibre>);
           if (twoLists.noDups.isNotEmpty) {
-            count = await (store).addAllArticleCalibre(twoLists.noDups);
+            count = await (store).createAllArticleCalibre(twoLists.noDups);
           }
           _clearSbAndData();
           return count;

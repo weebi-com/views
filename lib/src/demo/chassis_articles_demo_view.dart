@@ -9,16 +9,19 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 import 'package:views_weebi/views.dart';
 import 'package:views_weebi/widgets.dart';
 import 'package:views_weebi/chassis.dart' show ChassisAbstract;
+
 import 'info_route.dart';
 
-class ChassisTutoProducts extends ChassisAbstract {
+class ChassisDemoArticles extends ChassisAbstract {
   static const Key? keyAppBarTitle = Key("AppBar");
 
-  static ChassisTutoProducts buildChassisForArticles(
+  static ChassisDemoArticles buildChassisForArticles(
           GlobalKey<NavigatorState> mainNavigator,
           ArticlesStore articlesStore) =>
-      ChassisTutoProducts(
+      ChassisDemoArticles(
         selectedIndex: 0,
+        mainNavigatorKey: mainNavigator,
+        body: ArticlesCalibresOverviewWebOnly(mainNavigator: mainNavigator),
         actions: <Widget>[
           Tooltip(
             message: 'Trier par code',
@@ -51,11 +54,9 @@ class ChassisTutoProducts extends ChassisAbstract {
             ),
           ),
         ],
-        mainNavigatorKey: mainNavigator,
-        body: ArticlesCalibresOverviewWebOnly(mainNavigator: mainNavigator),
       );
 
-  const ChassisTutoProducts({
+  const ChassisDemoArticles({
     key,
     required Widget body,
     required int selectedIndex,
@@ -73,10 +74,10 @@ class ChassisTutoProducts extends ChassisAbstract {
   _ViewsFrameState createState() => _ViewsFrameState();
 }
 
-// * *consider adding pathes, selectedColor and titles into the class as params
+// * *consider adding paths, selectedColor and titles into the class as params
 // then consider making a dedicated constructor instead of extending an abstract class
 // should give more flexibility
-class _ViewsFrameState extends State<ChassisTutoProducts> {
+class _ViewsFrameState extends State<ChassisDemoArticles> {
   List<String> paths = [
     ArticlesCalibresAllFrameRoute.routePath,
     InfoRoute.routePath,
@@ -108,7 +109,7 @@ class _ViewsFrameState extends State<ChassisTutoProducts> {
                 ),
               ],
             ),
-            key: ChassisTutoProducts.keyAppBarTitle,
+            key: ChassisDemoArticles.keyAppBarTitle,
           ),
           centerTitle: true,
           elevation: 3,

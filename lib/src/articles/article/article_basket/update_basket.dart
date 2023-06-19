@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:models_weebi/common.dart';
 import 'package:models_weebi/extensions.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart'
@@ -12,13 +13,12 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:views_weebi/routes.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
-import 'package:views_weebi/src/articles/article/article_basket/discount_amount_widget.dart';
-import 'package:views_weebi/src/articles/article/article_basket/preview_proxies_selected_widget.dart';
-import 'package:views_weebi/src/articles/article/article_basket/type_ahead.dart';
+import 'package:views_weebi/src/articles/photo_picker.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 import 'package:views_weebi/src/widgets/toast.dart';
+import 'package:views_weebi/views_article_basket.dart';
 import 'package:views_weebi/widgets.dart' show appBarWeebiUpdateNotSaved;
-import 'package:views_weebi/widgets.dart' show FieldValueWidget, InformDialog;
+import 'package:views_weebi/widgets.dart' show InformDialog;
 // import 'package:weebi/src/widgets/toast.dart';
 
 class ArticleBasketUpdateView extends StatefulWidget {
@@ -44,9 +44,12 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
   final scrollControllerVert = ScrollController();
   final articlesMinQtWeebi = <ArticleWMinQt>[];
   int discountAmount = 0;
+  String photoPath = '';
+
   @override
   void initState() {
     super.initState();
+
     _newArticleFullName = TextEditingController(text: widget.article.fullName);
     _newArticleCode =
         TextEditingController(text: '${widget.article.articleCode}');
@@ -64,7 +67,15 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
   @override
   Widget build(BuildContext context) {
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-
+    if (articlesStore.photos.any((element) =>
+        element.calibreId == widget.article.calibreId &&
+        element.id == widget.article.id)) {
+      photoPath = articlesStore.photos
+          .firstWhere((element) =>
+              element.calibreId == widget.article.calibreId &&
+              element.id == widget.article.id)
+          .path;
+    }
     return NotificationListener<DiscountAmountChangedNotif>(
       onNotification: (n) {
         setState(() => discountAmount = n.val);
@@ -112,9 +123,8 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                 ]);
             _formKeyLine.currentState?.save();
             try {
-              final articleBasket =
-                  await articlesStore.updateArticleRetail<ArticleBasket>(
-                      _articleBasketToBeUpdated!);
+              final articleBasket = await articlesStore
+                  .updateArticle<ArticleBasket>(_articleBasketToBeUpdated!);
               toastSuccessArticle(context,
                   message: 'panier d\'article mis à jour');
               articlesStore.clearAllArticleMinQtInSelected();
@@ -165,17 +175,19 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                     .getProxiesListWithPriceAndCostArticleNotCreatedYetOnly(
                         articlesStore.calibresNotQuikspendNotBasket,
                         proxiesRaw);
+                final temp = proxiesWorth.totalPrice - discountAmount;
+                final totalPrice = numFormat.format(temp);
                 return Column(
                   children: <Widget>[
                     TextFormField(
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-                          labelText: 'Nouveau nom de l\'article*',
+                          labelText: 'Nouveau nom du panier d\'article*',
                           icon: const Icon(Icons.subject)),
                       controller: _newArticleFullName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Saisir le nouveau nom de l\'article';
+                          return 'Saisir le nouveau nom du panier d\'article';
                         }
                         // _formKey.currentState.save();  will be useful to save title here so we can then preload article fullName, like they do for passwords
                         return null;
@@ -209,22 +221,37 @@ class _ArticleBasketUpdateViewState extends State<ArticleBasketUpdateView>
                     //     }
                     //   },
                     // ),
-                    DiscountAmountWidget(proxiesWorth.totalPrice),
+                    const ArticlesInBasketTypeAhead(),
+                    const SizedBox(height: 16),
                     if (articlesStore
                         .articlesSelectedForBasketMinQt.isNotEmpty) ...[
-                      FieldValueWidget(
-                        const Icon(Icons.local_offer, color: Colors.teal),
-                        const Text("Prix de vente total"),
-                        SelectableText(
-                          numFormat
-                              .format(proxiesWorth.totalPrice - discountAmount),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                      const Text('Articles sélectionnés : '),
+                      const SizedBox(height: 16),
+                      const PreviewArticlesProxiesSelectedWidget(),
+                    ],
+                    if (articlesStore
+                        .articlesSelectedForBasketMinQt.isNotEmpty) ...[
+                      PriceTotalBasketWidget(totalPrice),
+                      DiscountAmountWidget(proxiesWorth.totalPrice),
+                    ],
+                    Observer(
+                      name: 'photo',
+                      builder: (context) =>
+                          NotificationListener<PhotoChangedNotif>(
+                        onNotification: (n) {
+                          setState(() {
+                            // _path = n.path;
+                            photoPath = n.path;
+                            // _source = n.photoSource;
+                          });
+                          return true;
+                        },
+                        child: PhotoStateless(
+                          path: photoPath,
+                          source: PhotoSource.file,
                         ),
                       ),
-                    ],
-                    const SizedBox(height: 8),
-                    const ArticlesInBasketTypeAhead(),
-                    const PreviewArticlesProxiesSelectedWidget(),
+                    ),
                   ],
                 );
               }),

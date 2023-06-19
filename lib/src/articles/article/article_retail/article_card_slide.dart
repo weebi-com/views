@@ -70,16 +70,16 @@ class ArticleACardSlide<A extends ArticleAbstract> extends StatelessWidget {
                     height: 160,
                     child: Hero(
                       tag: '${article.calibreId}.${article.id}',
-                      child: PhotoWidget(article),
+                      child: ArticlePhotoWidget(article),
                     ),
                   ),
-                  ArticleRetailFrameView(
+                  ArticleRetailDetailSection(
+                    article as ArticleRetail,
                     ArticleRetailStockNow(
                       article: article as ArticleRetail,
                       ticketsInvoker: ticketsInvoker,
                       closingStockShopsInvoker: closingStockShopsInvoker,
                     ),
-                    false,
                   ),
                 ],
               ),

@@ -153,7 +153,7 @@ class IconToastWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
                 child: textWidget ??
                     Text(
-                      message ?? '',
+                      message,
                       style: const TextStyle(
                           //fontSize: Theme.of(context).textTheme.title.fontSize,
                           color: Colors.white),
@@ -200,9 +200,7 @@ class BannerToastWidget extends StatelessWidget {
           required Widget text,
           required BuildContext context}) =>
       BannerToastWidget(
-        backgroundColor: context != null
-            ? Theme.of(context).toggleableActiveColor
-            : Colors.green,
+        backgroundColor: Theme.of(context).toggleableActiveColor,
         message: msg,
         textWidget: text,
       );
@@ -212,9 +210,7 @@ class BannerToastWidget extends StatelessWidget {
           required Widget text,
           required BuildContext context}) =>
       BannerToastWidget(
-        backgroundColor: context != null
-            ? Theme.of(context).colorScheme.error
-            : const Color(0xEFCC2E2E),
+        backgroundColor: Theme.of(context).colorScheme.error,
         message: msg,
         textWidget: text,
       );
@@ -222,19 +218,12 @@ class BannerToastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content = Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(17.0),
-      height: 60.0,
-      alignment: Alignment.center,
-      color: backgroundColor ?? Theme.of(context).colorScheme.background,
-      child: textWidget ??
-          Text(
-            message ?? '',
-            style: TextStyle(
-                //fontSize: Theme.of(context).textTheme.title.fontSize,
-                color: Colors.white),
-          ),
-    );
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.all(17.0),
+        height: 60.0,
+        alignment: Alignment.center,
+        color: backgroundColor ?? Theme.of(context).colorScheme.background,
+        child: textWidget);
 
     return content;
   }
@@ -276,28 +265,7 @@ class ActionToastWidget extends StatelessWidget {
             ),
           ]),
       child: Row(
-        children: [
-          textWidget ??
-              Text(
-                text ?? '',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-          actionWidget ??
-              IconButton(
-                onPressed: () {
-                  ToastManager().dismissAll(showAnim: true);
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //  return SecondPage();
-                  //}));
-                },
-                icon: Icon(
-                  Icons.add_circle_outline_outlined,
-                  color: Colors.white,
-                ),
-              ),
-        ],
+        children: [textWidget, actionWidget],
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
       ),
     );

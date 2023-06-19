@@ -81,7 +81,7 @@ class DeleteArticleCalibreButton extends StatelessWidget {
           }
           final articlesStore =
               Provider.of<ArticlesStore>(context, listen: false);
-          await articlesStore.deleteForeverLineArticle(articleLine);
+          await articlesStore.deleteForeverCalibre(articleLine);
           Navigator.of(context).pushNamed(articlesRouteToDisplayAfterDeletion);
         });
   }

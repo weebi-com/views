@@ -14,7 +14,7 @@ import 'package:views_weebi/src/articles/article/article_basket/glimpse_a_basket
 import 'package:views_weebi/src/articles/calibre/buttons_calibre.dart';
 import 'package:views_weebi/src/articles/article/article_retail/article_cards_slidable.dart';
 
-import 'package:views_weebi/src/routes/articles/frame.dart';
+import 'package:views_weebi/src/routes/articles/all_frame.dart';
 import 'package:views_weebi/views_article.dart';
 import 'package:views_weebi/styles.dart' show WeebiColors, WeebiTextStyles;
 import 'package:mixins_weebi/stock.dart';

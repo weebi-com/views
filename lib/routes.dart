@@ -1,6 +1,6 @@
 library routes;
 
-export 'src/routes/articles/frame.dart'; // entrypoint
+export 'src/routes/articles/all_frame.dart'; // entrypoint
 
 export 'src/routes/articles/calibre_detail.dart';
 export 'src/routes/articles/create_calibrate_retail.dart';

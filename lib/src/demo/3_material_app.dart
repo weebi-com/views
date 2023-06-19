@@ -7,17 +7,16 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/routes.dart';
 import 'package:rc_router2/rc_router2.dart';
 import 'package:views_weebi/views.dart';
-import 'chassis_articles_tuto_view.dart';
-import 'info_route.dart';
+import 'package:views_weebi/demo.dart';
 
-class ExampleApp extends StatefulWidget {
-  const ExampleApp({Key? key}) : super(key: key);
+class ArticlesDemoApp extends StatefulWidget {
+  const ArticlesDemoApp({Key? key}) : super(key: key);
 
   @override
-  State<ExampleApp> createState() => _ExampleAppState();
+  State<ArticlesDemoApp> createState() => _ArticlesDemoAppState();
 }
 
-class _ExampleAppState extends State<ExampleApp> {
+class _ArticlesDemoAppState extends State<ArticlesDemoApp> {
   final mainNavigator = GlobalKey<NavigatorState>();
   RcRoutes rcRoutes = RcRoutes(routes: []);
 
@@ -31,7 +30,7 @@ class _ExampleAppState extends State<ExampleApp> {
       // I can reduce bottombar to x2 activities in my tutorial without changing anything else
       ArticlesCalibresAllFrameRoute(
         mainNavigator,
-        ChassisTutoProducts.buildChassisForArticles(
+        ChassisDemoArticles.buildChassisForArticles(
             mainNavigator, articlesStore),
       ),
 
@@ -61,11 +60,17 @@ class _ExampleAppState extends State<ExampleApp> {
       navigatorKey: mainNavigator,
       onGenerateRoute: rcRoutes.onGeneratedRoute,
       scrollBehavior: MyCustomScrollBehavior(),
-      home: HomeViewChassisBuilder<ChassisTutoProducts>(
-        ChassisTutoProducts.buildChassisForArticles(
+      home: HomeViewChassisBuilder<ChassisDemoArticles>(
+        ChassisDemoArticles.buildChassisForArticles(
             mainNavigator, articlesStore),
         mainNavigator: mainNavigator,
       ),
+      // locale: const Locale('fr'),
+      // supportedLocales: const [
+      //   Locale('fr'),
+      //   Locale('en'),
+      //   Locale('es'), // spanish
+      // ],
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute<void>(
           settings: settings,
@@ -86,8 +91,6 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,
         PointerDeviceKind.mouse,
-        //PointerDeviceKind.trackpad,
-        // TODO put me back when null back in 2.12
-        // etc.
+        PointerDeviceKind.trackpad,
       };
 }

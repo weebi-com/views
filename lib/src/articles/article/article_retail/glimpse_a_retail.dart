@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/utils.dart';
 
 // Project imports:
@@ -10,10 +11,10 @@ import 'package:views_weebi/styles.dart' show WeebiColors;
 
 class ArticleRetailGlimpseWidget extends StatelessWidget {
   final ArticleRetail article;
-  final double articleLiveQt;
+  final ArticleRetailStockNow articleRetailStockNow;
   const ArticleRetailGlimpseWidget(
     this.article,
-    this.articleLiveQt,
+    this.articleRetailStockNow,
   );
 
   @override
@@ -36,7 +37,7 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
             height: 42,
             width: 42,
             child: ClipOval(
-              child: PhotoWidget(article),
+              child: ArticlePhotoWidget(article),
             ),
           ),
           Padding(
@@ -54,12 +55,12 @@ class ArticleRetailGlimpseWidget extends StatelessWidget {
                   : const TextStyle(),
             ),
           ),
-          if (articleLiveQt != 0.0) ...[
+          if (articleRetailStockNow.stockNow != 0.0) ...[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(article.weight != 1
-                  ? '${numFormat.format(article.weight)}p. x ${numFormat.format(articleLiveQt)}'
-                  : numFormat.format(articleLiveQt)),
+                  ? '${numFormat.format(article.weight)}p. x ${numFormat.format(articleRetailStockNow.stockNow)}'
+                  : numFormat.format(articleRetailStockNow.stockNow)),
             ),
             const Icon(Icons.warehouse, color: WeebiColors.grey)
           ],

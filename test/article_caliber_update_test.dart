@@ -28,15 +28,16 @@ void main() {
       ),
     ));
     await tester.pump();
-
+    // set-up
     final actionButton = find.byType(FloatingActionButton);
     final BuildContext context = tester.element(actionButton);
     final articlesStore = Provider.of<ArticlesStore>(context, listen: false);
-    final calibreCreated =
-        await articlesStore.createCalibrateArticle(ArticleCalibre.dummyRetail);
+    final calibreCreated = await articlesStore
+        .createAndCalibrateArticle(ArticleCalibre.dummyRetail);
     expect(calibreCreated, ArticleCalibre.dummyRetail);
-    final name = find.byKey(ArticleCalibreUpdateView.nameKey);
 
+    // we are already in ArticleCalibreUpdateView
+    final name = find.byKey(ArticleCalibreUpdateView.nameKey);
     expect(find.byIcon(Icons.short_text), findsOneWidget);
     expect(find.byIcon(Icons.filter_frames), findsOneWidget); // stockUnit
     await tester.enterText(name, 'jet prive');

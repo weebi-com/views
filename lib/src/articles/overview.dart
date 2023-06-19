@@ -49,7 +49,7 @@ class ArticlesCalibresOverviewWebOnly extends StatelessWidget {
                         controller: scrollControllerVertical,
                         itemCount: articlesStore.calibres.notQuickSpend.length,
                         itemBuilder: (BuildContext context, int index) =>
-                            ArticleCalibreFrame(
+                            ArticleCalibreGlimpse(
                           contextMain: context,
                           calibre: articlesStore.calibres.notQuickSpend[index],
                           ticketsInvoker: ticketsInvoker,
@@ -73,7 +73,7 @@ class ArticlesCalibresOverviewWebOnly extends StatelessWidget {
                           itemCount:
                               articlesStore.calibresPalpableFiltered.length,
                           itemBuilder: (BuildContext context, int index) =>
-                              ArticleCalibreFrame(
+                              ArticleCalibreGlimpse(
                             contextMain: context,
                             calibre:
                                 articlesStore.calibresPalpableFiltered[index],

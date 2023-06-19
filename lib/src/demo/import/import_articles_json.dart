@@ -83,8 +83,8 @@ class _ImportArticleCalibreJsonWidgetState
                 final twoLists = articlesStore.calibres
                     .findDupsById(newList: deserialisedJson);
                 if (twoLists.noDups.isNotEmpty) {
-                  final count =
-                      await articlesStore.addAllArticleCalibre(twoLists.noDups);
+                  final count = await articlesStore
+                      .createAllArticleCalibre(twoLists.noDups);
                   if (count == 0) {
                     return InformDialog.showDialogWeebiNotOk(
                         "L'import des articles a échoué", context);
@@ -114,7 +114,8 @@ class _ImportArticleCalibreJsonWidgetState
                 if (isOk == false) {
                   return;
                 }
-                if (await articlesStore.deleteAllArticlesAndCalibres() ==
+                if (await articlesStore
+                        .deleteAllArticlesAndPhotosAndCalibres() ==
                     false) {
                   return InformDialog.showDialogWeebiNotOk(
                       "La suppression des articles a échoué", context);

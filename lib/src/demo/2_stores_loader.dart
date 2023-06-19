@@ -11,16 +11,21 @@ import 'package:mixins_weebi/stores.dart';
 class StoresLoader extends StatelessWidget {
   final Widget child;
   final List<ArticleCalibre<ArticleAbstract>> articlesInitData;
-  const StoresLoader(this.child, this.articlesInitData, {Key? key})
+  final List<ArticlePhoto> articlesPhotoInitData;
+  const StoresLoader(this.child,
+      {required this.articlesInitData,
+      required this.articlesPhotoInitData,
+      Key? key})
       : super(key: key);
 
   Future<bool> loadIt(ArticlesStore articlesStore, TicketsStore ticketsStore,
       ClosingsStore closingsStore) async {
-    // * do not want to add mobx depency here, so await
+    //  TODO add mobx depency here
     // await asyncWhen((_) => appStore.initialLoading == false);
     await closingsStore.init();
     await ticketsStore.init();
-    final isStillLoading = await articlesStore.init(data: articlesInitData);
+    final isStillLoading = await articlesStore.init(
+        data: articlesInitData, photosData: articlesPhotoInitData);
     return isStillLoading;
   }
 

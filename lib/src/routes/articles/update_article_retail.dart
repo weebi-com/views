@@ -35,7 +35,7 @@ class ArticleRetailUpdateRoute extends RcRoute {
 
     return Provider.value(
       value: article,
-      child: ArticleUpdateView(article as ArticleRetail),
+      child: ArticleRetailUpdateView(article as ArticleRetail),
     );
   }
 }

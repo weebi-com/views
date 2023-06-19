@@ -10,8 +10,8 @@ import 'package:views_weebi/src/articles/calibre/basket/calibre_glimpse.dart';
 
 import 'package:views_weebi/views_calibre.dart';
 
-class ArticleCalibreFrame extends StatelessWidget {
-  const ArticleCalibreFrame({
+class ArticleCalibreGlimpse extends StatelessWidget {
+  const ArticleCalibreGlimpse({
     Key? key,
     required this.contextMain,
     required this.calibre,

@@ -164,9 +164,11 @@ packages:
   filebridge:
     dependency: transitive
     description:
-      path: "../../filebridge"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "711a837e0409269e03cfe35ca216c7a18416b81a"
+      url: "https://github.com/weebi-com/filebridge"
+    source: git
     version: "0.0.1"
   flutter:
     dependency: "direct main"
@@ -366,17 +368,18 @@ packages:
   models_base:
     dependency: transitive
     description:
-      path: "../../models_base"
-      relative: true
-    source: path
-    version: "1.4.3"
+      name: models_base
+      sha256: ecee55cd1c52afb6ba75f83fb372ddc7ec00b296d30f04e34de9915e17a8d28c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.4"
   models_weebi:
     dependency: "direct main"
     description:
       path: "../../models"
       relative: true
     source: path
-    version: "1.0.14"
+    version: "1.0.15"
   nested:
     dependency: transitive
     description:

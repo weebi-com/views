@@ -1,3 +1,9 @@
+## 0.0.53
+
+- photos can be added manually
+- updated tests
+- moved tests in example -> root, all same place
+- added widget test
 ## 0.0.5
 
 - fix photos from asset path

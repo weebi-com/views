@@ -12,6 +12,7 @@ dependencies:
   collection: ^1.14.12
   font_awesome_flutter: ^10.1.0 #icons 
   flutter_mobx: ^2.0.6+1
+  #intl: ^0.18.1
   mobx: ^2.0.1
   provider: ^6.0.3
   rc_router2: ^1.0.3

@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:models_weebi/base.dart';
-import 'package:intl/intl.dart' as intl;
 // Package imports:
 
 // Project imports:
@@ -25,15 +24,17 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
         FieldValueWidget(
             const Icon(Icons.event),
             const Text('date création'),
-            SelectableText(intl.DateFormat('dd/MM/yyyy HH:mm:ss')
-                .format(article.creationDate))),
+            // ('dd/MM/yyyy HH:mm:ss')
+            SelectableText(
+                '${article.creationDate.day}/${article.creationDate.month}/${article.creationDate.year} ${article.creationDate.hour}:${article.creationDate.minute}:${article.creationDate.second}')),
         if (article.updateDate != null &&
             article.creationDate.isAtSameMomentAs(article.updateDate!) == false)
           FieldValueWidget(
               const Icon(Icons.event),
               const Text('date modification'),
-              SelectableText(intl.DateFormat('dd/MM/yyyy HH:mm:ss')
-                  .format(article.updateDate!))),
+              SelectableText(
+                ('${article.updateDate?.day}/${article.updateDate?.month}/${article.updateDate?.year} ${article.updateDate?.hour}:${article.updateDate?.minute}:${article.updateDate?.second}'),
+              )),
         if (article.statusUpdateDate != null &&
             article.creationDate.isAtSameMomentAs(article.statusUpdateDate!) ==
                 false)
@@ -41,12 +42,7 @@ class ArticleDetailComplementarySection<A extends ArticleAbstract>
             const Icon(Icons.event),
             const Text('date modification du statut'),
             SelectableText(
-              intl.DateFormat('dd/MM/yyyy HH:mm:ss').format(
-                  (article is ArticleRetail
-                          ? article as ArticleRetail
-                          : article as ArticleBasket)
-                      .statusUpdateDate!),
-            ),
+                '${article.statusUpdateDate!.day}/${article.statusUpdateDate!.month}/${article.statusUpdateDate!.year} ${article.statusUpdateDate!.hour}:${article.statusUpdateDate!.minute}:${article.statusUpdateDate!.second}'),
           ),
         FieldValueWidget(
             const Icon(Icons.settings_outlined),

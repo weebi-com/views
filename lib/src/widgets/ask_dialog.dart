@@ -4,6 +4,8 @@ import 'package:models_weebi/base.dart';
 import 'package:views_weebi/src/articles/article/article_basket/ask_min_qt_basket.dart';
 import 'package:views_weebi/src/widgets/ask_big_quantity.dart';
 
+// ?? /// For dialogs that offer the user a choice between several options, consider
+/// using a [SimpleDialog].
 abstract class AskDialog {
   static Future<double> askBigQuantityDialog<A extends ArticleAbstract>(
       bool isStockOutput, A thisArticle, BuildContext context,

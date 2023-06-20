@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:views_weebi/src/routes/articles/update_article_basket.dart';
 import 'package:views_weebi/src/routes/articles/update_article_retail.dart';
 import 'package:views_weebi/src/widgets/ask_dialog.dart';
-import 'package:views_weebi/src/routes/articles/frame.dart';
+import 'package:views_weebi/src/routes/articles/all_frame.dart';
 import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
@@ -63,7 +63,7 @@ class DeleteArticleButton<A extends ArticleAbstract> extends StatelessWidget {
         final p = articlesStore.calibres
             .firstWhere((element) => element.id == article.productId);
         if (p.articles.length <= 1) {
-          await articlesStore.deleteForeverLineArticle(p);
+          await articlesStore.deleteForeverCalibre(p);
           Navigator.of(context)
               .popAndPushNamed(ArticlesCalibresAllFrameRoute.routePath);
         } else {

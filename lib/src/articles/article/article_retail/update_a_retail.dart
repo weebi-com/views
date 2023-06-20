@@ -8,6 +8,7 @@ import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/articles/photo_picker.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
@@ -15,18 +16,21 @@ import 'package:views_weebi/src/widgets/app_bar_weebi.dart';
 import 'package:views_weebi/src/widgets/dialogs.dart';
 import 'package:views_weebi/src/widgets/toast.dart';
 
-class ArticleUpdateView extends StatefulWidget {
+class ArticleRetailUpdateView extends StatefulWidget {
   static const fullNameKey = Key('nom');
   static const priceKey = Key('prix');
   static const costKey = Key('coût');
   final ArticleRetail articleRetail;
-  const ArticleUpdateView(this.articleRetail, {Key? key}) : super(key: key);
+  const ArticleRetailUpdateView(this.articleRetail, {Key? key})
+      : super(key: key);
 
   @override
-  State<ArticleUpdateView> createState() => _ArticleUpdateViewState();
+  State<ArticleRetailUpdateView> createState() =>
+      _ArticleRetailUpdateViewState();
 }
 
-class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
+class _ArticleRetailUpdateViewState extends State<ArticleRetailUpdateView>
+    with ToastWeebi {
   late ArticleRetailUpdateFormStore store;
   final controller = ScrollController();
 
@@ -89,7 +93,7 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
                 name: 'fullName',
                 builder: (_) => TextFormField(
                   initialValue: store.fullName,
-                  key: ArticleUpdateView.fullNameKey,
+                  key: ArticleRetailUpdateView.fullNameKey,
                   onChanged: (value) => store.fullName = value,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -103,7 +107,7 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
                 name: 'prix',
                 builder: (_) => TextFormField(
                   initialValue: store.price,
-                  key: ArticleUpdateView.priceKey,
+                  key: ArticleRetailUpdateView.priceKey,
                   onChanged: (value) => store.price = value,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -119,7 +123,7 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
               Observer(
                 name: 'coût',
                 builder: (_) => TextFormField(
-                  key: ArticleUpdateView.costKey,
+                  key: ArticleRetailUpdateView.costKey,
                   initialValue: store.cost,
                   onChanged: (value) => store.cost = value,
                   keyboardType: TextInputType.number,
@@ -160,6 +164,22 @@ class _ArticleUpdateViewState extends State<ArticleUpdateView> with ToastWeebi {
                 //   FilteringTextInputFormatter.allow(
                 //       RegExp(r'^[0-9A-Da-d\$\+\-\.\/\:]$'))
                 // ],
+              ),
+              Observer(
+                name: 'photo',
+                builder: (context) => NotificationListener<PhotoChangedNotif>(
+                  onNotification: (n) {
+                    setState(() {
+                      store.photoPath = n.path;
+                      store.photoSource = n.photoSource;
+                    });
+                    return true;
+                  },
+                  child: PhotoStateless(
+                    path: store.photoPath,
+                    source: store.photoSource,
+                  ),
+                ),
               ),
             ],
           ),

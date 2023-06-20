@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mixins_weebi/stores.dart';
 import 'package:mixins_weebi/validators.dart';
+import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart';
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/articles/photo_picker.dart';
 import 'package:views_weebi/src/routes/articles/calibre_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
@@ -158,6 +160,23 @@ class _ArticleCreateViewState extends State<ArticleCreateView> with ToastWeebi {
                 //   FilteringTextInputFormatter.allow(
                 //       RegExp(r'^[0-9A-Da-d\$\+\-\.\/\:]$'))
                 // ],
+              ),
+              Observer(
+                name: 'photo',
+                builder: (context) => NotificationListener<PhotoChangedNotif>(
+                  onNotification: (n) {
+                    setState(() {
+                      // _path = n.path;
+                      store.photoPath = n.path;
+                      // _source = n.photoSource;
+                    });
+                    return true;
+                  },
+                  child: PhotoStateless(
+                    path: store.photoPath,
+                    source: PhotoSource.file,
+                  ),
+                ),
               ),
             ],
           ),

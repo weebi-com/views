@@ -6,6 +6,7 @@ import 'package:mixins_weebi/validators.dart';
 import 'package:models_weebi/common.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:views_weebi/src/articles/photo_picker.dart';
 import 'package:views_weebi/src/routes/articles/article_detail.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
@@ -47,36 +48,33 @@ class _ArticleRetailCalibrateAndCreateViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWeebiUpdateNotSaved('Créer un article',
-          backgroundColor: WeebiColors.orange),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          store.validateAll();
-          if (store.hasErrors) {
-            return;
-          }
-          try {
-            final articleLine =
-                await store.createLineAndArticleRetailFromForm();
-
-            toastSuccessArticle(context, message: 'article créé');
-
-            Navigator.of(context).popAndPushNamed(
-                ArticleDetailRoute.generateRoute('${articleLine.id}', '1'));
-          } catch (e) {
-            return InformDialog.showDialogWeebiNotOk(
-                "Erreur lors de la mise à jour de la ligne $e", context);
-          }
-        },
-        backgroundColor: WeebiColors.orange,
-        child: const Text('OK', style: TextStyle(color: Colors.white)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: SingleChildScrollView(
-          controller: controller,
-          child: Column(
-            children: <Widget>[
+        appBar: appBarWeebiUpdateNotSaved('Créer un article',
+            backgroundColor: WeebiColors.orange),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            store.validateAll();
+            if (store.hasErrors) {
+              return;
+            }
+            try {
+              final articleLine =
+                  await store.createLineAndArticleRetailFromForm();
+              toastSuccessArticle(context, message: 'article créé');
+              Navigator.of(context).popAndPushNamed(
+                  ArticleDetailRoute.generateRoute('${articleLine.id}', '1'));
+            } catch (e) {
+              return InformDialog.showDialogWeebiNotOk(
+                  "Erreur lors de la mise à jour de la ligne $e", context);
+            }
+          },
+          backgroundColor: WeebiColors.orange,
+          child: const Text('OK', style: TextStyle(color: Colors.white)),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: SingleChildScrollView(
+            controller: controller,
+            child: Column(children: <Widget>[
               Observer(
                   builder: (_) => AnimatedOpacity(
                       child: const LinearProgressIndicator(),
@@ -177,10 +175,25 @@ class _ArticleRetailCalibrateAndCreateViewState
                 //       RegExp(r'^[0-9A-Da-d\$\+\-\.\/\:]$'))
                 // ],
               ),
-            ],
+              Observer(
+                name: 'photo',
+                builder: (context) => NotificationListener<PhotoChangedNotif>(
+                  onNotification: (n) {
+                    setState(() {
+                      // _path = n.path;
+                      store.photoPath = n.path;
+                      // _source = n.photoSource;
+                    });
+                    return true;
+                  },
+                  child: PhotoStateless(
+                    path: store.photoPath,
+                    source: PhotoSource.file,
+                  ),
+                ),
+              ),
+            ]),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

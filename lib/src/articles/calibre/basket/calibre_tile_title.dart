@@ -19,15 +19,12 @@ class LineSingleArticleBasketTileTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        articleBasket.photo.isEmpty
-            ? CircleAvatar(backgroundColor: Colors.transparent)
-            : Hero(
-                tag: articleBasket.calibreId,
-                child: CircleAvatar(
-                  foregroundImage:
-                      PhotoWidget(articleBasket).getImage as ImageProvider,
-                ),
-              ),
+        Hero(
+          tag: articleBasket.calibreId,
+          child: CircleAvatar(
+            foregroundImage: ArticlePhotoWidget(articleBasket) as ImageProvider,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: Text(

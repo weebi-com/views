@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:views_weebi/src/widgets/ask_dialog.dart';
-import 'package:views_weebi/src/routes/articles/frame.dart';
+import 'package:views_weebi/src/routes/articles/all_frame.dart';
 
 // Project imports:
 import 'package:views_weebi/styles.dart' show WeebiColors;
@@ -59,15 +58,6 @@ class _ViewsFrameState extends State<ChassisAllView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget posIcon = const SizedBox(
-        width: 24,
-        height: 24,
-        child: Icon(FontAwesomeIcons.cashRegister, color: Colors.white));
-    Widget posIconActive = const SizedBox(
-        width: 24,
-        height: 24,
-        child: Icon(FontAwesomeIcons.cashRegister, color: Colors.teal));
-
     // final shopStore = Provider.of<ShopStore>(context, listen: false);
     // final cartStore = Provider.of<CartStore>(context, listen: false);
     // print('about to request environment');

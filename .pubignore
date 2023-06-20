@@ -6,6 +6,11 @@
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 
+build/
+example/build/
+example/android/
+example/windows/
+example/ios/
 example/linux/flutter/generated_plugin_registrant.cc
 example/linux/flutter/generated_plugin_registrant.h
 example/linux/flutter/generated_plugins.cmake

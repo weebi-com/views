@@ -1,8 +1,7 @@
 name: views_weebi
-version: 0.0.52
+version: 0.0.53
 homepage: http://weebi.com/
 description: views and widgets
-#publish_to: none #https://onepub.dev/api/xnxpsdavuh/
 
 environment: 
   sdk: '>=2.19.6 <3.0.0' #'>=2.7.0 <3.0.0'
@@ -16,13 +15,13 @@ dependencies:
   mobx: ^2.0.1
   provider: ^6.0.3
   rc_router2: ^1.0.3
-  flutter_typeahead: ^4.0.0
+  flutter_typeahead: ^4.0.0 #TODO remove typeahead
   flutter_styled_toast: ^2.1.3 #1.5.2+3 
-
-  models_weebi: ^1.0.14
-    #path: ../models
-  mixins_weebi: ^0.1.2
-    #path: ../mixins
+  
+  # weebi
+  filebridge : ^0.0.1
+  models_weebi: ^1.0.15
+  mixins_weebi: ^0.1.3
 
 dev_dependencies:
   flutter_test: 

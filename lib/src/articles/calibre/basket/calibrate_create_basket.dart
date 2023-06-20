@@ -5,13 +5,19 @@ import 'package:models_weebi/common.dart';
 import 'package:models_weebi/extensions.dart';
 import 'package:models_weebi/utils.dart';
 import 'package:models_weebi/weebi_models.dart'
-    show AggregateProxies, ArticleBasket, ArticleCalibre, ProxyArticle;
+    show
+        AggregateProxies,
+        ArticleBasket,
+        ArticleCalibre,
+        ArticlePhoto,
+        ProxyArticle;
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:views_weebi/routes.dart';
 import 'package:mixins_weebi/stores.dart' show ArticlesStore;
+import 'package:views_weebi/src/articles/photo_picker.dart';
 import 'package:views_weebi/src/styles/colors.dart';
 
 import 'package:views_weebi/widgets.dart'
@@ -37,6 +43,7 @@ class _ArticleBasketCalibrateAndCreateViewState
   ArticleBasket? _newArticleBasket;
   ArticleCalibre<ArticleBasket>? _newLine;
   String _thisCategory = '';
+  String photoPath = '';
   final titleTextController = TextEditingController();
 
   TextEditingController _newLineBarcode = TextEditingController();
@@ -122,9 +129,16 @@ class _ArticleBasketCalibrateAndCreateViewState
               // * better not create lot at all
               try {
                 final calibreCreated = await articlesStore
-                    .createCalibrateArticle<ArticleBasket>(_newLine!);
+                    .createAndCalibrateArticle<ArticleBasket>(_newLine!);
                 // CustomSuccessToastWidget
-
+                if (photoPath.isNotEmpty) {
+                  final photo = ArticlePhoto(
+                      calibreId: articlesStore.calibres.nextId,
+                      id: 1,
+                      path: photoPath,
+                      source: PhotoSource.file);
+                  await articlesStore.createPhoto(photo);
+                }
                 toastSuccessArticle(context, message: 'panier créé');
 
                 articlesStore.clearAllArticleMinQtInSelected();
@@ -243,6 +257,24 @@ class _ArticleBasketCalibrateAndCreateViewState
                         PriceTotalBasketWidget(totalPrice),
                         DiscountAmountWidget(proxiesWorth.totalPrice),
                       ],
+                      Observer(
+                        name: 'photo',
+                        builder: (context) =>
+                            NotificationListener<PhotoChangedNotif>(
+                          onNotification: (n) {
+                            setState(() {
+                              // _path = n.path;
+                              photoPath = n.path;
+                              // _source = n.photoSource;
+                            });
+                            return true;
+                          },
+                          child: PhotoStateless(
+                            path: photoPath,
+                            source: PhotoSource.file,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mixins_weebi/stock.dart';
 import 'package:models_weebi/utils.dart';
 
 // Project imports:
@@ -8,10 +9,10 @@ import 'package:views_weebi/widgets.dart';
 
 class ArticleRetailDetailSection extends StatelessWidget {
   final ArticleRetail article;
-  final double articleLiveQt;
+  final ArticleRetailStockNow articleRetailStockNow;
   const ArticleRetailDetailSection(
     this.article,
-    this.articleLiveQt,
+    this.articleRetailStockNow,
   );
 
   @override
@@ -38,7 +39,7 @@ class ArticleRetailDetailSection extends StatelessWidget {
           const Icon(Icons.warehouse),
           const Text("Quantité"),
           SelectableText(
-            numFormat.format(articleLiveQt),
+            numFormat.format(articleRetailStockNow.stockNow),
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
         ),

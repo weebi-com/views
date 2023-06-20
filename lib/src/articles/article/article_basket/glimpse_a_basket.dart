@@ -46,16 +46,14 @@ class _ArticleBasketGlimpseWidStateFulState
         ),
         title: Row(
           children: <Widget>[
-            widget.articleStock.article.photo.isNotEmpty
-                ? Hero(
-                    tag:
-                        '${widget.articleStock.article.calibreId}.${widget.articleStock.article.id}',
-                    child: CircleAvatar(
-                        foregroundImage:
-                            PhotoWidget(widget.articleStock.article).getImage
-                                as ImageProvider),
-                  )
-                : CircleAvatar(backgroundColor: Colors.transparent),
+            Hero(
+              tag:
+                  '${widget.articleStock.article.calibreId}.${widget.articleStock.article.id}',
+              child: CircleAvatar(
+                  foregroundImage:
+                      ArticlePhotoWidget(widget.articleStock.article)
+                          as ImageProvider),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: Text(

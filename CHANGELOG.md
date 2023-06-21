@@ -1,3 +1,7 @@
+## 0.0.54
+
+- fix on photo basket 
+
 ## 0.0.53
 
 - photos can be added manually

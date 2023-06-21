@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: filebridge,mixins_weebi,models_base,models_weebi,services_weebi
+dependency_overrides:
+  filebridge:
+    path: ../filebridge
+  mixins_weebi:
+    path: ../mixins
+  models_base:
+    path: ../models_base
+  models_weebi:
+    path: ../models
+  services_weebi:
+    path: ../services

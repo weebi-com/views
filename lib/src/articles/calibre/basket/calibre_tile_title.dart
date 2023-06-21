@@ -21,8 +21,10 @@ class LineSingleArticleBasketTileTitle extends StatelessWidget {
       children: <Widget>[
         Hero(
           tag: articleBasket.calibreId,
-          child: CircleAvatar(
-            foregroundImage: ArticlePhotoWidget(articleBasket) as ImageProvider,
+          child: SizedBox(
+            height: 42,
+            width: 42,
+            child: ClipOval(child: ArticlePhotoWidget(articleBasket)),
           ),
         ),
         Padding(

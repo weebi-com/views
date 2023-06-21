@@ -17,13 +17,9 @@ dependencies:
   provider: ^6.0.3
   rc_router2: ^1.0.0
 
-  views_weebi:
-    path: ../../views
-  models_weebi: #^1.0.14
-    path: ../../models 
-  mixins_weebi: #^0.1.2
-    path: ../../mixins
- 
+  views_weebi: ^0.0.53
+  models_weebi: ^1.0.15
+  mixins_weebi: ^0.1.3
 
 dev_dependencies:
   flutter_test:

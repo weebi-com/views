@@ -49,10 +49,12 @@ class _ArticleBasketGlimpseWidStateFulState
             Hero(
               tag:
                   '${widget.articleStock.article.calibreId}.${widget.articleStock.article.id}',
-              child: CircleAvatar(
-                  foregroundImage:
-                      ArticlePhotoWidget(widget.articleStock.article)
-                          as ImageProvider),
+              child: SizedBox(
+                height: 42,
+                width: 42,
+                child: ClipOval(
+                    child: ArticlePhotoWidget(widget.articleStock.article)),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
